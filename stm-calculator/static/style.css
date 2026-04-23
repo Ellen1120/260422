@@ -1,0 +1,320 @@
+/* ── Reset / Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue:    #2563eb;
+  --blue-lt: #eff6ff;
+  --blue-dk: #1d4ed8;
+  --gray-1:  #f8fafc;
+  --gray-2:  #f1f5f9;
+  --gray-3:  #e2e8f0;
+  --gray-4:  #94a3b8;
+  --gray-6:  #475569;
+  --gray-8:  #1e293b;
+  --green:   #16a34a;
+  --green-lt:#f0fdf4;
+  --red:     #dc2626;
+  --radius:  8px;
+  --shadow:  0 1px 4px rgba(0,0,0,.08);
+}
+
+body {
+  font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+  font-size: 14px;
+  color: var(--gray-8);
+  background: var(--gray-2);
+  min-height: 100vh;
+}
+
+/* ── Header ── */
+header {
+  background: var(--blue);
+  color: #fff;
+  height: 52px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+.header-inner {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+header h1 { font-size: 16px; font-weight: 700; }
+
+/* ── Admin panel ── */
+.admin-panel {
+  background: #fffbeb;
+  border-bottom: 1px solid #fde68a;
+  padding: 16px 24px;
+}
+.admin-inner { max-width: 960px; margin: 0 auto; }
+.admin-desc  { color: var(--gray-6); margin: 4px 0 10px; line-height: 1.6; font-size: 13px; }
+.admin-row   { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.parse-status{ font-size: 12px; color: var(--gray-6); }
+.parse-log {
+  margin-top: 10px;
+  background: var(--gray-8);
+  color: #86efac;
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 12px;
+  font-family: 'Consolas', monospace;
+  max-height: 160px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+
+/* ── Main ── */
+main {
+  max-width: 960px;
+  margin: 24px auto;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── Card ── */
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--gray-3);
+  padding: 24px;
+}
+
+.section-title { font-size: 15px; font-weight: 700; margin-bottom: 18px; }
+
+/* ── Form ── */
+.form-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group > label { font-weight: 600; }
+.field-label { font-weight: 600; white-space: nowrap; }
+.hint  { font-weight: 400; color: var(--gray-4); font-size: 12px; }
+.file-hint { font-size: 11px; color: var(--gray-4); }
+
+select, input[type="number"], input[type="password"], input[type="text"] {
+  height: 36px;
+  border: 1px solid var(--gray-3);
+  border-radius: 6px;
+  padding: 0 10px;
+  font-size: 13.5px;
+  color: var(--gray-8);
+  background: #fff;
+  outline: none;
+  transition: border-color .15s;
+}
+select { min-width: 200px; }
+select:focus, input:focus { border-color: var(--blue); box-shadow: 0 0 0 2px #bfdbfe; }
+
+.batch-row { display: flex; align-items: center; gap: 8px; }
+.unit { color: var(--gray-6); font-size: 13px; }
+
+/* ── Checkboxes ── */
+.checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; }
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 400;
+  background: var(--gray-1);
+  border: 1px solid var(--gray-3);
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: background .1s, border-color .1s;
+}
+.checkbox-group label:has(input:checked) {
+  background: var(--blue-lt);
+  border-color: var(--blue);
+  color: var(--blue);
+  font-weight: 600;
+}
+.checkbox-group input[type="checkbox"] { accent-color: var(--blue); }
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px;
+  height: 36px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: background .15s, opacity .15s;
+}
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.btn-primary  { background: var(--blue); color: #fff; }
+.btn-primary:hover:not(:disabled) { background: var(--blue-dk); }
+.btn-ghost    { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.35); }
+.btn-ghost:hover { background: rgba(255,255,255,.1); }
+.btn-outline  { background: #fff; color: var(--gray-6); border: 1px solid var(--gray-3); }
+.btn-outline:hover { background: var(--gray-1); }
+.btn-calc     { margin-top: 4px; height: 40px; font-size: 14.5px; }
+
+/* ── Result section ── */
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.result-subtitle { font-size: 13px; color: var(--gray-6); margin-top: 4px; }
+
+.result-block { margin-bottom: 28px; }
+.block-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: var(--gray-4);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--gray-3);
+  margin-bottom: 10px;
+}
+.block-desc { font-size: 13px; color: var(--gray-6); margin-bottom: 10px; }
+
+/* ── Tables ── */
+.table-wrap { overflow-x: auto; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+th {
+  background: var(--gray-1);
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--gray-6);
+  border-bottom: 2px solid var(--gray-3);
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+.th-hint { font-size: 11px; font-weight: 400; color: var(--gray-4); }
+td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--gray-3);
+  vertical-align: middle;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--gray-1); }
+
+td.num  { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+td.bold { font-weight: 700; }
+
+/* ── 조제량 입력 + 시약 계산 셀 ── */
+.prep-input-cell { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.prep-input-cell input[type="number"] {
+  width: 80px; height: 30px; font-size: 13px; padding: 0 8px;
+}
+.reagent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 200px;
+}
+.reagent-item {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 3px 8px;
+  background: var(--green-lt);
+  border-radius: 4px;
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+.reagent-name  { color: var(--gray-6); flex: 1; }
+.reagent-amount{ font-weight: 700; color: var(--green); white-space: nowrap; }
+.reagent-placeholder { color: var(--gray-4); font-size: 12px; font-style: italic; }
+
+/* ── Prep detail cards ── */
+.prep-card {
+  border: 1px solid var(--gray-3);
+  border-radius: 6px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.prep-card-header {
+  background: var(--gray-1);
+  padding: 7px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  background: #dbeafe;
+  color: var(--blue);
+}
+.prep-card-body {
+  padding: 10px 14px;
+  line-height: 1.75;
+  color: var(--gray-6);
+  font-size: 13px;
+  white-space: pre-wrap;
+}
+
+/* ── Dissolution medium section ── */
+.diss-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  font-size: 13px;
+  color: var(--gray-6);
+  background: var(--gray-1);
+  border: 1px solid var(--gray-3);
+  border-radius: 6px;
+  padding: 8px 14px;
+  margin-bottom: 10px;
+}
+.diss-calc-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.diss-calc-table td {
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--gray-3);
+  vertical-align: middle;
+}
+.diss-formula { color: var(--gray-6); font-size: 12.5px; }
+.diss-total-row td {
+  border-top: 2px solid var(--gray-3);
+  border-bottom: none;
+  padding-top: 9px;
+  background: var(--blue-lt);
+}
+.diss-total {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--blue);
+}
+
+/* ── Utility ── */
+.hidden { display: none !important; }
+.spinning { animation: spin .8s linear infinite; display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Print ── */
+@media print {
+  header, .admin-panel, .card:first-of-type, .btn-outline { display: none !important; }
+  body { background: #fff; }
+  .card { box-shadow: none; border: none; padding: 0; }
+  .result-block { page-break-inside: avoid; }
+  .prep-input-cell input { display: none; }
+}

@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(where python *)",
+      "Bash(python -c \"import fastapi; print\\('fastapi ok'\\)\")",
+      "Bash(python -c \"import docx; print\\('docx ok'\\)\")",
+      "Bash(python -c \"import uvicorn; print\\('uvicorn ok'\\)\")",
+      "Bash(py -3.14 -c \"import fastapi; print\\('fastapi ok'\\)\")",
+      "Bash(py -3.14 -c \"import docx; print\\('docx ok'\\)\")",
+      "Bash(py -3.14 -c \"import uvicorn; print\\('uvicorn ok'\\)\")",
+      "Bash(py -3.14 -m uvicorn main:app --host 127.0.0.1 --port 8000 --reload)"
+    ]
+  }
+}

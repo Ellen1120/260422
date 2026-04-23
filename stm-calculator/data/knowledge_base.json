@@ -1,0 +1,1359 @@
+{
+  "products": [
+    {
+      "id": "STM-300599-T4.doc",
+      "stm_file": "STM-300599-T4.doc.docx",
+      "product_name": "CTPH-D005",
+      "strengths": [
+        "5 mg"
+      ],
+      "test_items": [
+        {
+          "name": "Description",
+          "preparations": []
+        },
+        {
+          "name": "Identification",
+          "preparations": []
+        },
+        {
+          "name": "Identification by HPLC",
+          "preparations": []
+        },
+        {
+          "name": "Dissolution",
+          "preparations": [
+            {
+              "section_name": "Dissolution medium preparation",
+              "solution_name": "Dissolution medium",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Transfer 2.0 g of sodium chloride and 7 mL of hydrochloric acid to a suitable container, dissolve and dilute to in 1000 mL of Milli-Q water, mix well and adjust the pH to 1.2 ± 0.05.",
+              "ingredients": [
+                {
+                  "name": "sodium chloride",
+                  "amount": 2.0,
+                  "unit": "g"
+                }
+              ],
+              "glassware": []
+            },
+            {
+              "section_name": "Buffer preparation",
+              "solution_name": "Buffer",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Weigh and transfer about 1.36 g of Potassium phosphate monobasic in 1000 mL of Milli-Q water. Adjust the pH 3.0 ± 0.02 with ortho-phosphoric acid.",
+              "ingredients": [
+                {
+                  "name": "Potassium phosphate monobasic",
+                  "amount": 1.36,
+                  "unit": "g"
+                }
+              ],
+              "glassware": []
+            },
+            {
+              "section_name": "Mobile phase preparation",
+              "solution_name": "Mobile phase",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 60:40 v/v, respectively. Degas in a sonicator for about 10 minutes.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Standard stock solution preparation",
+              "solution_name": "Standard stock solution",
+              "volume_per_batch_ml": 200.0,
+              "preparation_text": "Weigh and transfer about 29 mg of Vonoprazan fumarate standard into a 200 mL of volumetric flask.\nAdd about 150 mL of dissolution medium, sonicate for about 3 minutes to dissolve and dilute to volume with dissolution medium.",
+              "ingredients": [
+                {
+                  "name": "Vonoprazan fumarate",
+                  "amount": 29.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "dissolution medium",
+                  "amount": 150.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "200 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Standard solution preparation",
+              "solution_name": "Standard solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Pipette 5 mL of standard stock solution into a 100 mL volumetric flask and dilute to volume with dissolution medium and mix well.",
+              "ingredients": [
+                {
+                  "name": "standard stock solution",
+                  "amount": 5.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Transfer 900 mL dissolution medium into each dissolution bowl. Drop one tablet into each bowl, run the dissolution as per the dissolution parameters.\nWithdraw sufficient volume of the sample aliquot from each bowl at 37 °C. Filter the sample 0.45 µm PVDF (Hyundai micro) or 0.45 µm Nylon (Hyundai micro) or 0.45 µm PTFE (Hyundai micro) syringe filter.\nDissolution Parameters\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected two or more for stabilization.\nSystem Suitability\nThe relative standard deviation for peak areas of Vonoprazan from the replicate standard injections should not be more than 2.0 %.\nTailing factor for Vonoprazan peak obtained from standard chromatogram should not be more than 2.0.\nThe relative standard deviation for peak areas of Vonoprazan from the replicate standard injections and bracketing should not be more than 2.0 %.\nCalculation\nAS\t: Average peak area of Vonoprazan peak in the standard solutio\nAT\t: Peak area of Vonoprazan in the sample solution\nWs\t: Weight of standard taken in mg as Vonoprazan fumarate\nP\t: Potency of the standard as Vonoprazan fumarate, on as is basis\nL\t: Label claim of the tablets in mg as Vonoprazan.\n345.4\t: Label claim of the tablets in mg as Vonoprazan.\n461.46\t: Label claim of the tablets in mg as Vonoprazan fumarate.\nNote: Continue testing through the three levels unless the results confirm at either S1 or S2.\n*Q: Quantity, the amount of dissolved active ingredient specified in the individual monograph, expressed as a percentage of the labeled content.\nChrmatogram",
+              "ingredients": [],
+              "glassware": []
+            }
+          ],
+          "dissolution_conditions": {
+            "vessels_per_batch": 6,
+            "medium_name": "pH 1.2 buffer",
+            "apparatus": "USP-II (Paddle)",
+            "speed_rpm": 50,
+            "volume_per_vessel_ml": 900.0,
+            "sampling_time": "15 minutes",
+            "standard_medium_ml_by_strength": {
+              "5 mg": 300.0
+            }
+          }
+        },
+        {
+          "name": "Uniformity of dosage units (Content Uniformity)",
+          "preparations": [
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Weigh and transfer 1 tablet into a 100 mL volumetric flask (Do not grind tablet).\nAdd 70 mL of diluent and sonicate for 20 minutes with intermediate shaking (at least per every 5 minutes). Then dilute to volume with diluent and mix well.\nCentrifuge the test solution at 4500 RPM for 10 min or Filter through 0.45 µm PVDF (Hyundai micro) or 0.45 µm Nylon (Hyundai micro) or 0.45 µm PTFE (Hyundai micro) syringe filter.\nCalculation\nAS\t: Average peak area of Vonoprazan peak in the standard solution\nAT\t: Peak area of Vonoprazan in the sample solution\nWs\t: Weight of standard taken in mg as Vonoprazan fumarate.\nP\t: Potency of the standard as Vonoprazan fumarate, on as is basis\nL\t: Label claim of the tablets in mg as Vonoprazan\nN\t: The number of tablets.\n345.4\t: The molecular weight of Vonoprazan.\n461.46\t: The molecular weight of Vonoprazan fumarate.\nAcceptance value (AV)\nCalculate the Acceptance value as follows:\nAcceptance value (AV) = | M –  | + ks\nThe requirements for dosage uniformity are met if the acceptance value of the first 10 dosage units is less than or equal to L1 %, maximum allowed acceptance value.\nIf the acceptance value is > L1 %, test additional 20 units and calculate the acceptance value. The requirements are met if the final acceptance value of the 30 dosage units is ≤ L1 %, and no individual content of any dosage units is less than [1-(0.01) (L2)]M nor more than [1+(0.01) (L2)]M as specified in the calculation of Acceptance Value under Content Uniformity. Unless otherwise specified in L1 is 15.0 and L2 is 25.0.",
+              "ingredients": [
+                {
+                  "name": "diluent",
+                  "amount": 70.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Assay",
+          "preparations": [
+            {
+              "section_name": "Buffer preparation",
+              "solution_name": "Buffer",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Weigh and transfer about 1.36 g of Potassium phosphate monobasic in 1000 mL of Milli-Q-water. Adjust the pH 3.0 ± 0.02 with ortho-phosphoric acid.",
+              "ingredients": [
+                {
+                  "name": "Potassium phosphate monobasic",
+                  "amount": 1.36,
+                  "unit": "g"
+                }
+              ],
+              "glassware": []
+            },
+            {
+              "section_name": "Mobile phase A preparation",
+              "solution_name": "Mobile phase A",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 70:30 v/v, respectively. Degas in a sonicator for about 10 minutes.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Mobile phase B preparation",
+              "solution_name": "Mobile phase B",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 30:70 v/v, respectively. Degas in a sonicator for about 10 minutes.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Diluent preparation",
+              "solution_name": "Diluent",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix Milli-Q water and acetonitrile in the ratio of 40:60 v/v, respectively.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Standard stock solution preparation",
+              "solution_name": "Standard stock solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Weigh and transfer about 33.4 mg of Vonoprazan fumarate standard into a 100 mL volumetric flask.\nAdd about 70 mL of diluent and sonicate for 5 minutes to dissolve and then dilute to volume with diluent.",
+              "ingredients": [
+                {
+                  "name": "Vonoprazan fumarate",
+                  "amount": 33.4,
+                  "unit": "mg"
+                },
+                {
+                  "name": "diluent",
+                  "amount": 70.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Standard solution preparation",
+              "solution_name": "Standard solution",
+              "volume_per_batch_ml": 25.0,
+              "preparation_text": "Pipette 5 mL of the standard stock solution into a 25 mL volumetric flask and dilute to volume with diluent and mix well.",
+              "ingredients": [
+                {
+                  "name": "standard stock solution",
+                  "amount": 5.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "25 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": 500.0,
+              "preparation_text": "Transfer 5 tablets into a 500 mL volumetric flask.\nAdd 300 mL of diluent and sonicate for 20 minutes with intermediate shaking (at least per every 5 minutes). Then dilute to volume with diluent and mix well.\nCentrifuge the test solution at 4500 RPM for 10 min or Filter through 0.45 µm PVDF (Hyundai micro) or 0.45 µm Nylon (Hyundai micro) or 0.45 µm PTFE (Hyundai micro) syringe filter.\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nSystem Suitability\nTailing factor for Vonoprazan peak obtained from standard chromatogram should not be more than 2.0.\nThe relative standard deviation for peak areas of Vonoprazan from the replicate standard injections should not be more than 2.0 %.\nThe relative standard deviation for peak areas of Vonoprazan from the replicate standard injections and bracketing should not be more than 2.0 %.\nCalculation\nAS\t: Average peak area of Vonoprazan peak in the standard solution\nAT\t: Peak area of Vonoprazan in the sample solution\nWs\t: Weight of standard taken in mg as Vonoprazan fumarate.\nP\t: Potency of the standard as Vonoprazan fumarate, on as is basis\nL\t: Label claim of the tablets in mg as Vonoprazan.\nN\t: The number of tablets\n354.4\t: The molecular weight of Vonoprazan\n461.46\t: The molecular weight of Vonoprazan fumarate\nChrmatogram",
+              "ingredients": [
+                {
+                  "name": "diluent",
+                  "amount": 300.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "500 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Related substances (Method A)",
+          "preparations": [
+            {
+              "section_name": "Buffer solution preparation",
+              "solution_name": "Buffer solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Weigh and transfer about 2.84 g of Sodium phosphate dibasic into 1000 mL Milli-Q water. Adjust the pH 7.0 ± 0.02 with phosphoric acid.",
+              "ingredients": [
+                {
+                  "name": "Sodium phosphate dibasic",
+                  "amount": 2.84,
+                  "unit": "g"
+                }
+              ],
+              "glassware": []
+            },
+            {
+              "section_name": "Mobile phase A preparation",
+              "solution_name": "Mobile phase A",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix buffer solution and methanol in the ratio of 65:35 v/v, respectively.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Mobile phase B preparation",
+              "solution_name": "Mobile phase B",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix buffer solution and methanol in the ratio of 30:70 v/v, respectively.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Diluent preparation",
+              "solution_name": "Diluent",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix Milli-Q water and acetonitrile in the ratio of 60:40 v/v, respectively.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Standard stock solution preparation",
+              "solution_name": "Standard stock solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Accurately weigh and transfer about 33.4 mg of Vonoprazan fumarate standard into a 50 mL volumetric flask. Then dissolve in and dilute to volume with diluent and mix well. Sonicate, if necessary to dissolve.\nPipette 2 mL of the above solution into a 50 mL volumetric flask and dilute to volume with diluent and mix well.",
+              "ingredients": [
+                {
+                  "name": "Vonoprazan fumarate",
+                  "amount": 33.4,
+                  "unit": "mg"
+                },
+                {
+                  "name": "above solution",
+                  "amount": 2.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Standard solution preparation",
+              "solution_name": "Standard solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Pipette 5 mL of the standard stock solution into a 50 mL volumetric flask and dilute to volume with diluent and mix well.",
+              "ingredients": [
+                {
+                  "name": "standard stock solution",
+                  "amount": 5.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": 20.0,
+              "preparation_text": "Weigh and crush not less than 20 tablets to a fine powder in mortar with pestle.\nAccurately weigh and transfer the tablet powder equivalent to about 20 mg of Vonoprazan, into 20 mL of volumetric flask.\nAdd about 10 mL of diluent and sonicate for 20 minutes with intermediate shaking. Allow the flask cool to room temperature and dilute to volume with diluent and mix well.\nCentrifuge the above solution at 4500 rpm for 10 minutes or filter through 0.45 µm PVDF (Millipore), 0.45 µm Nylon (Millipore) and 0.45 µm PTFE (Hyundai miro) syringe filter.\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nRRT, RRF, LOD (%) and LOQ (%) Information\nSystem Suitability\nThe relative standard deviation for peak areas of Vonoprazan for three replicate injections of standard solution should not be more than 10.0 %.\nThe relative standard deviation for peak areas of Vonoprazan for three replicate injections of standard solution should and bracketing not be more than 10.0 %.\nThe tailing factor of Vonoprazan from the replicate standard injections should not be more than 2.0.\nCalculation\nAS\t: Average peak area of Vonoprazan peak from standard solution\nAT\t: Peak area of impurity from sample solution\nWs\t: Weight of standard taken in mg as Vonoprazan fumarate.\nWT\t: Weight of sample taken in mg.\nAw\t: Average weight of the tablet in mg.\nP\t: Potency of the standard as Vonoprazan fumarate, on as is basis\nL\t: Label claim of the tablets in mg as Vonoprazan.\nRRF\t: Relative response factor (unknown impurity = 1)\n354.4\t: The molecular weight of Vonoprazan\n461.46\t: The molecular weight of Vonoprazan fumarate\nChrmatogram",
+              "ingredients": [
+                {
+                  "name": "diluent",
+                  "amount": 10.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "20 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Related substances (Method B)",
+          "preparations": [
+            {
+              "section_name": "Buffer solution preparation",
+              "solution_name": "Buffer solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix Milli-Q water and 85% ortho phosphoric acid in the ratio of 1000:1 v/v, respectively.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Mobile phase A preparation",
+              "solution_name": "Mobile phase A",
+              "volume_per_batch_ml": null,
+              "preparation_text": "100% Buffer.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Mobile phase B preparation",
+              "solution_name": "Mobile phase B",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix buffer solution and Acetonitrile in the ratio of 20:80 v/v, respectively.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Diluent preparation",
+              "solution_name": "Diluent",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix Milli-Q water and acetonitrile in the ratio of 60:40 v/v, respectively.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Standard stock solution preparation",
+              "solution_name": "Standard stock solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Accurately weigh and transfer about 33.4 mg of Vonoprazan fumarate standard into a 50 mL volumetric flask. Then dissolve in and dilute to volume with diluent and mix well. Sonicate, if necessary to dissolve.\nPipette 2 mL of the above solution into a 50 mL volumetric flask and dilute to volume with diluent and mix well.",
+              "ingredients": [
+                {
+                  "name": "Vonoprazan fumarate",
+                  "amount": 33.4,
+                  "unit": "mg"
+                },
+                {
+                  "name": "above solution",
+                  "amount": 2.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Standard solution preparation",
+              "solution_name": "Standard solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Pipette 5 mL of the standard stock solution into a 50 mL volumetric flask and dilute to volume with diluent and mix well.",
+              "ingredients": [
+                {
+                  "name": "standard stock solution",
+                  "amount": 5.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": 20.0,
+              "preparation_text": "Weigh and crush not less than 20 tablets to a fine powder in mortar with pestle.\nAccurately weigh and transfer the tablet powder equivalent to about 20 mg of Vonoprazan, into 20 mL of volumetric flask.\nAdd about 10 mL of diluent and sonicate for 20 minutes with intermediate shaking. Allow the flask cool to room temperature and dilute to volume with diluent and mix well.\nCentrifuge the above solution at 4500 rpm for 10 minutes or filter through 0.45 µm PVDF (Millipore), 0.45 µm Nylon (Millipore) and 0.45 µm PTFE (Hyundai micro) syringe filter.\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nRRT, RRF, LOD (%) and LOQ (%) Information\nSystem Suitability\nThe relative standard deviation for peak areas of Vonoprazan for three replicate injections of standard solution should not be more than 10.0 %.\nThe relative standard deviation for peak areas of Vonoprazan for three replicate injections of standard solution should and bracketing not be more than 10.0 %.\nThe tailing factor of Vonoprazan from the replicate standard injections should not be more than 2.0.\nCalculation\nAS\t: Average peak area of Vonoprazan peak from standard solution\nAT\t: Peak area of impurity from sample solution\nWs\t: Weight of standard taken in mg as Vonoprazan fumarate.\nWt\t: Weight of sample taken in mg.\nAw\t: Average weight of the tablet in mg.\nP\t: Potency of the standard as Vonoprazan fumarate, on as is basis\nL\t: Label claim of the tablets in mg as Vonoprazan.\nRRF\t: Relative response factor (unknown impurity = 1)\n354.4\t: The molecular weight of Vonoprazan\n461.46\t: The molecular weight of Vonoprazan fumarate\nChrmatogram",
+              "ingredients": [
+                {
+                  "name": "diluent",
+                  "amount": 10.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "20 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "STM-CP029-T0.doc",
+      "stm_file": "STM-CP029-T0.doc.docx",
+      "product_name": "Pioglitazone Hydrochloride/Empagliflozin tablets",
+      "strengths": [
+        "30 mg/25 mg",
+        "30 mg/10 mg",
+        "15 mg/25 mg",
+        "15 mg/10 mg"
+      ],
+      "test_items": [
+        {
+          "name": "Description",
+          "preparations": []
+        },
+        {
+          "name": "Identification",
+          "preparations": []
+        },
+        {
+          "name": "Identification by HPLC",
+          "preparations": []
+        },
+        {
+          "name": "Dissolution",
+          "preparations": [
+            {
+              "section_name": "Dissolution medium preparation",
+              "solution_name": "Dissolution medium",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Dissolve about 2.0 g of sodium chloride and 7.0 mL of hydrochloric acid in 1000 mL of purified water and then adjust the pH to 1.2 ± 0.05.",
+              "ingredients": [
+                {
+                  "name": "sodium chloride",
+                  "amount": 2.0,
+                  "unit": "g"
+                }
+              ],
+              "glassware": []
+            },
+            {
+              "section_name": "Mobile phase preparation",
+              "solution_name": "Mobile phase",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Weigh and transfer about 3.45 g of potassium phosphate monobasic into 1000 mL of Milli-Q- water. Adjust the pH 3.0± 0.02 with ortho-phosphoric acid.\nMix buffer and acetonitrile in the ratio of 680 : 320 v/v, respectively. Degas in a sonicator for about 10 minutes.",
+              "ingredients": [
+                {
+                  "name": "potassium phosphate monobasic",
+                  "amount": 3.45,
+                  "unit": "g"
+                }
+              ],
+              "glassware": []
+            },
+            {
+              "section_name": "Standard stock solution for Pioglitazone preparation",
+              "solution_name": "Standard stock solution for Pioglitazone",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Weigh and transfer about 61.0 mg of Pioglitazone hydrochloride standard into a 50 mL of volumetric flask.\nAdd 30 mL of methanol, sonicate for 10 minutes to dissolve, and dilute to volume with methanol.",
+              "ingredients": [
+                {
+                  "name": "Pioglitazone hydrochloride",
+                  "amount": 61.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "methanol",
+                  "amount": 30.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Standard stock solution for Empagliflozin preparation",
+              "solution_name": "Standard stock solution for Empagliflozin",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Weigh and transfer about 70.0 mg of Empagliflozin standard into a 50 mL of volumetric flask.\nAdd 30 mL of methanol, sonicate for 10 minutes to dissolve, and dilute to volume with methanol.",
+              "ingredients": [
+                {
+                  "name": "Empagliflozin",
+                  "amount": 70.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "methanol",
+                  "amount": 30.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Standard solution preparation",
+              "solution_name": "Standard solution",
+              "volume_per_batch_ml": 200.0,
+              "preparation_text": "30 mg/25 mg\nPipette 6 mL of standard stock solution for Pioglitazone and 4 mL of standard stock solution for Empagliflozin into 200 mL volumetric flask and dilute to volume with pH 1.2 dissolution medium and mix well.\n30 mg/10 mg\nPipette 6 mL of standard stock solution for Pioglitazone, 2 mL of standard stock solution for Empagliflozin and 2 mL of methanol into 200 mL volumetric flask and dilute to volume with pH 1.2 dissolution medium and mix well.\n15 mg/25 mg\nPipette 3 mL of standard stock solution for Pioglitazone, 4 mL of standard stock solution for Empagliflozin and 3 mL of methanol into 200 mL volumetric flask and dilute to volume with pH 1.2 dissolution medium and mix well.\n15 mg/10 mg\nPipette 3 mL of standard stock solution for Pioglitazone, 2 mL of standard stock solution for Empagliflozin and 5 mL of methanol into 200 mL volumetric flask and dilute to volume with pH 1.2 dissolution medium and mix well.",
+              "ingredients": [
+                {
+                  "name": "standard stock solution for Pioglitazone",
+                  "amount": 6.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "200 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Transfer 900 mL dissolution medium into each dissolution bowl. Drop one tablet into each bow, run the dissolution as per the dissolution parameters.\nWithdraw sufficient volume of the sample aliquot from each bowl at 37 °C. Filter the sample solution through 0.45 µm PVDF syringe filter (Millipore) or 0.45 µm Nylon syringe filter (Millipore).\nDissolution Parameters\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nSystem Suitability\nThe tailing factor of Pioglitazone peak and Empagliflozin peak obtained from standard solution chromatogram should not be more than 2.0.\nThe relative standard deviation for peak areas of Pioglitazone peak and Empagliflozin peak from the replicate standard solution injections should not be more than 2.0 %.\nThe relative standard deviation for peak areas of Pioglitazone peak and Empagliflozin peak from the replicate standard solution and bracketing standard solution injections should not be more than 2.0 %.\nCalculation\nPioglitazone\n30 mg/25 mg and 30 mg/10 mg\n15 mg/25 mg and 15 mg/10 mg\nAS\t: Average peak area of Pioglitazone peak in the standard solution\nAT\t: Peak area of Pioglitazone in the sample solution\nWs\t: Weight of standard taken in mg as Pioglitazone hydrochloride.\nP\t: Potency of the standard as Pioglitazone hydrochloride, on as is basis\nL\t: Label claim of the tablets in mg as Pioglitazone\n356.44\t: The molecular weight of Pioglitazone.\n392.9\t: The molecular weight of Pioglitazone hydrochloride.\nEmpagliflozin\n30 mg/25 mg and 15 mg/25 mg\n30 mg/10 mg and 15 mg/10 mg\nAS\t: Average peak area of Empagliflozin peak in the standard solution\nAT\t: Peak area of Empagliflozin in the sample solution\nWs\t: Weight of standard taken in mg as Empagliflozin\nP\t: Potency of the standard as Empagliflozin, on as is basis\nL\t: Label claim of the tablets in mg as Empagliflozin\nNote: Continue testing through the three levels unless the results confirm at either S1 or S2.\n*Q: Quantity, the amount of dissolved active ingredient specified in the individual monograph, expressed as a percentage of the labeled content.\nChrmatogram",
+              "ingredients": [],
+              "glassware": []
+            }
+          ],
+          "dissolution_conditions": {
+            "vessels_per_batch": 6,
+            "medium_name": "pH 1.2 phosphate buffer",
+            "apparatus": "USP-II (Paddle)",
+            "speed_rpm": 50,
+            "volume_per_vessel_ml": 900.0,
+            "sampling_time": "30 minutes",
+            "standard_medium_ml_by_strength": {
+              "30 mg/25 mg": 200.0,
+              "30 mg/10 mg": 200.0,
+              "15 mg/25 mg": 200.0,
+              "15 mg/10 mg": 200.0
+            }
+          }
+        },
+        {
+          "name": "Uniformity of dosage unit (Content Uniformity)",
+          "preparations": [
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Weigh and transfer 1 tablet into a 100 mL volumetric flask (Do not grind tablet). Add 70 mL of diluent and sonicate for 30 minutes with intermediate shaking (at least per every 5 minutes). Then dilute to volume with diluent and mix well.\nCentrifuge the test solution at 4500 RPM for 10 min or filter through 0.45μm syringe filter.\nCalculation\nAS\t: Average peak area of Vonoprazan peak in the standard solution\nAT\t: Peak area of Vonoprazan in the sample solution\nWs\t: Weight of standard taken in mg as Vonoprazan fumarate.\nP\t: Potency of the standard as Vonoprazan fumarate, on as is basis\nL\t: Label claim of the tablets in mg as Vonoprazan\nN\t: The number of tablets.\n345.4\t: The molecular weight of Vonoprazan.\n461.46\t: The molecular weight of Vonoprazan fumarate.\nAcceptance value (AV)\nCalculate the Acceptance value as follows:\nAcceptance value (AV) = | M –  | + ks\nThe requirements for dosage uniformity are met if the acceptance value of the first 10 dosage units is less than or equal to L1 %, maximum allowed acceptance value\nIf the acceptance value is > L1 %, test additional 20 units and calculate the acceptance value. The requirements are met if the final acceptance value of the 30 dosage units is ≤ L1 %, and no individual content of any dosage units is less than [1-(0.01)(L2)]M nor more than [1+(0.01)(L2)]M as specified in the calculation of Acceptance Value under Content Uniformity or weight variation. Unless otherwise specified in L1 is 15.0 and L2 is 25.0.",
+              "ingredients": [
+                {
+                  "name": "diluent",
+                  "amount": 70.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Assay",
+          "preparations": [
+            {
+              "section_name": "Buffer preparation",
+              "solution_name": "Buffer",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Weigh and transfer about 4.1 g of Potassium phosphate monobasic into 1000 mL of Milli-Q-water. Adjust the pH 3.0 ± 0.02 with ortho-phosphoric acid. Filter this solution through 0.45 µm RC membrane filter.",
+              "ingredients": [
+                {
+                  "name": "Potassium phosphate monobasic",
+                  "amount": 4.1,
+                  "unit": "g"
+                }
+              ],
+              "glassware": []
+            },
+            {
+              "section_name": "Mobile phase A preparation",
+              "solution_name": "Mobile phase A",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 700:300 v/v, respectively. Degas in a sonicator for about 10 minutes.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Mobile phase B preparation",
+              "solution_name": "Mobile phase B",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 300:700 v/v, respectively. Degas in a sonicator for about 10 minutes.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "0.1 N hydrochloric acid preparation",
+              "solution_name": "0.1 N hydrochloric acid",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Dilute 8.5 mL of hydrochloric acid with water to 1000 mL.",
+              "ingredients": [
+                {
+                  "name": "hydrochloric acid",
+                  "amount": 8.5,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": []
+            },
+            {
+              "section_name": "Diluent preparation",
+              "solution_name": "Diluent",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix acetonitrile and 0.1 N hydrochloric acid in the ratio of 70:30 v/v, respectively.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Standard solution preparation",
+              "solution_name": "Standard solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "30 mg/25 mg\nWeigh and transfer about 33.06 mg of Pioglitazone hydrochloride standard and 25 mg of Empagliflozin standard into a 100 mL of volumetric flask.\nAdd about 70 mL of diluent and sonicate for 10 minutes to dissolve and then dilute to volume with diluent.\n30 mg/10 mg\nWeigh and transfer about 66.12 mg of Pioglitazone hydrochloride standard and 20 mg of Empagliflozin standard into a 200 mL of volumetric flask.\nAdd about 140 mL of diluent and sonicate for 10 minutes to dissolve and then dilute to volume with diluent.\n15 mg/25 mg\nWeigh and transfer about 33.06 mg of Pioglitazone hydrochloride standard and 50 mg of Empagliflozin standard into a 200 mL of volumetric flask.\nAdd about 140 mL of diluent and sonicate for 10 minutes to dissolve and then dilute to volume with diluent.\n15 mg/10 mg\nWeigh and transfer about 33.06 mg of Pioglitazone hydrochloride standard and 20 mg of Empagliflozin standard into a 200 mL of volumetric flask.\nAdd about 140 mL of diluent and sonicate for 10 minutes to dissolve and then dilute to volume with diluent.",
+              "ingredients": [
+                {
+                  "name": "Pioglitazone hydrochloride",
+                  "amount": 33.06,
+                  "unit": "mg"
+                },
+                {
+                  "name": "diluent",
+                  "amount": 70.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "volumetric flask",
+                  "size": "200 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": 500.0,
+              "preparation_text": "Weigh and transfer 5 tablets into 500 mL volumetric flask (Do not grind tablet).\nAdd 350 mL of diluent and sonicate for 30 minutes with intermediate shaking (at least per every 5 minutes). Then dilute to volume with diluent and mix well.\nCentrifuge the above sample solution at 5000 rpm for 10 minutes or filter through 0.45 µm PVDF (Millipore) or Nylon (Millipore) syringe filter.\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nSystem Suitability\nTailing factor of Pioglitazone and Empagliflozin peak obtained from standard chromatogram should not be more than 2.0.\nThe relative standard deviation for peak areas of Pioglitazone and Empagliflozin from the replicate standard injections should not be more than 2.0 %.\nThe relative standard deviation for peak areas of Pioglitazone and Empagliflozin from the replicate standard injections and bracketing should not be more than 2.0 %.\nCalculation\nPioglitazone\n30 mg/25 mg\n30 mg/10 mg, 15 mg/25 mg and 15 mg/10 mg\nAS\t: Average peak area of Pioglitazone peak in the standard solution\nAT\t: Peak area of Pioglitazone in the sample solution\nWs\t: Weight of standard taken in mg as Pioglitazone hydrochloride.\nP\t: Potency of the standard as Pioglitazone hydrochloride, on as is basis\nL\t: Label claim of the tablets in mg as Pioglitazone\nN\t: The number of tablets.\n356.44\t: The molecular weight of Pioglitazone.\n392.9\t: The molecular weight of Pioglitazone hydrochloride.\nEmpagliflozin\n30 mg/25 mg\n30 mg/10 mg, 15 mg/25 mg and 15 mg/10 mg\nAS\t: Average peak area of Empagliflozin peak in the standard solution\nAT\t: Peak area of Empagliflozin in the sample solution\nWs\t: Weight of standard taken in mg as Empagliflozin\nP\t: Potency of the standard as Empagliflozin, on as is basis\nL\t: Label claim of the tablets in mg as Empagliflozin\nN\t: The number of tablets.\nChrmatogram",
+              "ingredients": [
+                {
+                  "name": "diluent",
+                  "amount": 350.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "500 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Related substances",
+          "preparations": [
+            {
+              "section_name": "Buffer preparation",
+              "solution_name": "Buffer",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Weigh and transfer about 1.36 g of Potassium phosphate monobasic into 1000 mL Milli-Q-water. Adjust the pH 2.0 ± 0.02 with ortho-phosphoric acid.",
+              "ingredients": [
+                {
+                  "name": "Potassium phosphate monobasic",
+                  "amount": 1.36,
+                  "unit": "g"
+                }
+              ],
+              "glassware": []
+            },
+            {
+              "section_name": "Mobile phase A preparation",
+              "solution_name": "Mobile phase A",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 800:200 v/v, respectively.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Mobile phase B preparation",
+              "solution_name": "Mobile phase B",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix buffer solution, acetonitrile and methanol in the ratio of 400:400:200 v/v/v, respectively.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "0.1 N hydrochloric acid preparation",
+              "solution_name": "0.1 N hydrochloric acid",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Dilute 8.5 mL of hydrochloric acid with water to 1000 mL.",
+              "ingredients": [
+                {
+                  "name": "hydrochloric acid",
+                  "amount": 8.5,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": []
+            },
+            {
+              "section_name": "Diluent preparation",
+              "solution_name": "Diluent",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix 0.1 N hydrochloric acid and acetonitrile in the ratio of 700 : 300 v/v, respectively.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Pioglitazone standard stock solution preparation",
+              "solution_name": "Pioglitazone standard stock solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Accurately weigh and transfer about 26.6 mg of Pioglitazone hydrochloride standard into a 100 mL volumetric flask, then dissolve in and dilute to volume with diluent and mix well. Sonicate, if necessary to dissolve.",
+              "ingredients": [
+                {
+                  "name": "Pioglitazone hydrochloride",
+                  "amount": 26.6,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Empagliflozin standard stock solution preparation",
+              "solution_name": "Empagliflozin standard stock solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Accurately weigh and transfer about 20 mg of Empagliflozin standard into a 100 mL volumetric flask, then dissolve in and dilute to volume with diluent and mix well. Sonicate, if necessary to dissolve.",
+              "ingredients": [
+                {
+                  "name": "Empagliflozin",
+                  "amount": 20.0,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Standard solution preparation",
+              "solution_name": "Standard solution",
+              "volume_per_batch_ml": 200.0,
+              "preparation_text": "30 mg/25 mg\nPipette 2 mL of Pioglitazone standard stock solution and 2 mL of Empagliflozin standard stock solution into 200 mL volumetric flask and dilute to volume with diluent and mix well.\n30 mg/10 mg\nPipette 2 mL of Pioglitazone standard stock solution and 1 mL of Empagliflozin standard stock solution into 200 mL volumetric flask and dilute to volume with diluent and mix well.\n15 mg/25 mg\nPipette 1 mL of Pioglitazone standard stock solution and 2 mL of Empagliflozin standard stock solution into 200 mL volumetric flask and dilute to volume with diluent and mix well.\n15 mg/10 mg\nPipette 1 mL of Pioglitazone standard stock solution and 1 mL of Empagliflozin standard stock solution into 200 mL volumetric flask and dilute to volume with diluent and mix well.",
+              "ingredients": [
+                {
+                  "name": "Pioglitazone standard stock solution",
+                  "amount": 2.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "200 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "30 mg/25 mg and 15 mg/25 mg\nWeigh and crush not less than 20 tablets to a fine powder in mortar with pestle.\nAccurately weigh and transfer the tablet powder equivalent to 100 mg of Empagliflozin, transfer into 100 mL volumetric flask. (30/25 mg: 1483.2 mg, 15/25 mg: 1071.2 mg)\nAdd 70 mL of diluent and sonicate for 20 min with intermediate shaking. Allow the flask cool to room temperature and dilute to volume with diluent and mix well.\nCentrifuge this solution at 5000 rpm for 10 minutes or filter through 0.45 μm PVDF (Hyundai micro), 0.45 μm Nylon (Hyundai micro) or 0.45 μm PTFE (Hyundai micro) syringe filter.\n30 mg/10 mg and 15 mg/10 mg\nWeigh and crush not less than 20 tablets to a fine powder in mortar with pestle.\nAccurately weigh and transfer the tablet powder equivalent to 50 mg of Empagliflozin, transfer into 100 mL volumetric flask. (30/10 mg: 1339.0 mg, 15/10 mg: 1030.0 mg)\nAdd 70 mL of diluent and sonicate for 20 min with intermediate shaking. Allow the flask cool to room temperature and dilute to volume with diluent and mix well.\nCentrifuge this solution at 5000 rpm for 10 minutes or filter through 0.45 μm PVDF (Hyundai micro), 0.45 μm Nylon (Hyundai micro) or 0.45 μm PTFE (Hyundai micro) syringe filter.\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nSystem Suitability\nThe tailing factor of Pioglitazone and Empagliflozin peak from the replicate standard injections should not be more than 2.0.\nThe relative standard deviation for peak areas of Pioglitazone and Empagliflozin for three replicate injections of standard solution should not be more than 10.0 %.\nThe relative standard deviation for peak areas Pioglitazone and Empagliflozin for three replicate injections of standard solution and bracketing should not be more than 10.0 %.\nCalculation\n30 mg/25 mg\nAS\t: Average peak area of Empagliflozin from the standard solution\nAT\t: Peak area of unknown impurity in the sample solution\nWs\t: Weight of Empagliflozin standard taken in mg.\nWT\t: Weight of sample powder taken in mg.\nAw\t: Average weight of the tablet in mg.\nP\t: Potency of the standard as Empagliflozin, on as is basis\nL\t: Label claim of the tablets in mg as Empagliflozin\n30 mg/10 mg and 15 mg/10 mg\nAS\t: Average peak area of Empagliflozin from the standard solution\nAT\t: Peak area of unknown impurity in the sample solution\nWs\t: Weight of Empagliflozin standard taken in mg.\nWT\t: Weight of sample powder taken in mg.\nAw\t: Average weight of the tablet in mg.\nP\t: Potency of the standard as Empagliflozin, on as is basis\nL\t: Label claim of the tablets in mg as Empagliflozin\n15 mg/25 mg\nAS\t: Average peak area of Pioglitazone from the standard solution\nAT\t: Peak area of unknown impurity in the sample solution\nWs\t: Weight of Pioglitazone hydrochlride standard taken in mg.\nWT\t: Weight of sample powder taken in mg.\nAw\t: Average weight of the tablet in mg.\nP\t: Potency of the standard as Pioglitazone hydrochloride, on as is basis\nL\t: Label claim of the tablets in mg as Pioglitazone\nLOD (%) and LOQ (%) Information\nChrmatogram",
+              "ingredients": [
+                {
+                  "name": "diluent",
+                  "amount": 70.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "STM-CP032-T0.doc",
+      "stm_file": "STM-CP032-T0.doc.docx",
+      "product_name": "CTPH-D003",
+      "strengths": [
+        "50 mg",
+        "100 mg",
+        "200 mg"
+      ],
+      "test_items": [
+        {
+          "name": "Description",
+          "preparations": []
+        },
+        {
+          "name": "Identification",
+          "preparations": []
+        },
+        {
+          "name": "Identification by HPLC",
+          "preparations": []
+        },
+        {
+          "name": "Dissolution",
+          "preparations": [
+            {
+              "section_name": "Dissolution medium preparation",
+              "solution_name": "Dissolution medium",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Transfer 6.81 g of potassium phosphate monobasic and 0.9 g of sodium hydroxide in 1000 mL of purified water, mix well and adjust the pH to 6.8 ± 0.05.",
+              "ingredients": [
+                {
+                  "name": "potassium phosphate monobasic",
+                  "amount": 6.81,
+                  "unit": "g"
+                }
+              ],
+              "glassware": []
+            },
+            {
+              "section_name": "Buffer preparation",
+              "solution_name": "Buffer",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Weigh and transfer about 2.72 g of potassium phosphate monobasic into 1000 mL of purified water. Adjust the pH 2.0 ± 0.02 with ortho-phosphoric acid.",
+              "ingredients": [
+                {
+                  "name": "potassium phosphate monobasic",
+                  "amount": 2.72,
+                  "unit": "g"
+                }
+              ],
+              "glassware": []
+            },
+            {
+              "section_name": "Mobile phase A preparation",
+              "solution_name": "Mobile phase A",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 500:500 v/v, respectively. Degas in a sonicator for about 10 minutes.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Mobile phase B preparation",
+              "solution_name": "Mobile phase B",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 300:700 v/v, respectively. Degas in a sonicator for about 10 minutes.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Standard solution preparation (for 50 mg)",
+              "solution_name": "Standard solution (for 50 mg)",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Weigh and transfer about 25.0 mg of Sacubitril Valsartan Sodium standard into a 100 mL of volumetric flask. Add 60 mL of dissolution medium, sonicate for 10 minutes to dissolve, and dilute to volume with dissolution medium.\nPipette 5 mL of above solution into 20 mL volumetric flask and dilute to volume with dissolution medium and mix well.",
+              "ingredients": [
+                {
+                  "name": "Sacubitril Valsartan Sodium",
+                  "amount": 25.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "above solution",
+                  "amount": 5.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "dissolution medium",
+                  "amount": 60.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "volumetric flask",
+                  "size": "20 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Standard solution preparation (for 100 mg)",
+              "solution_name": "Standard solution (for 100 mg)",
+              "volume_per_batch_ml": 200.0,
+              "preparation_text": "Weigh and transfer about 25.0 mg of Sacubitril Valsartan Sodium standard into a 200 mL of volumetric flask. Add 140 mL of dissolution medium, sonicate for 10 minutes to dissolve, and dilute to volume with dissolution medium.",
+              "ingredients": [
+                {
+                  "name": "Sacubitril Valsartan Sodium",
+                  "amount": 25.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "dissolution medium",
+                  "amount": 140.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "200 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Standard solution preparation (for 200 mg)",
+              "solution_name": "Standard solution (for 200 mg)",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Weigh and transfer about 25.0 mg of Sacubitril Valsartan Sodium standard into a 100 mL of volumetric flask. Add 60 mL of dissolution medium, sonicate for 10 minutes to dissolve, and dilute to volume with dissolution medium.",
+              "ingredients": [
+                {
+                  "name": "Sacubitril Valsartan Sodium",
+                  "amount": 25.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "dissolution medium",
+                  "amount": 60.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Transfer 900 mL dissolution medium into each dissolution bowl. Drop one tablet into each bow, run the dissolution as per the dissolution parameters.\nWithdraw sufficient volume of the sample aliquot from each bowl at 37 °C. Filter the sample solution through 0.45 µm PVDF syringe filter (Millipore), 0.45 µm Nylon syringe filter (Hyundai Micro) or 0.45 µm PTFE syringe filter (Hyundai Micro).\nDissolution Parameters\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nSystem Suitability\nThe relative standard deviation for peak areas of Sacubitril and Valsartan from the replicate standard injections should not be more than 2.0 %.\nTailing factor for Sacubitril and Valsartan peak obtained from standard chromatogram should not be more than 1.5.\nThe relative standard deviation for peak areas of Sacubitril and Valsartan from the replicate standard injections and bracketing should not be more than 2.0 %.\nDetailed Label Claim\nCalculation\n50 mg\n100 mg\n200 mg\nAS\t: Average peak area of Sacubitril or Valsartan peak in the standard solution\nAT\t: Peak area of Sacubitril or Valsartan in the sample solution\nWs\t: Weight of standard taken in mg as Sacubitril Valsartan Sodium.\nP\t: Potency of the standard as Sacubitril or Valsartan, on as is basis\nL\t: Label claim of the tablets in mg as Sacubitril or Valsartan\nNote: Continue testing through the three levels unless the results confirm at either S1 or S2.\n*Q: Quantity, the amount of dissolved active ingredient specified in the individual monograph, expressed as a percentage of the labeled content.\nChrmatogram",
+              "ingredients": [],
+              "glassware": []
+            }
+          ],
+          "dissolution_conditions": {
+            "vessels_per_batch": 6,
+            "medium_name": "pH 6.8 buffer",
+            "apparatus": "USP-II (Paddle)",
+            "speed_rpm": 50,
+            "volume_per_vessel_ml": 900.0,
+            "sampling_time": "30 minutes",
+            "standard_medium_ml_by_strength": {
+              "50 mg": 120.0,
+              "100 mg": 200.0,
+              "200 mg": 100.0
+            }
+          }
+        },
+        {
+          "name": "Uniformity of dosage unit (Weight variation)",
+          "preparations": []
+        },
+        {
+          "name": "Assay",
+          "preparations": [
+            {
+              "section_name": "Buffer preparation",
+              "solution_name": "Buffer",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Weigh and transfer about 2.72 g of Potassium phosphate monobasic into 1000 mL of Milli-Q-water. Adjust the pH 2.0 ± 0.02 with ortho-phosphoric acid.",
+              "ingredients": [
+                {
+                  "name": "Potassium phosphate monobasic",
+                  "amount": 2.72,
+                  "unit": "g"
+                }
+              ],
+              "glassware": []
+            },
+            {
+              "section_name": "Mobile phase A preparation",
+              "solution_name": "Mobile phase A",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 500:500 v/v, respectively. Degas in a sonicator for about 10 minutes.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Mobile phase B preparation",
+              "solution_name": "Mobile phase B",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 300:700 v/v, respectively. Degas in a sonicator for about 10 minutes.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Diluent preparation",
+              "solution_name": "Diluent",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix acetonitrile and Milli-Q water in the ratio of 500:500 v/v, respectively.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Standard solution preparation",
+              "solution_name": "Standard solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Weigh and transfer about 45.0 mg of Sacubitril Valsartan Sodium standard into a 50 mL volumetric flask. Add about 30 mL of diluent and sonicate for 10 minutes to dissolve and then dilute to volume with diluent.",
+              "ingredients": [
+                {
+                  "name": "Sacubitril Valsartan Sodium",
+                  "amount": 45.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "diluent",
+                  "amount": 30.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": 250.0,
+              "preparation_text": "Weigh and crush not less than 20 tablets to a fine powder in mortar with pestle.\nAccurately weigh and transfer the tablet powder equivalent to 200 mg of Valsartan-sacubitril into 250 mL of volumetric flask. Add 150 mL of diluent and sonicate for 30 minutes with intermediate shaking every 5 minutes. Allow the flask cool to room temperature and dilute to volume with diluent and mix well.\nCentrifuge the test stock solution at 4500 rpm for 10 minutes, 0.45 µm PVDF syringe filter (Millipore), 0.45 µm Nylon syringe filter (Hyundai Micro) or 0.45 µm PTFE syringe filter (Hyundai Micro).\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nSystem Suitability\nThe relative standard deviation for peak areas of Sacubitril and Valsartan from the replicate standard injections should not be more than 2.0 %.\nTailing factor for Sacubitril and Valsartan peak obtained from standard chromatogram should not be more than 1.5.\nThe relative standard deviation for peak areas of Sacubitril and Valsartan from the replicate standard injections and bracketing should not be more than 2.0 %.\nDetailed Label Claim\nCalculation\nAS\t: Average peak area of Sacubitril or Valsartan peak in the standard solution\nAT\t: Peak area of Sacubitril or Valsartan in the sample solution\nWs\t: Weight of standard taken in mg as Sacubitril valsartan sodium.\nAW\t: Average weight of the tablet in mg.\nWT\t: Weight of test drug powder taken in mg.\nP\t: Potency of the standard as Sacubitril or Valsartan, on as is basis\nL\t: Label claim of the tablets in mg as Sacubitril or Valsartan\nChrmatogram",
+              "ingredients": [
+                {
+                  "name": "diluent",
+                  "amount": 150.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "250 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Related substances",
+          "preparations": [
+            {
+              "section_name": "Buffer preparation",
+              "solution_name": "Buffer",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Weigh and transfer about 2.72 g of Potassium phosphate monobasic into 1000 mL Milli-Q water. Adjust the pH 2.0 ± 0.02 with ortho-phosphoric acid. Filter through 0.45 µm RC filter.",
+              "ingredients": [
+                {
+                  "name": "Potassium phosphate monobasic",
+                  "amount": 2.72,
+                  "unit": "g"
+                }
+              ],
+              "glassware": []
+            },
+            {
+              "section_name": "Mobile phase A preparation",
+              "solution_name": "Mobile phase A",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 600:400 v/v, respectively. Degas in a sonicator for about 10 minutes.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Mobile phase B preparation",
+              "solution_name": "Mobile phase B",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 300:700 v/v, respectively. Degas in a sonicator for about 10 minutes.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Diluent preparation",
+              "solution_name": "Diluent",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix acetonitrile and Milli-Q in the ratio of 500:500 v/v, respectively.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "SCB4-Impurity 1 stock solution preparation",
+              "solution_name": "SCB4-Impurity 1 stock solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Weigh and transfer about 1 mg of SCB4-Impurity 1 standard a 100 mL volumetric flask. Add about 15 mL of acetonitrile and sonicate for 5 min and then dilute to volume with acetonitrile.",
+              "ingredients": [
+                {
+                  "name": "SCB4-Impurity 1",
+                  "amount": 1.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "acetonitrile",
+                  "amount": 15.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "System suitability solution preparation",
+              "solution_name": "System suitability solution",
+              "volume_per_batch_ml": 10.0,
+              "preparation_text": "Weigh and crush not less than 20 tablets to a fine powder in mortar with pestle.\nWeigh and transfer the tablets powder equivalent to about 24 mg of Sacubitril Valsartan into 10 mL volumetric flask. Add about 6 mL of diluent and sonicate for 10 min. Pipette 0.5 mL of SCB4-Impurity 1 stock solution into the above solution. Dilute to volume with diluent and mix well.\nCentrifuge the above solution at 4500 rpm for 10 minutes or filter through 0.45 μm PVDF (Millipire) or 0.45 μm Nylon (Millipore) syringe filter.",
+              "ingredients": [
+                {
+                  "name": "SCB4-Impurity 1 stock solution",
+                  "amount": 0.5,
+                  "unit": "ml"
+                },
+                {
+                  "name": "diluent",
+                  "amount": 6.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "10 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Standard solution preparation",
+              "solution_name": "Standard solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Weigh and transfer about 24 mg of Sacubitril Valsartan Sodium standard into a 100 mL volumetric flask. Add about 70 mL of diluent, and sonicate for 10 minutes and then, dilute to volume with diluent.\nPipette 2 mL of the above solution into a 100 mL volumetric flask and dilute to volume with diluent and mix well",
+              "ingredients": [
+                {
+                  "name": "Sacubitril Valsartan Sodium",
+                  "amount": 24.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "above solution",
+                  "amount": 2.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "diluent",
+                  "amount": 70.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": 250.0,
+              "preparation_text": "Weigh and crush not less than 20 tablets to a fine powder in mortar with pestle.\nWeigh and transfer the tablet powder equivalent to about 600 mg of Sacubitril Valsartan into 250 mL of volumetric flask. Add about 200 mL of diluent and sonicate for 30 minutes with intermediate shaking every 5 minutes. Allow the flask to cool to room temperature and dilute to volume with diluent and mix well.\nCentrifuge the above solution at 4500 rpm for 10 minutes or filter through 0.45 μm PVDF (Millipire) or 0.45 μm Nylon (Millipore) syringe filter.\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nSystem Suitability\nThe resolution between Valsartan and SCB4-Impurity 1 should not be less than 2.0 from system suitability solution.\nThe relative standard deviation for peak areas of Sacubitril and Valsartan from the replicated standard injections should not be more than 10.0 %.\nThe relative standard deviation for peak areas of Sacubitril and Valsartan from the replicate standard injections and bracketing should not be more than 10.0 %.\nDetailed Label Claim\nRelative retention time information about Sacubitril related impurities\nCalculation\nValsartan related impurities\nAS\t: Average peak area of Valsartan from the standard solution\nAT\t: Peak area of Valsartan impurity from the sample solution\nWs\t: Weight of Sacubitril valsartan sodium standard taken in mg.\nWT\t: Weight of sample powder taken in mg.\nAw\t: Average weight of the tablet in mg.\nP\t: Potency of the standard as Valsartan, on as is basis\nL\t: Label claim of the tablets in mg as Valsartan\nSacubitril related impurities\nAS\t: Average peak area of Sacubitril from the standard solution\nAT\t: Peak area of Sacubitril impurity from the sample solution\nWs\t: Weight of Sacubitril valsartan sodium standard taken in mg.\nWT\t: Weight of sample powder taken in mg.\nAw\t: Average weight of the tablet in mg.\nP\t: Potency of the standard as Sacubitril, on as is basis\nL\t: Label claim of the tablets in mg as Sacubitril\nRRF\t: Relative response factor. (Unknown impurity is ‘1’)\nLOD (%) and LOQ (%) Information\nChrmatogram",
+              "ingredients": [
+                {
+                  "name": "diluent",
+                  "amount": 200.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "250 mL",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Water content by KF",
+          "preparations": []
+        },
+        {
+          "name": "Polymorphism by PXRD",
+          "preparations": [
+            {
+              "section_name": "Sample preparation",
+              "solution_name": "Sample",
+              "volume_per_batch_ml": null,
+              "preparation_text": "50 mg\nTake not less than 40 tablets into mortar. Crush gently with pestle. Filter the powder using the No.45 testing sieve(355μm). Place the filtered powder in the sample holder.\n100 mg\nTake not less than 50 tablets into mortar. Crush gently with pestle. Filter the powder using the No.45 testing sieve(355μm). Place the filtered powder in the sample holder.\n200 mg\nTake not less than 10 tablets into mortar. Crush gently with pestle. Filter the powder using the No.45 testing sieve(355μm). Place the filtered powder in the sample holder.\nXRD system\nProcedure\nPlace the test sample on sample holder, pack and smooth its surface with a glass slide (or equivalent) and place the sample holder carefully in auto sampler rack and record the diffractogram.\nThe diffractogram of the test sample should match with the Sacubitril Valsartan sodium crystalline form-I 2θ values(± 0.2 °) defined in the table below.\nInformation of 2θ peak",
+              "ingredients": [],
+              "glassware": []
+            }
+          ]
+        },
+        {
+          "name": "Microbial Enumeration Test",
+          "preparations": [
+            {
+              "section_name": "Sample solution preparation (Dilution factor 1:10)",
+              "solution_name": "Sample solution (Dilution factor 1:10)",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Put 10 g of sample into 90 mL of diluent and mix it to homogenize.",
+              "ingredients": [],
+              "glassware": []
+            },
+            {
+              "section_name": "Sample solution preparation (Dilution factor 1:50)",
+              "solution_name": "Sample solution (Dilution factor 1:50)",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Add 20 mL of the sample solution (Dilution factor 1:10) to 80 mL of diluent. And shake it to suspension.\nTotal Aerobic Microbial Count (TAMC) Test\nPlace 2 petri dishes and transfer 1 mL of sample solution (Dilution factor 1:50) into each petri dish.\nPour 15 ~ 20 mL of TSA to each petri dish with sample solution dispersed. Swirl the petri dishes slowly to mix sample with media.\nIncubate at 30 - 35 ˚C for 5 days.\nPerform interim colony counting on days 2-4 and final colony counting on days 5 of incubation.\nNote: It can be possible to incubate additionally 2 days (Total 7 days).\nAfter incubation, resulting value is calculated by averaging the values obtained by multiplying dilution rate 50 to colony number detected from each petri dish.\nTotal Combined Yeasts and Molds Count (TYMC) Test\nPlace 2 petri dishes and transfer 1 mL of sample solution (Dilution factor 1:10) into each petri dish.\nPour 15 ~ 20 mL of SDA to each petri dish with sample solution dispersed. Swirl the petri dishes slowly to mix sample with media.\nIncubate at 20 - 25 ˚C for 7 days.\nPerform Interim colony counting on days 3-5 and final colony counting on days 7 of incubation.\nAfter incubation, resulting value is calculated by averaging the values obtained by multiplying dilution rate 10 to colony number detected from each petri dish.\nNegative Control Test\nPerform tests using diluent without sample in the same as the above procedure.\nSpecified Microorganisms Test: Escherichia coli (E.coli)\nMedia\nTest Method\nNote: Test method is selection culture method of E. coli using selective media (MCB) and confirmatory medium (MCA).",
+              "ingredients": [
+                {
+                  "name": "sample solution (Dilution factor 1:10)",
+                  "amount": 20.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": []
+            },
+            {
+              "section_name": "Sample Solution Preparation",
+              "solution_name": "Sample Solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Note: Sample solution (Dilution factor 1:10) of microbial enumeration test that is the same sample solution method can be used.\nPut 10 g of sample into 90 mL of diluent and mix it to homogenize.\nPre-incubation\nTransfer 10 mL of sample solution into the 90 mL of TSB. After that, mix the sample to homogenize.\nIncubate at 30-35 ℃ for 18-24 hours.\nSelection and Subculture\nShake the container, and transfer 1 mL of incubated TSB to 100 mL MCB.\nIncubate at 42-44 ℃ for 24-48 hours.\nStreak incubated MCB on the surface of MCA using inoculating loop.\nIncubate at 30-35 ℃ for 18-72 hours.\nNote: It can be possible to incubate additionally 48 hours (Total 120 hours).\nAfter incubation, confirm the growth of colonies on the surface of MCA.\nGrowth of colonies indicates the possible presence of E.coli, This is confirmed by identification tests, and follow the QS09004 Microbial Impact Assessment Procedure to determine whether MIA is required.\nNegative Control Test\nPerform tests without sample in the same as the above procedure.",
+              "ingredients": [],
+              "glassware": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

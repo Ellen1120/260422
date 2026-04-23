@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STM 시험 자원 계산기</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1>STM 시험 자원 계산기</h1>
+      <button class="btn btn-ghost" onclick="toggleAdmin()">⚙ 관리</button>
+    </div>
+  </header>
+
+  <!-- 관리 패널 -->
+  <div id="admin-panel" class="admin-panel hidden">
+    <div class="admin-inner">
+      <strong>STM 문서 파싱 (규칙 기반)</strong>
+      <p class="admin-desc">STM 폴더의 .docx 파일을 분석해 지식베이스를 구축합니다. API 키 불필요.</p>
+      <div class="admin-row">
+        <button class="btn btn-primary" id="btn-parse" onclick="startParse()">파싱 시작</button>
+        <span id="parse-status" class="parse-status"></span>
+      </div>
+      <pre id="parse-log" class="parse-log hidden"></pre>
+    </div>
+  </div>
+
+  <main>
+    <!-- ── 입력 폼 ── -->
+    <section class="card">
+      <h2 class="section-title">시험 조건 입력</h2>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>① 제품</label>
+          <select id="sel-product" onchange="onProductChange()">
+            <option value="">-- 제품 선택 --</option>
+          </select>
+          <span class="file-hint" id="hint-stm"></span>
+        </div>
+        <div class="form-group" id="row-strength" style="display:none">
+          <label>② 함량</label>
+          <select id="sel-strength" style="display:none"></select>
+          <span id="lbl-strength-fixed" style="display:none; font-weight:600; color:#1e40af; padding:4px 8px; background:#eff6ff; border-radius:6px; border:1px solid #bfdbfe;"></span>
+        </div>
+        <div class="form-group" id="row-batches" style="display:none">
+          <label>③ 배치 수</label>
+          <div class="batch-row">
+            <input type="number" id="inp-batches" value="1" min="1" max="100" style="width:70px" />
+            <span class="unit">배치</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" id="row-tests" style="display:none">
+        <label>④ 시험항목 <span class="hint">(복수 선택 가능)</span></label>
+        <div id="test-checkboxes" class="checkbox-group"></div>
+      </div>
+
+      <button class="btn btn-primary btn-calc" id="btn-calc" onclick="calculate()" disabled>
+        이론량 계산
+      </button>
+    </section>
+
+    <!-- ── 결과 ── -->
+    <section id="result-section" class="card hidden">
+      <div class="result-header">
+        <div>
+          <h2 class="section-title" style="margin:0">계산 결과</h2>
+          <p id="result-subtitle" class="result-subtitle"></p>
+          <p id="result-docno" class="result-docno"></p>
+        </div>
+        <button class="btn btn-outline" onclick="window.print()">🖨 인쇄</button>
+      </div>
+
+      <!-- 시험액 필요량 (용출 선택 시) -->
+      <div class="result-block" id="diss-medium-block" style="display:none">
+        <h3 class="block-title">시험액 (Dissolution Medium) 필요량</h3>
+        <div id="diss-medium-content"></div>
+      </div>
+
+      <!-- 용액 조제 테이블 -->
+      <div class="result-block">
+        <h3 class="block-title">용액 조제 목록</h3>
+        <p class="block-desc">이론량 기준 시약 필요량이 자동 계산됩니다. <strong>실제 조제량</strong>을 직접 입력하면 해당 양으로 재계산됩니다.</p>
+        <div class="table-wrap">
+          <table id="tbl-solutions">
+            <colgroup>
+              <col style="width:26%">
+              <col style="width:16%">
+              <col style="width:58%">
+            </colgroup>
+            <thead>
+              <tr>
+                <th>용액명</th>
+                <th>이론량<br><span class="th-hint">(배치 수 × 기준량)</span></th>
+                <th>실제 조제량 입력 → 시약 필요량 <span class="th-hint">(Tracking No.)</span></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 초자 목록 -->
+      <div class="result-block">
+        <h3 class="block-title">초자 목록</h3>
+        <table id="tbl-glassware">
+          <thead>
+            <tr>
+              <th>초자명</th>
+              <th>규격</th>
+              <th>1배치 수량</th>
+              <th>총 수량 (배치 수 기준)</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <!-- 조제 절차 -->
+      <div class="result-block">
+        <h3 class="block-title">조제 절차 상세</h3>
+        <div id="prep-details"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
