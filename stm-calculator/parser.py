@@ -10,6 +10,12 @@ from pathlib import Path
 
 from docx import Document
 
+# word namespace
+_W_NS = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'
+_W_T  = f'{{{_W_NS}}}t'
+_W_TR = f'{{{_W_NS}}}tr'
+_W_TC = f'{{{_W_NS}}}tc'
+
 STM_FOLDER = Path(__file__).parent.parent / "STM"
 DATA_FOLDER = Path(__file__).parent / "data"
 KB_PATH = DATA_FOLDER / "knowledge_base.json"
@@ -349,6 +355,89 @@ def _parse_preparations(section_lines: list[str]) -> list[dict]:
     return blocks
 
 
+# ── Body element 순서 반복 ────────────────────────────────
+
+def _iter_body_elements(doc):
+    """문서 body의 단락/표를 문서 순서대로 ('para', text) 또는 ('table', rows) yield."""
+    for child in doc.element.body:
+        tag = child.tag.split('}')[-1] if '}' in child.tag else child.tag
+        if tag == 'p':
+            texts = [n.text or '' for n in child.iter() if n.tag == _W_T]
+            yield 'para', ''.join(texts).strip()
+        elif tag == 'tbl':
+            rows: list[list[str]] = []
+            for tr in child.iter(_W_TR):
+                cells = []
+                for tc in tr.iter(_W_TC):
+                    ct = [n.text or '' for n in tc.iter(_W_T)]
+                    cells.append(''.join(ct).strip())
+                if cells:
+                    rows.append(cells)
+            if rows:
+                yield 'table', rows
+
+
+def _extract_hplc_conditions_per_section(doc) -> dict[str, dict]:
+    """
+    문서 body를 순서대로 스캔.
+    각 시험항목 섹션에서 HPLC 조건 표(Flow rate + Run time)와
+    직후 주입 순서 표(Solution | Injection No.)를 추출.
+    반환: {section_name: {flow_rate_ml_min, run_time_min, injections:[...]}}
+    """
+    result: dict[str, dict] = {}
+    current_section: str | None = None
+    pending_hplc: dict | None = None
+
+    for elem_type, elem_data in _iter_body_elements(doc):
+        if elem_type == 'para':
+            if _RE_TEST_ITEM.match(elem_data) and len(elem_data.split()) <= 8:
+                current_section = elem_data.strip()
+                pending_hplc = None
+            continue
+
+        rows: list[list[str]] = elem_data
+        if not current_section or not rows:
+            continue
+
+        row_map = {r[0]: r[1] for r in rows if len(r) >= 2}
+        flow_key = next((k for k in row_map if re.match(r'^flow\s*rate', k, re.IGNORECASE)), None)
+        run_key  = next((k for k in row_map if re.match(r'^run\s*time', k, re.IGNORECASE)), None)
+
+        if flow_key and run_key and current_section not in result:
+            fm = re.search(r'(\d+(?:\.\d+)?)', row_map[flow_key])
+            rm = re.search(r'(\d+(?:\.\d+)?)', row_map[run_key])
+            if fm and rm:
+                pending_hplc = {
+                    "flow_rate_ml_min": float(fm.group(1)),
+                    "run_time_min":     float(rm.group(1)),
+                    "injections": [],
+                }
+            continue
+
+        if pending_hplc is not None:
+            header = rows[0]
+            if (len(header) >= 2
+                    and re.match(r'^solution', header[0], re.IGNORECASE)
+                    and re.match(r'^injection', header[1], re.IGNORECASE)):
+                for row in rows[1:]:
+                    if len(row) < 2:
+                        continue
+                    # 각주 표기 제거: "2¹⁾" → "21)" → "2"
+                    # 후미 단일 숫자+")" 패턴(각주 마커)만 제거
+                    raw_count = re.sub(r'\d\)\s*$', '', row[1].strip()).strip()
+                    count_m = re.search(r'(\d+)', raw_count) or re.search(r'(\d+)', row[1])
+                    count   = int(count_m.group(1)) if count_m else 1
+                    pending_hplc["injections"].append({
+                        "solution":          row[0].strip(),
+                        "count":             count,
+                        "scales_with_batch": bool(re.search(r'\bsample\b', row[0], re.IGNORECASE)),
+                    })
+                result[current_section] = pending_hplc
+                pending_hplc = None
+
+    return result
+
+
 # ── 용출 조건 추출 ───────────────────────────────────────
 
 def _extract_dissolution_conditions(doc) -> dict | None:
@@ -677,6 +766,12 @@ def parse_document(doc_path: str) -> dict:
     reagents = _extract_all_reagents(doc)
     reagent_lookup = _build_reagent_lookup(reagents)
     _enrich_ingredients_tracking(test_items, reagent_lookup)
+
+    # HPLC 크로마토그래피 조건 추출 (Mobile phase 볼륨 계산용)
+    hplc_per_section = _extract_hplc_conditions_per_section(doc)
+    for item in test_items:
+        if item["name"] in hplc_per_section:
+            item["hplc_conditions"] = hplc_per_section[item["name"]]
 
     # 문서 번호
     doc_no = _extract_doc_no(doc)

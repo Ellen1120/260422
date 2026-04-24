@@ -75,12 +75,6 @@
         <button class="btn btn-outline" onclick="window.print()">🖨 인쇄</button>
       </div>
 
-      <!-- 시험액 필요량 (용출 선택 시) -->
-      <div class="result-block" id="diss-medium-block" style="display:none">
-        <h3 class="block-title">시험액 (Dissolution Medium) 필요량</h3>
-        <div id="diss-medium-content"></div>
-      </div>
-
       <!-- 용액 조제 테이블 -->
       <div class="result-block">
         <h3 class="block-title">용액 조제 목록</h3>
@@ -95,7 +89,7 @@
             <thead>
               <tr>
                 <th>용액명</th>
-                <th>이론량<br><span class="th-hint">(배치 수 × 기준량)</span></th>
+                <th>이론량</th>
                 <th>실제 조제량 입력 → 시약 필요량 <span class="th-hint">(Tracking No.)</span></th>
               </tr>
             </thead>
@@ -120,11 +114,39 @@
         </table>
       </div>
 
-      <!-- 조제 절차 -->
-      <div class="result-block">
-        <h3 class="block-title">조제 절차 상세</h3>
-        <div id="prep-details"></div>
+      <!-- 피펫/메스 실린더 목록 -->
+      <div class="result-block" id="block-pipettes" style="display:none">
+        <h3 class="block-title">피펫 / 메스 실린더 목록</h3>
+        <p class="block-desc">동일 규격은 공용 사용 기준으로 수량 1개로 산정합니다.</p>
+        <table id="tbl-pipettes">
+          <thead>
+            <tr>
+              <th>도구</th>
+              <th>규격</th>
+              <th>수량</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
       </div>
+
+      <!-- 필터 목록 -->
+      <div class="result-block" id="block-filters" style="display:none">
+        <h3 class="block-title">필터 목록</h3>
+        <table id="tbl-filters">
+          <thead>
+            <tr>
+              <th>종류</th>
+              <th>재질</th>
+              <th>제조처</th>
+              <th>1배치 수량</th>
+              <th>총 수량</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
     </section>
   </main>
 

@@ -77,6 +77,12 @@ async def startup():
 
 
 # ── 제품 목록 ─────────────────────────────────────────────
+def _extract_code_no(stm_file: str) -> str:
+    """'STM-300599-T4.doc.docx' → '300599'  ([접두어]-[코드번호]-[접미어] 중 가운데)"""
+    parts = stm_file.split("-")
+    return parts[1] if len(parts) >= 2 else stm_file
+
+
 @app.get("/api/products")
 def get_products():
     return [
@@ -84,6 +90,7 @@ def get_products():
             "id": p["id"],
             "name": p["product_name"],
             "stm_file": p["stm_file"],
+            "code_no": _extract_code_no(p.get("stm_file", "")),
             "strengths": p.get("strengths", ["N/A"]),
             "test_items": [t["name"] for t in p.get("test_items", [])],
         }

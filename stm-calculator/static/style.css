@@ -238,9 +238,31 @@ td.bold { font-weight: 700; }
   font-size: 12.5px;
   line-height: 1.4;
 }
-.reagent-name  { color: var(--gray-6); flex: 1; }
+.reagent-name  { color: var(--gray-6); flex: 1; display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+.reagent-tracking {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--blue);
+  background: var(--blue-lt);
+  border: 1px solid #bfdbfe;
+  border-radius: 3px;
+  padding: 0 4px;
+  white-space: nowrap;
+}
 .reagent-amount{ font-weight: 700; color: var(--green); white-space: nowrap; }
 .reagent-placeholder { color: var(--gray-4); font-size: 12px; font-style: italic; }
+.result-docno {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--blue);
+  background: var(--blue-lt);
+  border: 1px solid #bfdbfe;
+  border-radius: 4px;
+  padding: 1px 7px;
+  display: inline-block;
+  margin-top: 4px;
+}
 
 /* ── Prep detail cards ── */
 .prep-card {
@@ -274,35 +296,41 @@ td.bold { font-weight: 700; }
 }
 
 /* ── Dissolution medium section ── */
-.diss-meta {
+.diss-total-display {
   display: flex;
+  align-items: baseline;
+  gap: 10px;
   flex-wrap: wrap;
-  gap: 12px 24px;
-  font-size: 13px;
-  color: var(--gray-6);
-  background: var(--gray-1);
-  border: 1px solid var(--gray-3);
-  border-radius: 6px;
-  padding: 8px 14px;
-  margin-bottom: 10px;
-}
-.diss-calc-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-.diss-calc-table td {
-  padding: 7px 12px;
-  border-bottom: 1px solid var(--gray-3);
-  vertical-align: middle;
-}
-.diss-formula { color: var(--gray-6); font-size: 12.5px; }
-.diss-total-row td {
-  border-top: 2px solid var(--gray-3);
-  border-bottom: none;
-  padding-top: 9px;
+  padding: 12px 16px;
   background: var(--blue-lt);
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
 }
-.diss-total {
-  font-size: 15px;
+.diss-big-total {
+  font-size: 22px;
   font-weight: 700;
   color: var(--blue);
+  white-space: nowrap;
+}
+.diss-breakdown {
+  font-size: 13px;
+  color: var(--gray-6);
+}
+
+/* ── Dissolution medium inline breakdown ── */
+.diss-breakdown-inline {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--gray-4);
+  margin-top: 3px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ── Modified prep input ── */
+.prep-input-modified {
+  border-color: var(--blue) !important;
+  background: var(--blue-lt) !important;
 }
 
 /* ── Utility ── */

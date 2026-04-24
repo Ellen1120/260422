@@ -2,6 +2,7 @@
   "products": [
     {
       "id": "STM-300599-T4.doc",
+      "doc_no": "STM-300599-T4",
       "stm_file": "STM-300599-T4.doc.docx",
       "product_name": "CTPH-D005",
       "strengths": [
@@ -32,7 +33,8 @@
                 {
                   "name": "sodium chloride",
                   "amount": 2.0,
-                  "unit": "g"
+                  "unit": "g",
+                  "tracking_no": "SS004"
                 }
               ],
               "glassware": []
@@ -46,7 +48,8 @@
                 {
                   "name": "Potassium phosphate monobasic",
                   "amount": 1.36,
-                  "unit": "g"
+                  "unit": "g",
+                  "tracking_no": "SP118, SP038"
                 }
               ],
               "glassware": []
@@ -110,7 +113,15 @@
               "volume_per_batch_ml": null,
               "preparation_text": "Transfer 900 mL dissolution medium into each dissolution bowl. Drop one tablet into each bowl, run the dissolution as per the dissolution parameters.\nWithdraw sufficient volume of the sample aliquot from each bowl at 37 °C. Filter the sample 0.45 µm PVDF (Hyundai micro) or 0.45 µm Nylon (Hyundai micro) or 0.45 µm PTFE (Hyundai micro) syringe filter.\nDissolution Parameters\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected two or more for stabilization.\nSystem Suitability\nThe relative standard deviation for peak areas of Vonoprazan from the replicate standard injections should not be more than 2.0 %.\nTailing factor for Vonoprazan peak obtained from standard chromatogram should not be more than 2.0.\nThe relative standard deviation for peak areas of Vonoprazan from the replicate standard injections and bracketing should not be more than 2.0 %.\nCalculation\nAS\t: Average peak area of Vonoprazan peak in the standard solutio\nAT\t: Peak area of Vonoprazan in the sample solution\nWs\t: Weight of standard taken in mg as Vonoprazan fumarate\nP\t: Potency of the standard as Vonoprazan fumarate, on as is basis\nL\t: Label claim of the tablets in mg as Vonoprazan.\n345.4\t: Label claim of the tablets in mg as Vonoprazan.\n461.46\t: Label claim of the tablets in mg as Vonoprazan fumarate.\nNote: Continue testing through the three levels unless the results confirm at either S1 or S2.\n*Q: Quantity, the amount of dissolved active ingredient specified in the individual monograph, expressed as a percentage of the labeled content.\nChrmatogram",
               "ingredients": [],
-              "glassware": []
+              "glassware": [],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PTFE",
+                  "manufacturer": "Hyundai micro",
+                  "filter_type": "syringe"
+                }
+              ]
             }
           ],
           "dissolution_conditions": {
@@ -123,6 +134,37 @@
             "standard_medium_ml_by_strength": {
               "5 mg": 300.0
             }
+          },
+          "hplc_conditions": {
+            "flow_rate_ml_min": 1.0,
+            "run_time_min": 8.0,
+            "injections": [
+              {
+                "solution": "Blank solution (Dissolution medium)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 5,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Blank solution",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Bracketing (Standard solution)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
           }
         },
         {
@@ -146,6 +188,14 @@
                   "size": "100 mL",
                   "count_per_batch": 1
                 }
+              ],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PTFE",
+                  "manufacturer": "Hyundai micro",
+                  "filter_type": "syringe"
+                }
               ]
             }
           ]
@@ -162,7 +212,8 @@
                 {
                   "name": "Potassium phosphate monobasic",
                   "amount": 1.36,
-                  "unit": "g"
+                  "unit": "g",
+                  "tracking_no": "SP118, SP038"
                 }
               ],
               "glassware": []
@@ -186,9 +237,20 @@
             {
               "section_name": "Diluent preparation",
               "solution_name": "Diluent",
-              "volume_per_batch_ml": null,
+              "volume_per_batch_ml": 100.0,
               "preparation_text": "Mix Milli-Q water and acetonitrile in the ratio of 40:60 v/v, respectively.",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "Milli-Q water",
+                  "amount": 40.0,
+                  "unit": "mL"
+                },
+                {
+                  "name": "acetonitrile",
+                  "amount": 60.0,
+                  "unit": "mL"
+                }
+              ],
               "glassware": []
             },
             {
@@ -254,9 +316,43 @@
                   "size": "500 mL",
                   "count_per_batch": 1
                 }
+              ],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PTFE",
+                  "manufacturer": "Hyundai micro",
+                  "filter_type": "syringe"
+                }
               ]
             }
-          ]
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 1.0,
+            "run_time_min": 20.0,
+            "injections": [
+              {
+                "solution": "Blank solution (Diluent)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 5,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Bracketing (Standard solution)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
         },
         {
           "name": "Related substances (Method A)",
@@ -264,13 +360,14 @@
             {
               "section_name": "Buffer solution preparation",
               "solution_name": "Buffer solution",
-              "volume_per_batch_ml": null,
+              "volume_per_batch_ml": 1000.0,
               "preparation_text": "Weigh and transfer about 2.84 g of Sodium phosphate dibasic into 1000 mL Milli-Q water. Adjust the pH 7.0 ± 0.02 with phosphoric acid.",
               "ingredients": [
                 {
                   "name": "Sodium phosphate dibasic",
                   "amount": 2.84,
-                  "unit": "g"
+                  "unit": "g",
+                  "tracking_no": "SS023"
                 }
               ],
               "glassware": []
@@ -294,9 +391,20 @@
             {
               "section_name": "Diluent preparation",
               "solution_name": "Diluent",
-              "volume_per_batch_ml": null,
+              "volume_per_batch_ml": 100.0,
               "preparation_text": "Mix Milli-Q water and acetonitrile in the ratio of 60:40 v/v, respectively.",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "Milli-Q water",
+                  "amount": 60.0,
+                  "unit": "mL"
+                },
+                {
+                  "name": "acetonitrile",
+                  "amount": 40.0,
+                  "unit": "mL"
+                }
+              ],
               "glassware": []
             },
             {
@@ -362,9 +470,48 @@
                   "size": "20 mL",
                   "count_per_batch": 1
                 }
+              ],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PTFE",
+                  "manufacturer": "Hyundai miro",
+                  "filter_type": "syringe"
+                }
               ]
             }
-          ]
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 1.0,
+            "run_time_min": 80.0,
+            "injections": [
+              {
+                "solution": "Blank solution (Diluent)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 3,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Blank solution (Diluent)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Bracketing (Standard solution)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
         },
         {
           "name": "Related substances (Method B)",
@@ -396,9 +543,20 @@
             {
               "section_name": "Diluent preparation",
               "solution_name": "Diluent",
-              "volume_per_batch_ml": null,
+              "volume_per_batch_ml": 100.0,
               "preparation_text": "Mix Milli-Q water and acetonitrile in the ratio of 60:40 v/v, respectively.",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "Milli-Q water",
+                  "amount": 60.0,
+                  "unit": "mL"
+                },
+                {
+                  "name": "acetonitrile",
+                  "amount": 40.0,
+                  "unit": "mL"
+                }
+              ],
               "glassware": []
             },
             {
@@ -464,14 +622,54 @@
                   "size": "20 mL",
                   "count_per_batch": 1
                 }
+              ],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PTFE",
+                  "manufacturer": "Hyundai micro",
+                  "filter_type": "syringe"
+                }
               ]
             }
-          ]
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 0.5,
+            "run_time_min": 45.0,
+            "injections": [
+              {
+                "solution": "Blank solution (Diluent)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 3,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Blank solution (Diluent)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Bracketing (Standard solution)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
         }
       ]
     },
     {
       "id": "STM-CP029-T0.doc",
+      "doc_no": "STM-CP029-T0",
       "stm_file": "STM-CP029-T0.doc.docx",
       "product_name": "Pioglitazone Hydrochloride/Empagliflozin tablets",
       "strengths": [
@@ -505,7 +703,23 @@
                 {
                   "name": "sodium chloride",
                   "amount": 2.0,
-                  "unit": "g"
+                  "unit": "g",
+                  "tracking_no": "SS004"
+                }
+              ],
+              "glassware": []
+            },
+            {
+              "solution_name": "Buffer",
+              "section_name": "Mobile phase preparation",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Weigh and transfer about 3.45 g of potassium phosphate monobasic into 1000 mL of Milli-Q water. Adjust the pH 3.0 ± 0.02 with ortho-phosphoric acid.",
+              "ingredients": [
+                {
+                  "name": "potassium phosphate monobasic",
+                  "amount": 3.45,
+                  "unit": "g",
+                  "tracking_no": "SP131"
                 }
               ],
               "glassware": []
@@ -514,12 +728,17 @@
               "section_name": "Mobile phase preparation",
               "solution_name": "Mobile phase",
               "volume_per_batch_ml": null,
-              "preparation_text": "Weigh and transfer about 3.45 g of potassium phosphate monobasic into 1000 mL of Milli-Q- water. Adjust the pH 3.0± 0.02 with ortho-phosphoric acid.\nMix buffer and acetonitrile in the ratio of 680 : 320 v/v, respectively. Degas in a sonicator for about 10 minutes.",
+              "preparation_text": "Mix buffer and acetonitrile in the ratio of 680:320 v/v, respectively. Degas in a sonicator for about 10 minutes.",
               "ingredients": [
                 {
-                  "name": "potassium phosphate monobasic",
-                  "amount": 3.45,
-                  "unit": "g"
+                  "name": "Buffer",
+                  "amount": 680.0,
+                  "unit": "mL"
+                },
+                {
+                  "name": "acetonitrile",
+                  "amount": 320.0,
+                  "unit": "mL"
                 }
               ],
               "glassware": []
@@ -538,7 +757,8 @@
                 {
                   "name": "methanol",
                   "amount": 30.0,
-                  "unit": "ml"
+                  "unit": "ml",
+                  "tracking_no": "LM035"
                 }
               ],
               "glassware": [
@@ -563,7 +783,8 @@
                 {
                   "name": "methanol",
                   "amount": 30.0,
-                  "unit": "ml"
+                  "unit": "ml",
+                  "tracking_no": "LM035"
                 }
               ],
               "glassware": [
@@ -600,7 +821,21 @@
               "volume_per_batch_ml": null,
               "preparation_text": "Transfer 900 mL dissolution medium into each dissolution bowl. Drop one tablet into each bow, run the dissolution as per the dissolution parameters.\nWithdraw sufficient volume of the sample aliquot from each bowl at 37 °C. Filter the sample solution through 0.45 µm PVDF syringe filter (Millipore) or 0.45 µm Nylon syringe filter (Millipore).\nDissolution Parameters\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nSystem Suitability\nThe tailing factor of Pioglitazone peak and Empagliflozin peak obtained from standard solution chromatogram should not be more than 2.0.\nThe relative standard deviation for peak areas of Pioglitazone peak and Empagliflozin peak from the replicate standard solution injections should not be more than 2.0 %.\nThe relative standard deviation for peak areas of Pioglitazone peak and Empagliflozin peak from the replicate standard solution and bracketing standard solution injections should not be more than 2.0 %.\nCalculation\nPioglitazone\n30 mg/25 mg and 30 mg/10 mg\n15 mg/25 mg and 15 mg/10 mg\nAS\t: Average peak area of Pioglitazone peak in the standard solution\nAT\t: Peak area of Pioglitazone in the sample solution\nWs\t: Weight of standard taken in mg as Pioglitazone hydrochloride.\nP\t: Potency of the standard as Pioglitazone hydrochloride, on as is basis\nL\t: Label claim of the tablets in mg as Pioglitazone\n356.44\t: The molecular weight of Pioglitazone.\n392.9\t: The molecular weight of Pioglitazone hydrochloride.\nEmpagliflozin\n30 mg/25 mg and 15 mg/25 mg\n30 mg/10 mg and 15 mg/10 mg\nAS\t: Average peak area of Empagliflozin peak in the standard solution\nAT\t: Peak area of Empagliflozin in the sample solution\nWs\t: Weight of standard taken in mg as Empagliflozin\nP\t: Potency of the standard as Empagliflozin, on as is basis\nL\t: Label claim of the tablets in mg as Empagliflozin\nNote: Continue testing through the three levels unless the results confirm at either S1 or S2.\n*Q: Quantity, the amount of dissolved active ingredient specified in the individual monograph, expressed as a percentage of the labeled content.\nChrmatogram",
               "ingredients": [],
-              "glassware": []
+              "glassware": [],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PVDF",
+                  "manufacturer": "Millipore",
+                  "filter_type": "syringe"
+                },
+                {
+                  "size_um": 0.45,
+                  "material": "Nylon",
+                  "manufacturer": "Millipore",
+                  "filter_type": "syringe"
+                }
+              ]
             }
           ],
           "dissolution_conditions": {
@@ -616,6 +851,32 @@
               "15 mg/25 mg": 200.0,
               "15 mg/10 mg": 200.0
             }
+          },
+          "hplc_conditions": {
+            "flow_rate_ml_min": 1.3,
+            "run_time_min": 15.0,
+            "injections": [
+              {
+                "solution": "Blank solution (Dissolution medium)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 5,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Bracketing (Standard solution)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
           }
         },
         {
@@ -639,6 +900,14 @@
                   "size": "100 mL",
                   "count_per_batch": 1
                 }
+              ],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "",
+                  "manufacturer": "",
+                  "filter_type": "syringe"
+                }
               ]
             }
           ]
@@ -649,16 +918,25 @@
             {
               "section_name": "Buffer preparation",
               "solution_name": "Buffer",
-              "volume_per_batch_ml": null,
+              "volume_per_batch_ml": 1000.0,
               "preparation_text": "Weigh and transfer about 4.1 g of Potassium phosphate monobasic into 1000 mL of Milli-Q-water. Adjust the pH 3.0 ± 0.02 with ortho-phosphoric acid. Filter this solution through 0.45 µm RC membrane filter.",
               "ingredients": [
                 {
                   "name": "Potassium phosphate monobasic",
                   "amount": 4.1,
-                  "unit": "g"
+                  "unit": "g",
+                  "tracking_no": "SP131"
                 }
               ],
-              "glassware": []
+              "glassware": [],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "RC",
+                  "manufacturer": "",
+                  "filter_type": "membrane"
+                }
+              ]
             },
             {
               "section_name": "Mobile phase A preparation",
@@ -685,7 +963,8 @@
                 {
                   "name": "hydrochloric acid",
                   "amount": 8.5,
-                  "unit": "ml"
+                  "unit": "ml",
+                  "tracking_no": "LH001"
                 }
               ],
               "glassware": []
@@ -693,9 +972,20 @@
             {
               "section_name": "Diluent preparation",
               "solution_name": "Diluent",
-              "volume_per_batch_ml": null,
+              "volume_per_batch_ml": 100.0,
               "preparation_text": "Mix acetonitrile and 0.1 N hydrochloric acid in the ratio of 70:30 v/v, respectively.",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "acetonitrile",
+                  "amount": 70.0,
+                  "unit": "mL"
+                },
+                {
+                  "name": "0.1 N hydrochloric acid",
+                  "amount": 30.0,
+                  "unit": "mL"
+                }
+              ],
               "glassware": []
             },
             {
@@ -748,7 +1038,33 @@
                 }
               ]
             }
-          ]
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 1.0,
+            "run_time_min": 20.0,
+            "injections": [
+              {
+                "solution": "Blank solution (Diluent)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 5,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Bracketing (Standard solution)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
         },
         {
           "name": "Related substances",
@@ -756,13 +1072,14 @@
             {
               "section_name": "Buffer preparation",
               "solution_name": "Buffer",
-              "volume_per_batch_ml": null,
+              "volume_per_batch_ml": 1000.0,
               "preparation_text": "Weigh and transfer about 1.36 g of Potassium phosphate monobasic into 1000 mL Milli-Q-water. Adjust the pH 2.0 ± 0.02 with ortho-phosphoric acid.",
               "ingredients": [
                 {
                   "name": "Potassium phosphate monobasic",
                   "amount": 1.36,
-                  "unit": "g"
+                  "unit": "g",
+                  "tracking_no": "SP131"
                 }
               ],
               "glassware": []
@@ -792,7 +1109,8 @@
                 {
                   "name": "hydrochloric acid",
                   "amount": 8.5,
-                  "unit": "ml"
+                  "unit": "ml",
+                  "tracking_no": "LH001"
                 }
               ],
               "glassware": []
@@ -800,9 +1118,20 @@
             {
               "section_name": "Diluent preparation",
               "solution_name": "Diluent",
-              "volume_per_batch_ml": null,
+              "volume_per_batch_ml": 100.0,
               "preparation_text": "Mix 0.1 N hydrochloric acid and acetonitrile in the ratio of 700 : 300 v/v, respectively.",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "0.1 N hydrochloric acid",
+                  "amount": 70.0,
+                  "unit": "mL"
+                },
+                {
+                  "name": "acetonitrile",
+                  "amount": 30.0,
+                  "unit": "mL"
+                }
+              ],
               "glassware": []
             },
             {
@@ -883,14 +1212,54 @@
                   "size": "100 mL",
                   "count_per_batch": 1
                 }
+              ],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PTFE",
+                  "manufacturer": "Hyundai micro",
+                  "filter_type": "syringe"
+                }
               ]
             }
-          ]
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 0.7,
+            "run_time_min": 120.0,
+            "injections": [
+              {
+                "solution": "Blank solution (Diluent)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 3,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Blank solution (Diluent, 100 µL)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Bracketing (Standard solution)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
         }
       ]
     },
     {
       "id": "STM-CP032-T0.doc",
+      "doc_no": "STM-CP032-T0",
       "stm_file": "STM-CP032-T0.doc.docx",
       "product_name": "CTPH-D003",
       "strengths": [
@@ -923,7 +1292,8 @@
                 {
                   "name": "potassium phosphate monobasic",
                   "amount": 6.81,
-                  "unit": "g"
+                  "unit": "g",
+                  "tracking_no": "SP118, SP038"
                 }
               ],
               "glassware": []
@@ -931,13 +1301,14 @@
             {
               "section_name": "Buffer preparation",
               "solution_name": "Buffer",
-              "volume_per_batch_ml": null,
+              "volume_per_batch_ml": 1000.0,
               "preparation_text": "Weigh and transfer about 2.72 g of potassium phosphate monobasic into 1000 mL of purified water. Adjust the pH 2.0 ± 0.02 with ortho-phosphoric acid.",
               "ingredients": [
                 {
                   "name": "potassium phosphate monobasic",
                   "amount": 2.72,
-                  "unit": "g"
+                  "unit": "g",
+                  "tracking_no": "SP118, SP038"
                 }
               ],
               "glassware": []
@@ -1049,7 +1420,27 @@
               "volume_per_batch_ml": null,
               "preparation_text": "Transfer 900 mL dissolution medium into each dissolution bowl. Drop one tablet into each bow, run the dissolution as per the dissolution parameters.\nWithdraw sufficient volume of the sample aliquot from each bowl at 37 °C. Filter the sample solution through 0.45 µm PVDF syringe filter (Millipore), 0.45 µm Nylon syringe filter (Hyundai Micro) or 0.45 µm PTFE syringe filter (Hyundai Micro).\nDissolution Parameters\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nSystem Suitability\nThe relative standard deviation for peak areas of Sacubitril and Valsartan from the replicate standard injections should not be more than 2.0 %.\nTailing factor for Sacubitril and Valsartan peak obtained from standard chromatogram should not be more than 1.5.\nThe relative standard deviation for peak areas of Sacubitril and Valsartan from the replicate standard injections and bracketing should not be more than 2.0 %.\nDetailed Label Claim\nCalculation\n50 mg\n100 mg\n200 mg\nAS\t: Average peak area of Sacubitril or Valsartan peak in the standard solution\nAT\t: Peak area of Sacubitril or Valsartan in the sample solution\nWs\t: Weight of standard taken in mg as Sacubitril Valsartan Sodium.\nP\t: Potency of the standard as Sacubitril or Valsartan, on as is basis\nL\t: Label claim of the tablets in mg as Sacubitril or Valsartan\nNote: Continue testing through the three levels unless the results confirm at either S1 or S2.\n*Q: Quantity, the amount of dissolved active ingredient specified in the individual monograph, expressed as a percentage of the labeled content.\nChrmatogram",
               "ingredients": [],
-              "glassware": []
+              "glassware": [],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PVDF",
+                  "manufacturer": "Millipore",
+                  "filter_type": "syringe"
+                },
+                {
+                  "size_um": 0.45,
+                  "material": "Nylon",
+                  "manufacturer": "Hyundai Micro",
+                  "filter_type": "syringe"
+                },
+                {
+                  "size_um": 0.45,
+                  "material": "PTFE",
+                  "manufacturer": "Hyundai Micro",
+                  "filter_type": "syringe"
+                }
+              ]
             }
           ],
           "dissolution_conditions": {
@@ -1064,6 +1455,32 @@
               "100 mg": 200.0,
               "200 mg": 100.0
             }
+          },
+          "hplc_conditions": {
+            "flow_rate_ml_min": 1.0,
+            "run_time_min": 16.0,
+            "injections": [
+              {
+                "solution": "Blank solution (Dissolution medium)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 5,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Bracketing (Standard solution)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
           }
         },
         {
@@ -1076,13 +1493,14 @@
             {
               "section_name": "Buffer preparation",
               "solution_name": "Buffer",
-              "volume_per_batch_ml": null,
+              "volume_per_batch_ml": 1000.0,
               "preparation_text": "Weigh and transfer about 2.72 g of Potassium phosphate monobasic into 1000 mL of Milli-Q-water. Adjust the pH 2.0 ± 0.02 with ortho-phosphoric acid.",
               "ingredients": [
                 {
                   "name": "Potassium phosphate monobasic",
                   "amount": 2.72,
-                  "unit": "g"
+                  "unit": "g",
+                  "tracking_no": "SP118, SP038"
                 }
               ],
               "glassware": []
@@ -1106,9 +1524,20 @@
             {
               "section_name": "Diluent preparation",
               "solution_name": "Diluent",
-              "volume_per_batch_ml": null,
+              "volume_per_batch_ml": 100.0,
               "preparation_text": "Mix acetonitrile and Milli-Q water in the ratio of 500:500 v/v, respectively.",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "acetonitrile",
+                  "amount": 50.0,
+                  "unit": "mL"
+                },
+                {
+                  "name": "Milli-Q water",
+                  "amount": 50.0,
+                  "unit": "mL"
+                }
+              ],
               "glassware": []
             },
             {
@@ -1154,9 +1583,55 @@
                   "size": "250 mL",
                   "count_per_batch": 1
                 }
+              ],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PVDF",
+                  "manufacturer": "Millipore",
+                  "filter_type": "syringe"
+                },
+                {
+                  "size_um": 0.45,
+                  "material": "Nylon",
+                  "manufacturer": "Hyundai Micro",
+                  "filter_type": "syringe"
+                },
+                {
+                  "size_um": 0.45,
+                  "material": "PTFE",
+                  "manufacturer": "Hyundai Micro",
+                  "filter_type": "syringe"
+                }
               ]
             }
-          ]
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 1.0,
+            "run_time_min": 16.0,
+            "injections": [
+              {
+                "solution": "Blank solution (Diluent)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 5,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Bracketing (Standard solution)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
         },
         {
           "name": "Related substances",
@@ -1164,16 +1639,25 @@
             {
               "section_name": "Buffer preparation",
               "solution_name": "Buffer",
-              "volume_per_batch_ml": null,
+              "volume_per_batch_ml": 1000.0,
               "preparation_text": "Weigh and transfer about 2.72 g of Potassium phosphate monobasic into 1000 mL Milli-Q water. Adjust the pH 2.0 ± 0.02 with ortho-phosphoric acid. Filter through 0.45 µm RC filter.",
               "ingredients": [
                 {
                   "name": "Potassium phosphate monobasic",
                   "amount": 2.72,
-                  "unit": "g"
+                  "unit": "g",
+                  "tracking_no": "SP118, SP038"
                 }
               ],
-              "glassware": []
+              "glassware": [],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "RC",
+                  "manufacturer": "",
+                  "filter_type": "membrane"
+                }
+              ]
             },
             {
               "section_name": "Mobile phase A preparation",
@@ -1194,9 +1678,20 @@
             {
               "section_name": "Diluent preparation",
               "solution_name": "Diluent",
-              "volume_per_batch_ml": null,
+              "volume_per_batch_ml": 100.0,
               "preparation_text": "Mix acetonitrile and Milli-Q in the ratio of 500:500 v/v, respectively.",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "acetonitrile",
+                  "amount": 50.0,
+                  "unit": "mL"
+                },
+                {
+                  "name": "Milli-Q",
+                  "amount": 50.0,
+                  "unit": "mL"
+                }
+              ],
               "glassware": []
             },
             {
@@ -1213,7 +1708,8 @@
                 {
                   "name": "acetonitrile",
                   "amount": 15.0,
-                  "unit": "ml"
+                  "unit": "ml",
+                  "tracking_no": "LA037"
                 }
               ],
               "glassware": [
@@ -1246,6 +1742,14 @@
                   "type": "volumetric flask",
                   "size": "10 mL",
                   "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "Nylon",
+                  "manufacturer": "Millipore",
+                  "filter_type": "syringe"
                 }
               ]
             },
@@ -1297,9 +1801,53 @@
                   "size": "250 mL",
                   "count_per_batch": 1
                 }
+              ],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "Nylon",
+                  "manufacturer": "Millipore",
+                  "filter_type": "syringe"
+                }
               ]
             }
-          ]
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 1.0,
+            "run_time_min": 60.0,
+            "injections": [
+              {
+                "solution": "Blank solution (Diluent)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "System suitability solution",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 3,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Blank solution (Diluent)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Bracketing (Standard solution)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
         },
         {
           "name": "Water content by KF",

@@ -4,6 +4,7 @@
 let _products = [];
 let _selected = { productId: null, strength: null };
 let _calcResult = null;
+let _sortedSolutions = [];
 let _pollTimer = null;
 
 // ── 초기화 ────────────────────────────────────────────────
@@ -27,7 +28,7 @@ function renderProductSelect() {
   _products.forEach(p => {
     const opt = document.createElement('option');
     opt.value = p.id;
-    opt.textContent = p.name;
+    opt.textContent = p.code_no || p.name;
     sel.appendChild(opt);
   });
   if (_products.length === 0) {
@@ -53,7 +54,7 @@ function onProductChange() {
   const product = _products.find(p => p.id === productId);
   if (!product) return;
 
-  document.getElementById('hint-stm').textContent = product.stm_file;
+  document.getElementById('hint-stm').textContent = `${product.name}  (${product.stm_file})`;
 
   const selStr   = document.getElementById('sel-strength');
   const lblFixed = document.getElementById('lbl-strength-fixed');
@@ -167,65 +168,79 @@ function renderResult(data) {
     docNoEl.style.display = 'none';
   }
 
-  renderDissolutionMedium(data.dissolution_medium);
-  renderSolutionTable(data.solutions);
+  renderSolutionTable(data.solutions, data.dissolution_medium);
   renderGlasswareTable(data.glassware);
-  renderPrepDetails(data.solutions);
+  renderPipetteTable(data.pipettes || []);
+  renderFilterTable(data.filters || []);
 
   show('result-section');
   document.getElementById('result-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// ── 시험액 필요량 (용출) ─────────────────────────────────
-function renderDissolutionMedium(dm) {
-  if (!dm || !dm.volume_per_vessel_ml) {
-    hide('diss-medium-block');
-    return;
-  }
-
-  const sampleMl = dm.sample_medium_ml;
-  const stdMl    = dm.standard_medium_ml_once || 0;
-  const totalMl  = dm.total_medium_ml;
-
-  const parts = [`검액 ${fmt(sampleMl)} mL`];
-  if (stdMl > 0) parts.push(`표준액 ${fmt(stdMl)} mL`);
-  const breakdown = parts.join(' + ');
-
-  document.getElementById('diss-medium-content').innerHTML = `
-    <div class="diss-total-display">
-      <span class="diss-big-total">${fmt(totalMl)} mL</span>
-      <span class="diss-breakdown">(${breakdown})</span>
-    </div>
-  `;
-  show('diss-medium-block');
-}
+// 솔루션 표에서 제외할 이름 패턴
+const _HIDDEN_SOL = /^(standard\s+stock\s+solution|standard\s+solution|sample\s+solution)/i;
 
 // ── 용액 테이블 ───────────────────────────────────────────
-function renderSolutionTable(solutions) {
+function renderSolutionTable(solutions, dm) {
   const tbody = document.querySelector('#tbl-solutions tbody');
   tbody.innerHTML = '';
 
-  if (!solutions.length) {
+  const visible = solutions.filter(s => !_HIDDEN_SOL.test((s.solution_name || '').trim()));
+
+  if (!visible.length) {
     tbody.innerHTML = '<tr><td colspan="3" class="empty-msg">조제 정보 없음</td></tr>';
     return;
   }
 
-  solutions.forEach((s, idx) => {
+  // 원본 solutions를 visible로 교체해 이후 로직에 반영
+  solutions = visible;
+
+  const solutionPriority = name => {
+    const n = (name || '').toLowerCase();
+    if (/mobile\s*phase/i.test(n)) return 0;
+    if (/\bbuffer\b/i.test(n)) return 1;
+    if (/dissolution/i.test(n)) return 2;
+    return 3;
+  };
+
+  _sortedSolutions = [...solutions].sort((a, b) =>
+    solutionPriority(a.solution_name) - solutionPriority(b.solution_name)
+  );
+
+  _sortedSolutions.forEach((s, idx) => {
     const tr = document.createElement('tr');
-    const theoretical = s.theoretical_volume_ml != null
-      ? fmt(s.theoretical_volume_ml) + ' mL' : '-';
+
+    const isDissolutionMedium = /dissolution/i.test(s.solution_name);
+    let effectiveVolumeMl, breakdownHtml = '';
+
+    if (isDissolutionMedium && dm && dm.total_medium_ml) {
+      effectiveVolumeMl = dm.total_medium_ml;
+      const parts = [`검액 ${fmt(dm.sample_medium_ml)} mL`];
+      if (dm.standard_medium_ml_once > 0) parts.push(`표준액 ${fmt(dm.standard_medium_ml_once)} mL`);
+      breakdownHtml = `<div class="diss-breakdown-inline">(${parts.join(' + ')})</div>`;
+    } else {
+      effectiveVolumeMl = s.theoretical_volume_ml;
+    }
+
+    const theoretical = effectiveVolumeMl != null
+      ? fmt(effectiveVolumeMl) + ' mL' : '-';
+    const placeholderVal = effectiveVolumeMl != null ? String(effectiveVolumeMl) : '';
 
     const inputId   = `prep-input-${idx}`;
     const reagentId = `reagent-out-${idx}`;
 
     tr.innerHTML = `
       <td>${esc(s.solution_name)}</td>
-      <td class="num bold">${theoretical}</td>
+      <td class="num bold">
+        ${theoretical}
+        ${breakdownHtml}
+      </td>
       <td>
         <div class="prep-input-cell">
           <input type="number" id="${inputId}" min="0" step="1"
-                 placeholder="직접 입력 (mL)"
+                 placeholder="${placeholderVal}"
                  data-idx="${idx}"
+                 data-theoretical="${placeholderVal}"
                  oninput="onPrepAmountInput(this)"
                  style="width:110px" />
           <span class="unit">mL</span>
@@ -235,24 +250,30 @@ function renderSolutionTable(solutions) {
     `;
     tbody.appendChild(tr);
 
-    // 이론량 기준으로 시약 자동 계산 표시
-    const outEl = document.getElementById(reagentId);
-    _renderReagents(outEl, s, s.theoretical_volume_ml);
+    const outEl = tr.querySelector('.reagent-list');
+    if (outEl) _renderReagents(outEl, s, effectiveVolumeMl);
   });
 }
 
 function onPrepAmountInput(input) {
-  const idx   = parseInt(input.dataset.idx);
-  const prepMl = parseFloat(input.value);
-  const sol   = _calcResult.solutions[idx];
-  const outEl = document.getElementById(`reagent-out-${idx}`);
+  const idx          = parseInt(input.dataset.idx);
+  const theoreticalMl = parseFloat(input.dataset.theoretical);
+  const prepMl       = parseFloat(input.value);
+  const sol          = _sortedSolutions[idx];
+  const outEl        = document.getElementById(`reagent-out-${idx}`);
 
-  // 입력이 비어있으면 이론량으로 복귀
-  const refMl = (prepMl > 0) ? prepMl : sol.theoretical_volume_ml;
+  if (input.value.trim() !== '') {
+    input.classList.add('prep-input-modified');
+  } else {
+    input.classList.remove('prep-input-modified');
+  }
+
+  const refMl = (prepMl > 0) ? prepMl : theoreticalMl;
   _renderReagents(outEl, sol, refMl);
 }
 
 function _renderReagents(outEl, sol, volumeMl) {
+  if (!outEl) return;
   if (!volumeMl || volumeMl <= 0 || !sol.volume_per_batch_ml) {
     outEl.innerHTML = sol.ingredients && sol.ingredients.length
       ? '<span class="reagent-placeholder">조제량 정보 없음</span>'
@@ -304,26 +325,62 @@ function renderGlasswareTable(glassware) {
   });
 }
 
-// ── 조제 절차 ─────────────────────────────────────────────
-function renderPrepDetails(solutions) {
-  const container = document.getElementById('prep-details');
-  container.innerHTML = '';
-  solutions.forEach(s => {
-    if (!s.preparation_text) return;
-    const card = document.createElement('div');
-    card.className = 'prep-card';
-    card.innerHTML = `
-      <div class="prep-card-header">
-        <span class="badge">${esc(s.test_item)}</span>
-        <strong>${esc(s.solution_name)}</strong>
-      </div>
-      <div class="prep-card-body">${esc(s.preparation_text).replace(/\n/g, '<br>')}</div>
-    `;
-    container.appendChild(card);
-  });
-  if (!container.children.length) {
-    container.innerHTML = '<p style="color:#94a3b8;font-size:13px">조제 절차 정보 없음</p>';
+
+// ── 피펫/메스 실린더 테이블 ──────────────────────────────
+function renderPipetteTable(pipettes) {
+  const block = document.getElementById('block-pipettes');
+  const tbody = document.querySelector('#tbl-pipettes tbody');
+  tbody.innerHTML = '';
+
+  if (!pipettes.length) {
+    block.style.display = 'none';
+    return;
   }
+
+  block.style.display = '';
+  pipettes.forEach(p => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${esc(p.type)}</td>
+      <td class="num bold">${p.volume_ml} mL</td>
+      <td class="num">1개</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// ── 필터 테이블 ──────────────────────────────────────────
+function renderFilterTable(filters) {
+  const block = document.getElementById('block-filters');
+  const tbody = document.querySelector('#tbl-filters tbody');
+  tbody.innerHTML = '';
+
+  if (!filters.length) {
+    block.style.display = 'none';
+    return;
+  }
+
+  block.style.display = '';
+
+  const sorted = [...filters].sort((a, b) =>
+    (a.material + a.manufacturer).localeCompare(b.material + b.manufacturer)
+  );
+
+  sorted.forEach(f => {
+    const kind = f.filter_type === 'membrane' ? 'Membrane filter' : 'Syringe filter';
+    const size = f.size_um ? `${f.size_um} µm` : '-';
+    const mat  = f.material || '-';
+    const mfr  = f.manufacturer || '-';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${esc(kind)} <span class="th-hint">${esc(size)}</span></td>
+      <td>${esc(mat)}</td>
+      <td>${esc(mfr)}</td>
+      <td class="num">${f.count_per_batch}개</td>
+      <td class="num bold">${f.total_count}개</td>
+    `;
+    tbody.appendChild(tr);
+  });
 }
 
 // ── 관리 패널 ────────────────────────────────────────────
