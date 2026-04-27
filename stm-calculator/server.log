@@ -1,0 +1,15 @@
+Loaded 4 products from knowledge base.
+INFO:     127.0.0.1:59146 - "GET /api/products HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55474 - "POST /api/calculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59330 - "POST /api/calculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59300 - "POST /api/calculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65138 - "GET / HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:65138 - "GET /app.js?v=17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65138 - "GET /api/products HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50950 - "POST /api/calculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52830 - "POST /api/calculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61400 - "POST /api/calculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59510 - "POST /api/calculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59141 - "POST /api/calculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62071 - "POST /api/calculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50266 - "POST /api/calculate HTTP/1.1" 200 OK

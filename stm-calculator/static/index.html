@@ -44,18 +44,12 @@
           <label>② 함량</label>
           <select id="sel-strength" style="display:none"></select>
           <span id="lbl-strength-fixed" style="display:none; font-weight:600; color:#1e40af; padding:4px 8px; background:#eff6ff; border-radius:6px; border:1px solid #bfdbfe;"></span>
-        </div>
-        <div class="form-group" id="row-batches" style="display:none">
-          <label>③ 배치 수</label>
-          <div class="batch-row">
-            <input type="number" id="inp-batches" value="1" min="1" max="100" style="width:70px" />
-            <span class="unit">배치</span>
-          </div>
+          <div id="strength-multi" style="display:none"></div>
         </div>
       </div>
 
       <div class="form-group" id="row-tests" style="display:none">
-        <label>④ 시험항목 <span class="hint">(복수 선택 가능)</span></label>
+        <label>③ 시험항목 <span class="hint">(복수 선택 · 항목별 배치 수 입력)</span></label>
         <div id="test-checkboxes" class="checkbox-group"></div>
       </div>
 
@@ -101,13 +95,14 @@
       <!-- 초자 목록 -->
       <div class="result-block">
         <h3 class="block-title">초자 목록</h3>
+        <div id="gw-summary"></div>
         <table id="tbl-glassware">
           <thead>
             <tr>
+              <th>용액 조제</th>
               <th>초자명</th>
               <th>규격</th>
-              <th>1배치 수량</th>
-              <th>총 수량 (배치 수 기준)</th>
+              <th>총 수량</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -130,16 +125,37 @@
         </table>
       </div>
 
+      <!-- 표준품 목록 -->
+      <div class="result-block" id="block-standards" style="display:none">
+        <h3 class="block-title">표준품 목록</h3>
+        <table id="tbl-standards">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Consumable Type</th>
+              <th>Location</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <!-- 컬럼 목록 -->
+      <div class="result-block" id="block-columns" style="display:none">
+        <h3 class="block-title">컬럼 목록</h3>
+        <div id="col-groups"></div>
+      </div>
+
       <!-- 필터 목록 -->
       <div class="result-block" id="block-filters" style="display:none">
-        <h3 class="block-title">필터 목록</h3>
+        <h3 class="block-title">필터 및 원심분리 팔콘 목록</h3>
         <table id="tbl-filters">
           <thead>
             <tr>
+              <th>용액 조제</th>
               <th>종류</th>
               <th>재질</th>
               <th>제조처</th>
-              <th>1배치 수량</th>
               <th>총 수량</th>
             </tr>
           </thead>
@@ -150,6 +166,6 @@
     </section>
   </main>
 
-  <script src="/app.js"></script>
+  <script src="/app.js?v=17"></script>
 </body>
 </html>

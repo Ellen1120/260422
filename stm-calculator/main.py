@@ -15,7 +15,9 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
 from parser import build_knowledge_base, load_knowledge_base, save_knowledge_base
-from calculator import calculate_resources, scale_ingredients
+from calculator import calculate_resources, scale_ingredients, merge_all_results
+from standards_db import lookup as lookup_standards
+from column_db import lookup as lookup_columns
 
 CONFIG_PATH = Path(__file__).parent / "data" / "config.json"
 
@@ -70,10 +72,47 @@ _state = {
 _state_lock = threading.Lock()
 
 
+def _needs_reparse() -> bool:
+    """STM 폴더에 knowledge_base.json보다 새로운 .docx 파일이 있으면 True."""
+    from parser import STM_FOLDER, KB_PATH
+    if not KB_PATH.exists():
+        return True
+    kb_mtime = KB_PATH.stat().st_mtime
+    for f in STM_FOLDER.glob("*.docx"):
+        if not f.name.startswith("~$") and f.stat().st_mtime > kb_mtime:
+            return True
+    return False
+
+
 @app.on_event("startup")
 async def startup():
     _state["products"] = load_knowledge_base()
     print(f"Loaded {len(_state['products'])} products from knowledge base.")
+    if _needs_reparse():
+        print("STM 폴더에 변경 감지 → 자동 파싱 시작...")
+        threading.Thread(target=_auto_reparse, daemon=True).start()
+
+
+def _auto_reparse():
+    def _log(msg: str):
+        print(msg)
+        _state["parse_log"].append(msg)
+    with _state_lock:
+        _state["parsing"] = True
+        _state["parse_error"] = None
+        _state["parse_log"] = []
+    try:
+        products = build_knowledge_base(progress_callback=_log)
+        with _state_lock:
+            _state["products"] = products
+        _log(f"완료: {len(products)}개 제품 파싱됨")
+    except Exception as e:
+        with _state_lock:
+            _state["parse_error"] = str(e)
+        _log(f"오류: {e}")
+    finally:
+        with _state_lock:
+            _state["parsing"] = False
 
 
 # ── 제품 목록 ─────────────────────────────────────────────
@@ -107,11 +146,19 @@ def get_product(product_id: str):
 
 
 # ── 계산 ─────────────────────────────────────────────────
+class TestItemBatch(BaseModel):
+    name: str
+    batch_count: int = Field(ge=1, le=100)
+
+
+class StrengthConfig(BaseModel):
+    strength: str
+    test_items: list[TestItemBatch]
+
+
 class CalculateRequest(BaseModel):
     product_id: str
-    strength: str
-    test_items: list[str]
-    batch_count: int = Field(ge=1, le=100)
+    strength_configs: list[StrengthConfig]
 
 
 @app.post("/api/calculate")
@@ -119,9 +166,30 @@ def calculate(req: CalculateRequest):
     product = next((p for p in _state["products"] if p["id"] == req.product_id), None)
     if not product:
         raise HTTPException(404, "Product not found")
-    if not req.test_items:
-        raise HTTPException(400, "시험항목을 하나 이상 선택하세요")
-    return calculate_resources(product, req.strength, req.test_items, req.batch_count)
+    if not req.strength_configs:
+        raise HTTPException(400, "함량 및 시험항목을 선택하세요")
+
+    results = [
+        calculate_resources(product, sc.strength, [tb.name], tb.batch_count)
+        for sc in req.strength_configs
+        for tb in sc.test_items
+    ]
+    strength_configs_dict = [
+        {"strength": sc.strength, "test_items": [{"name": tb.name, "batch_count": tb.batch_count} for tb in sc.test_items]}
+        for sc in req.strength_configs
+    ]
+    merged = merge_all_results(results, strength_configs_dict)
+    merged["standards"] = lookup_standards(merged.get("standard_names", []))
+
+    selected_test_names = {tb.name for sc in req.strength_configs for tb in sc.test_items}
+    col_specs = list({
+        item.get("hplc_conditions", {}).get("column_spec")
+        for item in product.get("test_items", [])
+        if item.get("name") in selected_test_names
+        and item.get("hplc_conditions", {}).get("column_spec")
+    })
+    merged["columns"] = lookup_columns(col_specs)
+    return merged
 
 
 # ── 시약 스케일 계산 ──────────────────────────────────────

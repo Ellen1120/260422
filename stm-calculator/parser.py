@@ -16,8 +16,10 @@ _W_T  = f'{{{_W_NS}}}t'
 _W_TR = f'{{{_W_NS}}}tr'
 _W_TC = f'{{{_W_NS}}}tc'
 
-STM_FOLDER = Path(__file__).parent.parent / "STM"
-DATA_FOLDER = Path(__file__).parent / "data"
+BASE_DIR = Path(__file__).resolve().parent
+STM_DIR = BASE_DIR.parent / "STM"
+STM_FOLDER = STM_DIR
+DATA_FOLDER = BASE_DIR / "data"
 KB_PATH = DATA_FOLDER / "knowledge_base.json"
 
 # ── 정규식 상수 ───────────────────────────────────────────
@@ -40,6 +42,39 @@ _RE_TEST_ITEM = re.compile(
     re.IGNORECASE,
 )
 
+# 한글 시험항목 이름 → 영문 정규 이름 매핑
+_KO_TEST_ITEM_MAP: list[tuple[re.Pattern, str]] = [
+    (re.compile(r'^성상\s*$'), 'Description'),
+    (re.compile(r'^확인시험\s*(?:\(HPLC\))?\s*$'), 'Identification'),
+    (re.compile(r'^용출\s*$'), 'Dissolution'),
+    (re.compile(r'^함량\s*$'), 'Assay'),
+    (re.compile(r'^제제\s*균일성\s*(?:\([^)]+\))?\s*$'), 'Uniformity of dosage units (Content Uniformity)'),
+    (re.compile(r'^유연물질\s*(?:\(방법\s*[IVXivx가-힣]+\))?\s*$'), 'Related substances'),
+    (re.compile(r'^수분\s*(?:함량|측정)?\s*(?:\(KF\))?\s*$'), 'Water content by KF'),
+    (re.compile(r'^결정형\s*(?:\(PXRD\))?\s*$'), 'Polymorphism by PXRD'),
+    (re.compile(r'^미생물\s*한도시험\s*$'), 'Microbial Enumeration Test'),
+]
+
+
+def _normalize_ko_strength(line: str) -> str | None:
+    """'26 밀리그램/5 밀리그램' → '26 mg/5 mg', 한글 함량이 아니면 None."""
+    if not _RE_KO_STRENGTH_LINE.match(line):
+        return None
+    nums = re.findall(r'\d+(?:\.\d+)?', line)
+    return "/".join(f"{n} mg" for n in nums)
+
+
+def _get_canonical_test_item_name(line: str) -> str | None:
+    """영문 또는 한글 시험항목 이름이면 정규 영문명 반환, 아니면 None."""
+    stripped = line.strip()
+    if _RE_TEST_ITEM.match(stripped) and len(stripped.split()) <= 8:
+        return stripped
+    for pat, name in _KO_TEST_ITEM_MAP:
+        if pat.match(stripped):
+            return name
+    return None
+
+
 # 조제 헤딩: "preparation" 단어를 포함하고 짧은 줄 (내용줄 제외)
 _RE_PREP_CONTENT_START = re.compile(
     r"^(?:Accurately\s+)?(?:Weigh|Transfer|Add|Pipette|Dissolve"
@@ -59,6 +94,10 @@ _RE_STRENGTH_LINE = re.compile(
 _RE_STRENGTH_PAREN = re.compile(
     r"\bpreparation\s*\(\s*for\s+(.+?)\s*\)",
     re.IGNORECASE,
+)
+# 한글 함량 표기: "26 밀리그램/5 밀리그램"
+_RE_KO_STRENGTH_LINE = re.compile(
+    r"^\s*\d+(?:\.\d+)?\s*밀리그램(?:\s*/\s*\d+(?:\.\d+)?\s*밀리그램)*\s*$"
 )
 
 # 시약 추출 패턴 (순서 중요: 구체적인 것 먼저)
@@ -105,11 +144,56 @@ _RE_RATIO = re.compile(
     re.IGNORECASE,
 )
 
-# 초자 패턴
+# 한글 시약 추출 패턴
+_KO_INGREDIENT_PATTERNS: list[re.Pattern] = [
+    # "아질사르탄 약 52 mg을 달아" / "Ammonium phosphate monobasic 약 2.0 g 달아"
+    # "Potassium phosphate monobasic 6.81g과" (약 없음, 과 terminator)
+    re.compile(
+        r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]+?)\s+(?:약\s*)?(\d+(?:\.\d+)?)\s*(mg|g)\s*(?:[을를과]|달아)',
+        re.IGNORECASE,
+    ),
+    # "아질사르탄 표준원액 5 mL 및" / "암로디핀베실산염 표준원액 3 mL을"
+    re.compile(
+        r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]+?)\s+(\d+(?:\.\d+)?)\s*(mL)\s*(?:[을를]|및|까지)',
+        re.IGNORECASE,
+    ),
+]
+
+# 한글 비율 혼합 패턴 (2성분: "A와 B를 X:Y v/v의 비율로 혼합")
+_RE_RATIO_KO2 = re.compile(
+    r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s*(?:와|과)\s*'
+    r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s*(?:을|를)?\s*각각\s*'
+    r'(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)',
+)
+
+# 초자 패턴 (영문)
 _RE_GLASSWARE = re.compile(
     r"(\d+(?:\.\d+)?)\s*mL\s+(?:of\s+)?(?:a\s+)?"
     r"(volumetric\s+flask|graduated\s+cylinder|measuring\s+cylinder"
     r"|pipette|burette|beaker|vial)",
+    re.IGNORECASE,
+)
+# 초자 패턴 (한글)
+_RE_GLASSWARE_KO = re.compile(
+    r"(\d+(?:\.\d+)?)\s*mL\s+(용량플라스크|메스실린더|메스플라스크|피펫|비이커|바이알)",
+)
+
+# 원심분리 팔콘 검출
+_RE_CENTRIFUGE = re.compile(r"\bcentrifuge\b", re.IGNORECASE)
+
+# 시린지 필터: 재질 명시형 (0.45 µm PVDF (Millipore))
+_RE_FILTER_MENTION = re.compile(
+    r"(\d+(?:\.\d+)?)\s*[uμµ]\s*m\s+(PVDF|Nylon|PTFE|PES|MCE|Cellulose)\s*(?:\(([^)]+)\))?",
+    re.IGNORECASE,
+)
+# 시린지 필터: 재질 미명시형 (0.45µm syringe filter)
+_RE_GENERIC_SYRINGE_FILTER = re.compile(
+    r"(\d+(?:\.\d+)?)\s*[uμµ]\s*m\s+syringe\s+filter",
+    re.IGNORECASE,
+)
+# 시린지 필터: 한글 표현 (0.45 µm PTFE 시린지 필터)
+_RE_FILTER_KO = re.compile(
+    r"(\d+(?:\.\d+)?)\s*[uμµ]\s*m\s+(PVDF|Nylon|PTFE|PES|MCE)?\s*시린지\s*필터",
     re.IGNORECASE,
 )
 
@@ -122,11 +206,15 @@ _RE_VOLUMETRIC_FLASK_SIZE = re.compile(
 # 최종 볼륨 추출 (우선순위 순)
 _RE_VOLUME_PATTERNS: list[re.Pattern] = [
     re.compile(r"dilute\s+to\s+(\d+(?:\.\d+)?)\s*mL", re.IGNORECASE),
-    re.compile(r"with\s+\w[\w\s-]*?\s+to\s+(\d+(?:\.\d+)?)\s*mL", re.IGNORECASE),  # "with water to 1000 mL"
+    re.compile(r"with\s+\w[\w\s-]*?\s+to\s+(\d+(?:\.\d+)?)\s*mL", re.IGNORECASE),
     re.compile(r"into\s+(?:a\s+)?(\d+(?:\.\d+)?)\s*mL\s+(?:of\s+)?volumetric\s+flask", re.IGNORECASE),
     re.compile(r"(\d+(?:\.\d+)?)\s*mL\s+volumetric\s+flask", re.IGNORECASE),
+    re.compile(r"into\s+(\d+(?:\.\d+)?)\s*mL\s+(?:of\s+)?(?:Milli-Q[-\s]?water|purified\s+water)", re.IGNORECASE),
     re.compile(r"in\s+(\d+(?:\.\d+)?)\s*mL\s+of\s+(?:purified|Milli-Q|water)", re.IGNORECASE),
     re.compile(r"in\s+(\d+(?:\.\d+)?)\s*mL\s+of\s+\w", re.IGNORECASE),
+    # 한글: "X mL 용량플라스크에 넣고 표선" or "물 X mL에 넣고"
+    re.compile(r"(\d+(?:\.\d+)?)\s*mL\s+용량플라스크"),
+    re.compile(r"물\s+(\d+(?:\.\d+)?)\s*mL에\s+(?:넣|녹|옮)"),
 ]
 
 # 제품명 추출
@@ -144,7 +232,11 @@ def _is_korean(text: str) -> bool:
 
 
 def _is_prep_heading(line: str) -> bool:
-    """조제 섹션 헤딩 여부 판별."""
+    """조제 섹션 헤딩 여부 판별 (영문/한글 모두 지원)."""
+    # 한글: "XX 조제" 패턴 (짧은 헤딩)
+    if re.match(r'^[가-힣A-Za-z0-9\s()\-/]+\s*조제\s*$', line) and len(line) <= 40:
+        return True
+    # 영문: 기존 로직
     if not re.search(r"\bpreparation\b", line, re.IGNORECASE):
         return False
     if len(line) > 120:
@@ -157,7 +249,12 @@ def _is_prep_heading(line: str) -> bool:
 
 
 def _derive_solution_name(heading: str) -> str:
-    """'Buffer preparation' → 'Buffer'"""
+    """'Buffer preparation' → 'Buffer', '완충액 조제' → '완충액'"""
+    # 한글 "조제" 제거
+    ko = re.sub(r'\s*조제\s*$', '', heading).strip()
+    if ko != heading.strip():
+        return ko
+    # 영문 "preparation" 제거
     name = re.sub(r"\s+preparation\b", "", heading, flags=re.IGNORECASE).strip()
     return name.strip()
 
@@ -165,12 +262,16 @@ def _derive_solution_name(heading: str) -> str:
 # ── 핵심 추출 함수 ────────────────────────────────────────
 
 def _extract_volume(heading: str, lines: list[str]) -> float | None:
-    """준비 텍스트에서 최종 조제 볼륨(mL) 추출."""
+    """준비 텍스트에서 최종 조제 볼륨(mL) 추출. 명시적 볼륨 없으면 비율 합산으로 대체."""
     combined = heading + " " + " ".join(lines)
     for pat in _RE_VOLUME_PATTERNS:
         m = pat.search(combined)
         if m:
             return float(m.group(1))
+    # 비율 혼합이고 총량 미지정인 경우 비율 합산을 기본 볼륨으로 사용
+    m = _RE_RATIO.search(combined)
+    if m:
+        return float(m.group(3)) + float(m.group(4))
     return None
 
 
@@ -197,13 +298,30 @@ def _extract_ingredients(text: str, final_volume_ml: float | None) -> list[dict]
             seen.add(key)
             results.append({"name": name, "amount": round(amount, 4), "unit": unit.lower()})
 
-    # 패턴 기반 추출
+    # 패턴 기반 추출 (영문)
     for _tag, pat in _INGREDIENT_PATTERNS:
         for m in pat.finditer(text):
             _add(m.group(3), float(m.group(1)), m.group(2))
 
-    # 비율 혼합 (Mix A and B in ratio X:Y)
+    # 한글 시약 추출
+    for pat in _KO_INGREDIENT_PATTERNS:
+        for m in pat.finditer(text):
+            name_raw = m.group(1).strip().rstrip(',').strip()
+            _add(name_raw, float(m.group(2)), m.group(3))
+
+    # 비율 혼합 영문 (Mix A and B in ratio X:Y)
     for m in _RE_RATIO.finditer(text):
+        sub_a = m.group(1).strip()
+        sub_b = m.group(2).strip()
+        ratio_a = float(m.group(3))
+        ratio_b = float(m.group(4))
+        total = ratio_a + ratio_b
+        if final_volume_ml and total > 0:
+            _add(sub_a, round(ratio_a / total * final_volume_ml, 1), "mL")
+            _add(sub_b, round(ratio_b / total * final_volume_ml, 1), "mL")
+
+    # 비율 혼합 한글 2성분 (A와 B를 각각 X:Y)
+    for m in _RE_RATIO_KO2.finditer(text):
         sub_a = m.group(1).strip()
         sub_b = m.group(2).strip()
         ratio_a = float(m.group(3))
@@ -216,17 +334,80 @@ def _extract_ingredients(text: str, final_volume_ml: float | None) -> list[dict]
     return results
 
 
+_KO_GLASSWARE_MAP = {
+    '용량플라스크': 'volumetric flask',
+    '메스실린더': 'graduated cylinder',
+    '메스플라스크': 'volumetric flask',
+    '피펫': 'pipette',
+    '비이커': 'beaker',
+    '바이알': 'vial',
+}
+
 def _extract_glassware(text: str) -> list[dict]:
-    """준비 절차 텍스트에서 초자 목록 추출."""
-    results: list[dict] = []
-    seen: set[tuple] = set()
+    """준비 절차 텍스트에서 초자 목록 추출. 동일 규격이 여러 번 나오면 count_per_batch 합산."""
+    count_map: dict[tuple, int] = {}
     for m in _RE_GLASSWARE.finditer(text):
         size = m.group(1)
         gtype = re.sub(r"\s+", " ", m.group(2).lower().strip())
         key = (gtype, size)
-        if key not in seen:
-            seen.add(key)
-            results.append({"type": gtype, "size": f"{size} mL", "count_per_batch": 1})
+        count_map[key] = count_map.get(key, 0) + 1
+    for m in _RE_GLASSWARE_KO.finditer(text):
+        size = m.group(1)
+        gtype = _KO_GLASSWARE_MAP.get(m.group(2), m.group(2))
+        key = (gtype, size)
+        count_map[key] = count_map.get(key, 0) + 1
+    return [
+        {"type": gtype, "size": f"{size} mL", "count_per_batch": cnt}
+        for (gtype, size), cnt in count_map.items()
+    ]
+
+
+def _extract_filters_from_text(text: str) -> list[dict]:
+    """조제 텍스트에서 시린지 필터 추출 - 줄별로 처리해 복수 종류를 모두 포함."""
+    filter_lines = [
+        line for line in text.splitlines()
+        if re.search(r"filter\s+through|syringe\s+filter|시린지\s*필터", line, re.IGNORECASE)
+    ]
+    if not filter_lines:
+        return []
+
+    results: list[dict] = []
+    seen: set[tuple] = set()
+
+    for line in filter_lines:
+        specific_found = False
+        for m in _RE_FILTER_MENTION.finditer(line):
+            size = float(m.group(1))
+            material = m.group(2).upper()
+            mfr = m.group(3).strip() if m.group(3) else ""
+            key = (size, material, mfr)
+            if key not in seen:
+                seen.add(key)
+                results.append({
+                    "size_um": size, "material": material,
+                    "manufacturer": mfr, "filter_type": "syringe", "count_per_batch": 1,
+                })
+            specific_found = True
+        if not specific_found:
+            for m in _RE_GENERIC_SYRINGE_FILTER.finditer(line):
+                size = float(m.group(1))
+                key = (size, "", "")
+                if key not in seen:
+                    seen.add(key)
+                    results.append({
+                        "size_um": size, "material": "", "manufacturer": "",
+                        "filter_type": "syringe", "count_per_batch": 1,
+                    })
+            for m in _RE_FILTER_KO.finditer(line):
+                size = float(m.group(1))
+                material = (m.group(2) or "").upper()
+                key = (size, material, "")
+                if key not in seen:
+                    seen.add(key)
+                    results.append({
+                        "size_um": size, "material": material, "manufacturer": "",
+                        "filter_type": "syringe", "count_per_batch": 1,
+                    })
     return results
 
 
@@ -279,6 +460,12 @@ def _extract_strengths(paragraphs: list[str]) -> list[str]:
         if m2:
             _add(m2.group(1))
 
+    # 한글 함량: "26 밀리그램/5 밀리그램"
+    for line in paragraphs:
+        ko_str = _normalize_ko_strength(line)
+        if ko_str:
+            _add(ko_str)
+
     # 단일 함량 문서: "Standard solution preparation (for 50 mg)" 패턴 없을 때
     # Label claim 수치로부터 추출 시도 (예: "20 mg Vonoprazan" 또는 section header)
     if not strengths:
@@ -296,19 +483,36 @@ def _extract_strengths(paragraphs: list[str]) -> list[str]:
 
 # ── 섹션 파싱 ────────────────────────────────────────────
 
+def _parent_section_name(name: str, current_name: str | None) -> str | None:
+    """
+    name이 current_name의 하위 항목이면 current_name 반환, 아니면 None.
+    예) 'Identification by HPLC' → current 'Identification' → 'Identification'
+    """
+    if current_name and name.lower().startswith(current_name.lower() + " "):
+        return current_name
+    return None
+
+
 def _parse_sections(english_lines: list[str]) -> list[dict]:
     """
     영문 줄 목록을 시험항목 섹션으로 그룹화.
+    하위 항목(e.g. 'Identification by HPLC')은 상위 항목('Identification')에 병합.
     반환: [{name, lines}]
     """
     sections: list[dict] = []
     current: dict | None = None
 
     for line in english_lines:
-        if _RE_TEST_ITEM.match(line) and len(line.split()) <= 8:
-            if current:
-                sections.append(current)
-            current = {"name": line.strip(), "lines": []}
+        canonical = _get_canonical_test_item_name(line)
+        if canonical:
+            parent = _parent_section_name(canonical, current["name"] if current else None)
+            # 같은 정규명 또는 하위 항목이면 현재 섹션에 병합
+            if parent or (current and canonical == current["name"]):
+                current["lines"].append(line)
+            else:
+                if current:
+                    sections.append(current)
+                current = {"name": canonical, "lines": []}
         elif current is not None:
             current["lines"].append(line)
 
@@ -328,19 +532,55 @@ def _parse_preparations(section_lines: list[str]) -> list[dict]:
 
     def _flush() -> None:
         nonlocal current_heading, current_lines
-        if current_heading:
-            prep_text = "\n".join(l for l in current_lines if l.strip())
-            vol = _extract_volume(current_heading, current_lines)
+        if not current_heading:
+            return
+
+        sol_base = _derive_solution_name(current_heading)
+
+        # current_lines 원소가 여러 줄을 포함할 수 있으므로 먼저 평탄화
+        full_text = "\n".join(l for l in current_lines if l.strip())
+        text_lines = full_text.splitlines()
+
+        # 함량 서브섹션 분리: "30 mg/25 mg" 또는 "26 밀리그램/5 밀리그램" 줄이 있으면 각 함량별 prep 생성
+        str_positions: list[tuple[int, str]] = []
+        for i, l in enumerate(text_lines):
+            m_en = _RE_STRENGTH_LINE.match(l)
+            if m_en:
+                str_positions.append((i, m_en.group(1).strip()))
+                continue
+            ko_str = _normalize_ko_strength(l)
+            if ko_str:
+                str_positions.append((i, ko_str))
+
+        def _make_block(sol_name: str, sub_lines: list[str]) -> None:
+            prep_text = "\n".join(l for l in sub_lines if l.strip())
+            vol = _extract_volume(current_heading, sub_lines)
             ingredients = _extract_ingredients(prep_text, vol)
             glassware = _extract_glassware(prep_text)
+            filters_list = _extract_filters_from_text(prep_text)
+            if _RE_CENTRIFUGE.search(prep_text):
+                filters_list.append({
+                    "size_um": None, "material": None, "manufacturer": None,
+                    "filter_type": "centrifuge", "count_per_batch": 1,
+                })
             blocks.append({
                 "section_name": current_heading,
-                "solution_name": _derive_solution_name(current_heading),
+                "solution_name": sol_name,
                 "volume_per_batch_ml": vol,
                 "preparation_text": prep_text,
                 "ingredients": ingredients,
                 "glassware": glassware,
+                "filters": filters_list,
             })
+
+        # 첫 번째 줄이 함량 헤더일 때만 분할 (Calculation 섹션 내 함량 참조 줄 오인식 방지)
+        if str_positions and str_positions[0][0] == 0:
+            for k, (start_idx, str_label) in enumerate(str_positions):
+                end_idx = str_positions[k + 1][0] if k + 1 < len(str_positions) else len(text_lines)
+                _make_block(f"{sol_base} (for {str_label})", text_lines[start_idx + 1:end_idx])
+        else:
+            _make_block(sol_base, text_lines)
+
         current_heading = None
         current_lines = []
 
@@ -390,8 +630,9 @@ def _extract_hplc_conditions_per_section(doc) -> dict[str, dict]:
 
     for elem_type, elem_data in _iter_body_elements(doc):
         if elem_type == 'para':
-            if _RE_TEST_ITEM.match(elem_data) and len(elem_data.split()) <= 8:
-                current_section = elem_data.strip()
+            canonical = _get_canonical_test_item_name(elem_data)
+            if canonical:
+                current_section = canonical
                 pending_hplc = None
             continue
 
@@ -400,9 +641,10 @@ def _extract_hplc_conditions_per_section(doc) -> dict[str, dict]:
             continue
 
         row_map = {r[0]: r[1] for r in rows if len(r) >= 2}
-        flow_key = next((k for k in row_map if re.match(r'^flow\s*rate', k, re.IGNORECASE)), None)
-        run_key  = next((k for k in row_map if re.match(r'^run\s*time', k, re.IGNORECASE)), None)
+        flow_key = next((k for k in row_map if re.match(r'^(?:flow\s*rate|유량)', k, re.IGNORECASE)), None)
+        run_key  = next((k for k in row_map if re.match(r'^(?:run\s*time|분석\s*시간)', k, re.IGNORECASE)), None)
 
+        col_key = next((k for k in row_map if re.match(r'^(?:column|칼럼)\s*$', k, re.IGNORECASE)), None)
         if flow_key and run_key and current_section not in result:
             fm = re.search(r'(\d+(?:\.\d+)?)', row_map[flow_key])
             rm = re.search(r'(\d+(?:\.\d+)?)', row_map[run_key])
@@ -410,6 +652,7 @@ def _extract_hplc_conditions_per_section(doc) -> dict[str, dict]:
                 pending_hplc = {
                     "flow_rate_ml_min": float(fm.group(1)),
                     "run_time_min":     float(rm.group(1)),
+                    "column_spec": row_map[col_key].strip() if col_key else None,
                     "injections": [],
                 }
             continue
@@ -430,7 +673,7 @@ def _extract_hplc_conditions_per_section(doc) -> dict[str, dict]:
                     pending_hplc["injections"].append({
                         "solution":          row[0].strip(),
                         "count":             count,
-                        "scales_with_batch": bool(re.search(r'\bsample\b', row[0], re.IGNORECASE)),
+                        "scales_with_batch": bool(re.search(r'\bsample\b|검액', row[0], re.IGNORECASE)),
                     })
                 result[current_section] = pending_hplc
                 pending_hplc = None
@@ -456,11 +699,17 @@ def _extract_dissolution_conditions(doc) -> dict | None:
             re.match(r"dissolution\s+medi", k, re.IGNORECASE) for k in row_map
         )
         has_volume = any(re.match(r"volume\b", k, re.IGNORECASE) for k in row_map)
-        if not (has_diss_media and has_volume):
+        # 한글 용출 조건 표: "용량" + "장치" 또는 "속도"
+        has_ko_volume = any(re.match(r'^용량$', k) for k in row_map)
+        has_ko_apparatus = any(re.match(r'^(?:장치|속도)', k) for k in row_map)
+        is_ko_diss = has_ko_volume and has_ko_apparatus
+
+        if not ((has_diss_media and has_volume) or is_ko_diss):
             continue
 
         cond: dict = {"vessels_per_batch": 6}
         for raw_key, val in row_map.items():
+            # 영문 키
             if re.match(r"dissolution\s+medi", raw_key, re.IGNORECASE):
                 cond["medium_name"] = val
             elif re.match(r"volume\b", raw_key, re.IGNORECASE):
@@ -475,6 +724,22 @@ def _extract_dissolution_conditions(doc) -> dict | None:
                     cond["speed_rpm"] = int(ms.group(1))
             elif re.match(r"sampling\s+time", raw_key, re.IGNORECASE):
                 cond["sampling_time"] = val
+            # 한글 키
+            elif re.match(r'^용량$', raw_key):
+                m = re.search(r"(\d+(?:\.\d+)?)\s*mL", val, re.IGNORECASE)
+                if m:
+                    cond["volume_per_vessel_ml"] = float(m.group(1))
+            elif re.match(r'^장치', raw_key):
+                cond["apparatus"] = val
+            elif re.match(r'^속도', raw_key):
+                ms = re.search(r"(\d+)", val)
+                if ms:
+                    cond["speed_rpm"] = int(ms.group(1))
+            elif re.match(r'^샘플링', raw_key):
+                cond["sampling_time"] = val
+
+        if is_ko_diss and not cond.get("medium_name"):
+            cond["medium_name"] = "시험액"
 
         if "volume_per_vessel_ml" in cond:
             return cond
@@ -575,6 +840,60 @@ def _extract_standard_medium_ml_for_dissolution(
     return {}
 
 
+# ── Standard 표 파싱 ─────────────────────────────────────
+
+def _extract_standards_per_section(doc) -> dict[str, list[dict]]:
+    """
+    문서 body를 순서대로 스캔해 각 시험항목 섹션의 STD Name | Grade 표를 추출.
+    반환: {section_name: [{"std_name": ..., "grade": ...}]}
+    """
+    result: dict[str, list[dict]] = {}
+    current_section: str | None = None
+
+    for elem_type, elem_data in _iter_body_elements(doc):
+        if elem_type == 'para':
+            canonical = _get_canonical_test_item_name(elem_data)
+            if canonical:
+                parent = _parent_section_name(canonical, current_section)
+                if not parent:
+                    current_section = canonical
+            continue
+
+        # 표 처리
+        rows: list[list[str]] = elem_data
+        if not current_section or not rows:
+            continue
+
+        header = rows[0]
+        std_name_col = next(
+            (i for i, h in enumerate(header) if re.match(r'(?:std\s*name|표준품)', h, re.IGNORECASE)),
+            None,
+        )
+        if std_name_col is None:
+            continue
+
+        grade_col = next(
+            (i for i, h in enumerate(header) if re.match(r'(?:grade|등급)', h, re.IGNORECASE)),
+            None,
+        )
+
+        standards: list[dict] = []
+        for row in rows[1:]:
+            std_name = row[std_name_col].strip() if std_name_col < len(row) else ""
+            grade = (
+                row[grade_col].strip()
+                if grade_col is not None and grade_col < len(row)
+                else ""
+            )
+            if std_name:
+                standards.append({"std_name": std_name, "grade": grade})
+
+        if standards and current_section not in result:
+            result[current_section] = standards
+
+    return result
+
+
 # ── Reagent 표 파싱 ──────────────────────────────────────
 
 def _extract_all_reagents(doc) -> list[dict]:
@@ -590,22 +909,22 @@ def _extract_all_reagents(doc) -> list[dict]:
         if not rows or len(rows[0]) < 2:
             continue
 
-        # 첫 행이 Reagent 헤더인지 확인
+        # 첫 행이 Reagent 또는 한글 시약 헤더인지 확인
         header = rows[0]
-        if not re.match(r"^reagent\s*$", header[0], re.IGNORECASE):
+        if not re.match(r"^(?:reagent|시약)\s*$", header[0], re.IGNORECASE):
             continue
 
-        # 컬럼 인덱스 매핑
+        # 컬럼 인덱스 매핑 (영문/한글 공통)
         col: dict[str, int] = {}
         for i, h in enumerate(header):
             hl = h.lower()
-            if re.match(r"^reagent$", hl):
+            if re.match(r"^(?:reagent|시약)$", hl):
                 col["name"] = i
-            elif "tracking" in hl:
+            elif "tracking" in hl or "추적" in hl:
                 col["tracking_no"] = i
-            elif "grade" in hl:
+            elif "grade" in hl or "등급" in hl:
                 col["grade"] = i
-            elif "manufacturer" in hl:
+            elif "manufacturer" in hl or "제조처" in hl:
                 col["manufacturer"] = i
             elif "cat" in hl:
                 col["cat_no"] = i
@@ -719,12 +1038,9 @@ def parse_document(doc_path: str) -> dict:
     # 헤더 표에서 제품명·함량 우선 추출
     header_name, header_strength = _extract_header_title(doc)
 
-    # 영문 줄만 추출 (한글 줄 제외)
-    english_lines = [
-        p.text.strip()
-        for p in doc.paragraphs
-        if p.text.strip() and not _is_korean(p.text)
-    ]
+    # 전체 단락 추출 (한글 문서 대응)
+    all_lines = [p.text.strip() for p in doc.paragraphs if p.text.strip()]
+    english_lines = [l for l in all_lines if not _is_korean(l)]
 
     # 제품명: 헤더 우선, 없으면 본문 파싱
     if header_name:
@@ -733,14 +1049,14 @@ def parse_document(doc_path: str) -> dict:
         names = _extract_product_names(english_lines)
         product_name = " / ".join(names) if names else Path(doc_path).stem
 
-    # 함량: 헤더에서 찾았으면 사용, 없으면 본문에서 추출
+    # 함량: 헤더에서 찾았으면 사용, 없으면 본문에서 추출 (한글 포함)
     if header_strength:
         strengths = [header_strength]
     else:
-        strengths = _extract_strengths(english_lines)
+        strengths = _extract_strengths(all_lines)
 
-    # 시험항목 섹션 파싱
-    sections = _parse_sections(english_lines)
+    # 시험항목 섹션 파싱 (영문 + 한글 헤딩 모두 처리)
+    sections = _parse_sections(all_lines)
     test_items: list[dict] = []
     for sec in sections:
         preps = _parse_preparations(sec["lines"])
@@ -766,6 +1082,12 @@ def parse_document(doc_path: str) -> dict:
     reagents = _extract_all_reagents(doc)
     reagent_lookup = _build_reagent_lookup(reagents)
     _enrich_ingredients_tracking(test_items, reagent_lookup)
+
+    # 표준품(STD Name) 표 추출 → test_items에 연결
+    standards_per_section = _extract_standards_per_section(doc)
+    for item in test_items:
+        if item["name"] in standards_per_section:
+            item["standards"] = standards_per_section[item["name"]]
 
     # HPLC 크로마토그래피 조건 추출 (Mobile phase 볼륨 계산용)
     hplc_per_section = _extract_hplc_conditions_per_section(doc)
