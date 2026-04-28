@@ -9,6 +9,7 @@ import re
 _RE_MP    = re.compile(r'^mobile\s*phase|^이동상', re.IGNORECASE)
 _RE_BUF   = re.compile(r'^buffer\b|^완충액', re.IGNORECASE)
 _RE_DILUENT = re.compile(r'^diluent|^희석액', re.IGNORECASE)
+_RE_KOREAN = re.compile(r'[가-힣]')
 _RE_SAMPLE_SOL  = re.compile(r'sample', re.IGNORECASE)
 _RE_UNIFORMITY  = re.compile(r'uniformity', re.IGNORECASE)
 _RE_ASSAY       = re.compile(r'^assay$', re.IGNORECASE)
@@ -30,6 +31,102 @@ _RE_RATIO_KO = re.compile(
     r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s*(?:을|를)?\s*각각\s*'
     r'(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)',
 )
+# 한글 3성분 비율: "A, B 및 C를 X:Y:Z v/v/v"
+_RE_RATIO_KO3 = re.compile(
+    r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s*,\s*'
+    r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s+및\s+'
+    r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s*(?:을|를)?\s*'
+    r'(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)',
+)
+# 한글 2성분 비율 (및, 각각 없음): "A 및 B를 X:Y v/v"
+_RE_RATIO_KO2_MIT = re.compile(
+    r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s+및\s+'
+    r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s*(?:을|를)?\s*'
+    r'(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)'
+    r'(?!\s*:\s*\d)',
+)
+
+
+# 국문 표준품명 → 영문 변환 사전
+_KO_EN_STD: dict[str, str] = {
+    "가바펜틴": "Gabapentin",
+    "글리메피리드": "Glimepiride",
+    "글리클라지드": "Gliclazide",
+    "글리피지드": "Glipizide",
+    "나프록센": "Naproxen",
+    "네비볼롤": "Nebivolol",
+    "니페디핀": "Nifedipine",
+    "다파글리플로진": "Dapagliflozin",
+    "덱시부프로펜": "Dexibuprofen",
+    "독사조신메실산염": "Doxazosin mesylate",
+    "둘록세틴염산염": "Duloxetine hydrochloride",
+    "디클로페낙나트륨": "Diclofenac sodium",
+    "라베프라졸나트륨": "Rabeprazole sodium",
+    "라미프릴": "Ramipril",
+    "레르카니디핀염산염": "Lercanidipine hydrochloride",
+    "레보세티리진염산염": "Levocetirizine hydrochloride",
+    "로사르탄칼륨": "Losartan potassium",
+    "로수바스타틴칼슘": "Rosuvastatin calcium",
+    "로수바스타틴": "Rosuvastatin",
+    "리나글립틴": "Linagliptin",
+    "리시노프릴": "Lisinopril",
+    "메트포르민염산염": "Metformin hydrochloride",
+    "메트포르민": "Metformin",
+    "모사프리드시트르산염": "Mosapride citrate",
+    "몬테루카스트나트륨": "Montelukast sodium",
+    "미카르디스": "Telmisartan",
+    "발사르탄": "Valsartan",
+    "베나제프릴염산염": "Benazepril hydrochloride",
+    "보노프라잔푸마르산염": "Vonoprazan fumarate",
+    "보노프라잔": "Vonoprazan",
+    "비소프롤롤푸마르산염": "Bisoprolol fumarate",
+    "사쿠비트릴발사르탄나트륨수화물": "Sacubitril valsartan sodium hydrate",
+    "사쿠비트릴": "Sacubitril",
+    "서트랄린염산염": "Sertraline hydrochloride",
+    "세티리진염산염": "Cetirizine hydrochloride",
+    "소타롤염산염": "Sotalol hydrochloride",
+    "시타글립틴인산염수화물": "Sitagliptin phosphate monohydrate",
+    "시타글립틴": "Sitagliptin",
+    "아모사핀": "Amoxapine",
+    "아목시실린": "Amoxicillin",
+    "아세클로페낙": "Aceclofenac",
+    "아스피린": "Aspirin",
+    "아질사르탄메독소밀": "Azilsartan medoxomil",
+    "아질사르탄": "Azilsartan",
+    "아토르바스타틴칼슘": "Atorvastatin calcium",
+    "아토르바스타틴": "Atorvastatin",
+    "아티카프릴": "Atazanavir",
+    "알글리시다제알파": "Alglucosidase alfa",
+    "암로디핀베실산염": "Amlodipine besylate",
+    "암로디핀말레산염": "Amlodipine maleate",
+    "암로디핀": "Amlodipine",
+    "에소메프라졸마그네슘": "Esomeprazole magnesium",
+    "에제티미브": "Ezetimibe",
+    "엔탈라프릴말레산염": "Enalapril maleate",
+    "엠파글리플로진": "Empagliflozin",
+    "오메프라졸": "Omeprazole",
+    "올메사르탄메독소밀": "Olmesartan medoxomil",
+    "이르베사르탄": "Irbesartan",
+    "이부프로펜": "Ibuprofen",
+    "인다파미드": "Indapamide",
+    "카나글리플로진": "Canagliflozin",
+    "카르베딜롤": "Carvedilol",
+    "카르베딜롤인산염": "Carvedilol phosphate",
+    "칸데사르탄실렉세틸": "Candesartan cilexetil",
+    "클로피도그렐황산염": "Clopidogrel bisulfate",
+    "클로피도그렐": "Clopidogrel",
+    "텔미사르탄": "Telmisartan",
+    "트리메부틴말레산염": "Trimebutine maleate",
+    "피오글리타존염산염": "Pioglitazone hydrochloride",
+    "피오글리타존": "Pioglitazone",
+    "하이드로클로로티아지드": "Hydrochlorothiazide",
+    "히드로클로로티아지드": "Hydrochlorothiazide",
+}
+
+
+def _translate_std_name(name: str) -> str:
+    """국문 표준품명을 영문으로 변환. 사전에 없으면 원문 반환."""
+    return _KO_EN_STD.get(name.strip(), name)
 
 
 def _sample_count_for_item(item_name: str) -> int:
@@ -106,7 +203,9 @@ def _process_preparations(
         gw_test_item = item_name        if is_sample_std else ""
         for gw in prep.get("glassware", []):
             key = (gw.get("type", ""), gw.get("size", ""), sol_name, gw_strength, gw_test_item)
-            per_batch = gw.get("count_per_batch", 1) * per_sample
+            # mortar는 공유 장비이므로 배치 수·검액 수 무관하게 1개
+            is_shared = gw.get("type", "") == "mortar"
+            per_batch = 1 if is_shared else gw.get("count_per_batch", 1) * per_sample
             if key not in glassware_agg:
                 glassware_agg[key] = {
                     "type": gw.get("type", ""),
@@ -115,11 +214,12 @@ def _process_preparations(
                     "strength": gw_strength,
                     "test_item": gw_test_item,
                     "count_per_batch": per_batch,
-                    "total_count": per_batch * effective_batches,
+                    "total_count": 1 if is_shared else per_batch * effective_batches,
                 }
             else:
-                glassware_agg[key]["count_per_batch"] += per_batch
-                glassware_agg[key]["total_count"] += per_batch * effective_batches
+                if not is_shared:
+                    glassware_agg[key]["count_per_batch"] += per_batch
+                    glassware_agg[key]["total_count"] += per_batch * effective_batches
 
         # 필터 집계 — 조제별/시험항목별 별도 행 (검액·표준액만 strength·test_item 포함)
         fi_strength  = (strength or "") if is_sample_std else ""
@@ -226,20 +326,38 @@ def calculate_resources(
             sol["volume_per_batch_ml"]   = mp_vol
             sol["theoretical_volume_ml"] = mp_vol
             prep_text = sol.get("preparation_text", "")
-            m = _RE_RATIO.search(prep_text) or _RE_RATIO_KO.search(prep_text)
-            if m:
-                sub_a, sub_b = m.group(1).strip(), m.group(2).strip()
-                r_a, r_b = float(m.group(3)), float(m.group(4))
-                t = r_a + r_b
+            m3 = _RE_RATIO_KO3.search(prep_text)
+            if m3:
+                sub_a, sub_b, sub_c = m3.group(1).strip(), m3.group(2).strip(), m3.group(3).strip()
+                r_a, r_b, r_c = float(m3.group(4)), float(m3.group(5)), float(m3.group(6))
+                t = r_a + r_b + r_c
                 if t > 0:
                     sol["ingredients"] = [
                         {"name": sub_a, "amount": round(r_a / t * mp_vol, 1), "unit": "mL"},
                         {"name": sub_b, "amount": round(r_b / t * mp_vol, 1), "unit": "mL"},
+                        {"name": sub_c, "amount": round(r_c / t * mp_vol, 1), "unit": "mL"},
                     ]
-                    if "buffer" in sub_a.lower() or "완충액" in sub_a:
-                        total_buffer_needed += mp_vol * (r_a / t)
-                    elif "buffer" in sub_b.lower() or "완충액" in sub_b:
-                        total_buffer_needed += mp_vol * (r_b / t)
+                    for sub, r in [(sub_a, r_a), (sub_b, r_b), (sub_c, r_c)]:
+                        if "buffer" in sub.lower() or "완충액" in sub:
+                            total_buffer_needed += mp_vol * (r / t)
+                            break
+            else:
+                m = _RE_RATIO.search(prep_text) or _RE_RATIO_KO.search(prep_text)
+                if not m:
+                    m = _RE_RATIO_KO2_MIT.search(prep_text)
+                if m:
+                    sub_a, sub_b = m.group(1).strip(), m.group(2).strip()
+                    r_a, r_b = float(m.group(3)), float(m.group(4))
+                    t = r_a + r_b
+                    if t > 0:
+                        sol["ingredients"] = [
+                            {"name": sub_a, "amount": round(r_a / t * mp_vol, 1), "unit": "mL"},
+                            {"name": sub_b, "amount": round(r_b / t * mp_vol, 1), "unit": "mL"},
+                        ]
+                        if "buffer" in sub_a.lower() or "완충액" in sub_a:
+                            total_buffer_needed += mp_vol * (r_a / t)
+                        elif "buffer" in sub_b.lower() or "완충액" in sub_b:
+                            total_buffer_needed += mp_vol * (r_b / t)
 
         if total_buffer_needed > 0 and buf_sols:
             for sol in buf_sols:
@@ -265,10 +383,21 @@ def calculate_resources(
                     total_used += float(ing.get("amount", 0)) * scale
         if total_used > 0:
             prep_text = sol.get("preparation_text", "")
-            m = _RE_RATIO.search(prep_text) or _RE_RATIO_KO.search(prep_text)
             sol["theoretical_volume_ml"] = round(total_used, 1)
             sol["volume_per_batch_ml"]   = total_used
-            if m:
+            m3 = _RE_RATIO_KO3.search(prep_text)
+            m = None if m3 else (_RE_RATIO.search(prep_text) or _RE_RATIO_KO.search(prep_text) or _RE_RATIO_KO2_MIT.search(prep_text))
+            if m3:
+                sub_a, sub_b, sub_c = m3.group(1).strip(), m3.group(2).strip(), m3.group(3).strip()
+                r_a, r_b, r_c = float(m3.group(4)), float(m3.group(5)), float(m3.group(6))
+                t = r_a + r_b + r_c
+                if t > 0:
+                    sol["ingredients"] = [
+                        {"name": sub_a, "amount": round(r_a / t * total_used, 1), "unit": "mL"},
+                        {"name": sub_b, "amount": round(r_b / t * total_used, 1), "unit": "mL"},
+                        {"name": sub_c, "amount": round(r_c / t * total_used, 1), "unit": "mL"},
+                    ]
+            elif m:
                 sub_a = m.group(1).strip()
                 sub_b = m.group(2).strip()
                 r_a, r_b = float(m.group(3)), float(m.group(4))
@@ -290,7 +419,7 @@ def calculate_resources(
         if not item_stds and _RE_UNIFORMITY.search(item["name"]) and assay_item_for_uniformity:
             item_stds = assay_item_for_uniformity.get("standards", [])
         for std in item_stds:
-            nm = (std.get("std_name") or "").strip()
+            nm = _translate_std_name((std.get("std_name") or "").strip())
             if nm and nm.lower() not in rs_seen:
                 rs_seen.add(nm.lower())
                 standard_names.append(nm)
@@ -309,34 +438,65 @@ def calculate_resources(
             continue
 
         prep_text = sol.get("preparation_text", "")
+        # 비율 혼합 용액(Mix A:B)은 홀 피펫 자동 생성 제외
+        if (_RE_RATIO.search(prep_text) or _RE_RATIO_KO.search(prep_text) or
+                _RE_RATIO_KO3.search(prep_text) or _RE_RATIO_KO2_MIT.search(prep_text)):
+            continue
         btv_m = _RE_BTV.search(prep_text)
         btv_solvent = btv_m.group(1).strip().lower() if btv_m else ""
         vol_per_batch = sol.get("volume_per_batch_ml") or 0
-
         for ing in sol.get("ingredients", []):
             if ing.get("unit", "").strip().lower() != "ml":
                 continue
             vol = round(float(ing.get("amount", 0)), 1)
-            if vol <= 0:
-                continue
+            if vol <= 0 or vol > 25:
+                continue  # 메스 실린더(>25 mL)는 성분 분석으로 자동 추가하지 않음
             ing_name = ing.get("name", "").strip().lower()
-            # 표선 용매 자체이고 총량의 50% 이상이면 BTV → 피펫 불필요
+            # 표선 용매와 동일한 성분이면 피펫 불필요
             if btv_solvent and (ing_name in btv_solvent or btv_solvent.startswith(ing_name)):
-                if vol_per_batch == 0 or vol >= vol_per_batch * 0.5:
-                    continue
-            gtype = "홀 피펫" if vol <= 25 else "메스 실린더"
-            size  = f"{vol} mL"
-            key   = (gtype, size, gtype, "", "")
+                continue
+            sol_name = sol.get("solution_name", "")
+            size = f"{vol} mL"
+            key  = ("홀 피펫", size, sol_name, "", "")
             if key not in glassware_agg:
                 glassware_agg[key] = {
-                    "type": gtype,
+                    "type": "홀 피펫",
                     "size": size,
-                    "source_prep": gtype,
+                    "source_prep": sol_name,
                     "strength": "",
                     "test_item": "",
                     "count_per_batch": 1,
                     "total_count": 1,
                 }
+
+    # 내용 없는 빈 조제(이중언어 문서에서 영문 헤딩 stub) 제거
+    solutions = [
+        s for s in solutions
+        if s.get("preparation_text") or s.get("ingredients")
+    ]
+
+    # 동일 용액 내 중복 성분 제거: 추적번호 있는 영문명 우선, 동일 양/단위의 한글명 제거
+    for sol in solutions:
+        ings = sol.get("ingredients")
+        if not ings or len(ings) < 2:
+            continue
+        seen: dict[tuple, dict] = {}
+        cleaned: list[dict] = []
+        for ing in ings:
+            key = (round(float(ing.get("amount", 0)), 4), (ing.get("unit") or "").lower())
+            if key in seen:
+                existing = seen[key]
+                if existing.get("tracking_no") and _RE_KOREAN.search(ing.get("name", "")):
+                    continue  # 추적번호 있는 기존 유지, 한글명 중복 제거
+                if ing.get("tracking_no") and _RE_KOREAN.search(existing.get("name", "")):
+                    cleaned.remove(existing)
+                    seen[key] = ing
+                    cleaned.append(ing)
+                    continue
+            else:
+                seen[key] = ing
+            cleaned.append(ing)
+        sol["ingredients"] = cleaned
 
     return {
         "product_name": product.get("product_name", ""),
@@ -363,7 +523,7 @@ def _calc_dissolution_medium(
     for item in product.get("test_items", []):
         if item["name"] not in test_item_names:
             continue
-        if not re.match(r"^dissolution\s*$", item["name"], re.IGNORECASE):
+        if not re.match(r"^dissolution\b", item["name"], re.IGNORECASE):
             continue
 
         conds = item.get("dissolution_conditions")
@@ -462,12 +622,12 @@ def merge_all_results(
             if vol not in pip_map:
                 pip_map[vol] = dict(pip)
 
-    # Dissolution medium: 합산
+    # Dissolution medium: Method A/B는 동일 vessel 사용 → sample은 max, standard는 합산
     dm_list = [r["dissolution_medium"] for r in results if r.get("dissolution_medium")]
     merged_dm = None
     if dm_list:
         merged_dm = dict(dm_list[0])
-        merged_dm["sample_medium_ml"] = round(sum(d["sample_medium_ml"] for d in dm_list), 1)
+        merged_dm["sample_medium_ml"] = max(d["sample_medium_ml"] for d in dm_list)
         merged_dm["standard_medium_ml_once"] = round(sum(d["standard_medium_ml_once"] for d in dm_list), 1)
         merged_dm["total_medium_ml"] = round(
             merged_dm["sample_medium_ml"] + merged_dm["standard_medium_ml_once"], 1

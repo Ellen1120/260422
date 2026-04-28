@@ -131,7 +131,11 @@ def get_products():
             "stm_file": p["stm_file"],
             "code_no": _extract_code_no(p.get("stm_file", "")),
             "strengths": p.get("strengths", ["N/A"]),
-            "test_items": [t["name"] for t in p.get("test_items", [])],
+            "test_items": [
+                t["name"] for t in p.get("test_items", [])
+                if t["name"] != "Description"
+                and not (t["name"].startswith("Identification") and not t.get("preparations"))
+            ],
         }
         for p in _state["products"]
     ]

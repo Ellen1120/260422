@@ -30,15 +30,15 @@ _RE_KOREAN = re.compile(r"[가-힣]")
 _RE_TEST_ITEM = re.compile(
     r"^(?:"
     r"Description"
-    r"|Identification(?:\s+by\s+HPLC)?"
+    r"|Identification(?:\s+by\s+HPLC)?\s*"
     r"|Dissolution"
     r"|Assay"
-    r"|Uniformity\s+of\s+dosage\s+units?(?:\s*\([^)]*\))?"
+    r"|(?:Uniformity\s+of\s+dosage\s+units?|Content\s+uniformity)(?:\s*\([^)]*\))?"
     r"|Related\s+substances?(?:\s*\(Method\s+[AB]\))?"
     r"|Water\s+content\s+by\s+KF"
     r"|Polymorphism\s+by\s+PXRD"
     r"|Microbial\s+Enumeration\s+Test"
-    r")\s*$",
+    r")(?:\s*<[^>]+>)?\s*$",
     re.IGNORECASE,
 )
 
@@ -67,8 +67,16 @@ def _normalize_ko_strength(line: str) -> str | None:
 def _get_canonical_test_item_name(line: str) -> str | None:
     """영문 또는 한글 시험항목 이름이면 정규 영문명 반환, 아니면 None."""
     stripped = line.strip()
-    if _RE_TEST_ITEM.match(stripped) and len(stripped.split()) <= 8:
-        return stripped
+    if _RE_TEST_ITEM.match(stripped) and len(stripped.split()) <= 12:
+        # "<Method-A: ...>" suffix에서 Method 식별자(A/B) 추출 → 별도 섹션으로 분리
+        method_m = re.search(r'<Method[-\s]*([AB])\b', stripped, re.IGNORECASE)
+        normalized = re.sub(r'\s*<[^>]+>\s*$', '', stripped).strip()
+        if re.match(r'^content\s+uniformity\s*$', normalized, re.IGNORECASE):
+            return 'Uniformity of dosage units (Content Uniformity)'
+        base = normalized if normalized else stripped
+        if method_m:
+            return f"{base} (Method {method_m.group(1).upper()})"
+        return base
     for pat, name in _KO_TEST_ITEM_MAP:
         if pat.match(stripped):
             return name
@@ -80,7 +88,7 @@ _RE_PREP_CONTENT_START = re.compile(
     r"^(?:Accurately\s+)?(?:Weigh|Transfer|Add|Pipette|Dissolve"
     r"|Mix|Dilute|Note[:\s]|Centrifuge|Filter|Inject"
     r"|Proceed|Compare|Observe|Place|Take|Shake|Incubate"
-    r"|Streak|Perform|After|The\s|If\s|Put\s|Pour\s|Blank"
+    r"|Streak|Perform|After|The\s|If\s|Put\s|Pour\s|Blank\s+(?!preparation\b)"
     r"|Withdraw|Adjust|Heat|Cool|Rinse)",
     re.IGNORECASE,
 )
@@ -165,6 +173,20 @@ _RE_RATIO_KO2 = re.compile(
     r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s*(?:을|를)?\s*각각\s*'
     r'(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)',
 )
+# 한글 3성분 비율: "A, B 및 C를 X:Y:Z v/v/v"
+_RE_RATIO_KO3 = re.compile(
+    r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s*,\s*'
+    r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s+및\s+'
+    r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s*(?:을|를)?\s*'
+    r'(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)',
+)
+# 한글 2성분 비율 (및, 각각 없음): "A 및 B를 X:Y v/v"
+_RE_RATIO_KO2_MIT = re.compile(
+    r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s+및\s+'
+    r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s*(?:을|를)?\s*'
+    r'(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)'
+    r'(?!\s*:\s*\d)',
+)
 
 # 초자 패턴 (영문)
 _RE_GLASSWARE = re.compile(
@@ -197,10 +219,13 @@ _RE_FILTER_KO = re.compile(
     re.IGNORECASE,
 )
 
-# 용출 표준액 조제에서 volumetric flask 크기 추출
+# 용출 표준액 조제에서 volumetric flask 크기 추출 (영문/한글)
 _RE_VOLUMETRIC_FLASK_SIZE = re.compile(
     r"(\d+(?:\.\d+)?)\s*mL\s+(?:of\s+)?volumetric\s+flask",
     re.IGNORECASE,
+)
+_RE_KO_VOLUMETRIC_FLASK_SIZE = re.compile(
+    r"(\d+(?:\.\d+)?)\s*mL\s+(?:용량플라스크|메스플라스크)",
 )
 
 # 최종 볼륨 추출 (우선순위 순)
@@ -272,6 +297,12 @@ def _extract_volume(heading: str, lines: list[str]) -> float | None:
     m = _RE_RATIO.search(combined)
     if m:
         return float(m.group(3)) + float(m.group(4))
+    m3 = _RE_RATIO_KO3.search(combined)
+    if m3:
+        return float(m3.group(4)) + float(m3.group(5)) + float(m3.group(6))
+    m2 = _RE_RATIO_KO2.search(combined) or _RE_RATIO_KO2_MIT.search(combined)
+    if m2:
+        return float(m2.group(3)) + float(m2.group(4))
     return None
 
 
@@ -331,6 +362,32 @@ def _extract_ingredients(text: str, final_volume_ml: float | None) -> list[dict]
             _add(sub_a, round(ratio_a / total * final_volume_ml, 1), "mL")
             _add(sub_b, round(ratio_b / total * final_volume_ml, 1), "mL")
 
+    # 비율 혼합 한글 3성분 (A, B 및 C를 X:Y:Z v/v/v)
+    for m in _RE_RATIO_KO3.finditer(text):
+        sub_a = m.group(1).strip()
+        sub_b = m.group(2).strip()
+        sub_c = m.group(3).strip()
+        ratio_a = float(m.group(4))
+        ratio_b = float(m.group(5))
+        ratio_c = float(m.group(6))
+        total = ratio_a + ratio_b + ratio_c
+        if final_volume_ml and total > 0:
+            _add(sub_a, round(ratio_a / total * final_volume_ml, 1), "mL")
+            _add(sub_b, round(ratio_b / total * final_volume_ml, 1), "mL")
+            _add(sub_c, round(ratio_c / total * final_volume_ml, 1), "mL")
+
+    # 비율 혼합 한글 2성분 (A 및 B를 X:Y, 각각 없음) - 3성분 텍스트 제외
+    if not _RE_RATIO_KO3.search(text):
+        for m in _RE_RATIO_KO2_MIT.finditer(text):
+            sub_a = m.group(1).strip()
+            sub_b = m.group(2).strip()
+            ratio_a = float(m.group(3))
+            ratio_b = float(m.group(4))
+            total = ratio_a + ratio_b
+            if final_volume_ml and total > 0:
+                _add(sub_a, round(ratio_a / total * final_volume_ml, 1), "mL")
+                _add(sub_b, round(ratio_b / total * final_volume_ml, 1), "mL")
+
     return results
 
 
@@ -342,6 +399,8 @@ _KO_GLASSWARE_MAP = {
     '비이커': 'beaker',
     '바이알': 'vial',
 }
+
+_RE_MORTAR = re.compile(r"\b(?:mortar|mortar\s+and\s+pestle)\b|유발", re.IGNORECASE)
 
 def _extract_glassware(text: str) -> list[dict]:
     """준비 절차 텍스트에서 초자 목록 추출. 동일 규격이 여러 번 나오면 count_per_batch 합산."""
@@ -356,10 +415,13 @@ def _extract_glassware(text: str) -> list[dict]:
         gtype = _KO_GLASSWARE_MAP.get(m.group(2), m.group(2))
         key = (gtype, size)
         count_map[key] = count_map.get(key, 0) + 1
-    return [
+    result = [
         {"type": gtype, "size": f"{size} mL", "count_per_batch": cnt}
         for (gtype, size), cnt in count_map.items()
     ]
+    if _RE_MORTAR.search(text):
+        result.append({"type": "mortar", "size": "-", "count_per_batch": 1})
+    return result
 
 
 def _extract_filters_from_text(text: str) -> list[dict]:
@@ -455,10 +517,21 @@ def _extract_strengths(paragraphs: list[str]) -> list[str]:
         m = _RE_STRENGTH_LINE.match(line)
         if m:
             _add(m.group(1).replace(" ", "").replace("mg", " mg").strip())
-        # "preparation (for 50 mg)"
+        # "preparation (for 50 mg)" — 복수 함량 "(For 80/10 mg, 40/10 mg)" 분리
         m2 = _RE_STRENGTH_PAREN.search(line)
         if m2:
-            _add(m2.group(1))
+            raw = m2.group(1).strip()
+            parts = re.split(r'\s*,\s*|\s+&\s+|\s+and\s+', raw, flags=re.IGNORECASE)
+            added = False
+            for part in parts:
+                part = part.strip()
+                # "30 mg/25 mg" 또는 "80/10 mg" 두 가지 형식 모두 허용
+                if (_RE_STRENGTH_LINE.match(part) or
+                        re.match(r'^\d+(?:\.\d+)?(?:/\d+(?:\.\d+)?)+\s*mg\s*$', part, re.IGNORECASE)):
+                    _add(part)
+                    added = True
+            if not added:
+                _add(raw)
 
     # 한글 함량: "26 밀리그램/5 밀리그램"
     for line in paragraphs:
@@ -555,6 +628,9 @@ def _parse_preparations(section_lines: list[str]) -> list[dict]:
         def _make_block(sol_name: str, sub_lines: list[str]) -> None:
             prep_text = "\n".join(l for l in sub_lines if l.strip())
             vol = _extract_volume(current_heading, sub_lines)
+            # 내용이 없고 볼륨도 없는 빈 블록(이중언어 문서에서 영문 헤딩만 남는 경우) 제외
+            if not prep_text and vol is None:
+                return
             ingredients = _extract_ingredients(prep_text, vol)
             glassware = _extract_glassware(prep_text)
             filters_list = _extract_filters_from_text(prep_text)
@@ -698,7 +774,8 @@ def _extract_dissolution_conditions(doc) -> dict | None:
         has_diss_media = any(
             re.match(r"dissolution\s+medi", k, re.IGNORECASE) for k in row_map
         )
-        has_volume = any(re.match(r"volume\b", k, re.IGNORECASE) for k in row_map)
+        # "Volume" 또는 "Vessel Volume" 모두 허용
+        has_volume = any(re.search(r"\bvolume\b", k, re.IGNORECASE) for k in row_map)
         # 한글 용출 조건 표: "용량" + "장치" 또는 "속도"
         has_ko_volume = any(re.match(r'^용량$', k) for k in row_map)
         has_ko_apparatus = any(re.match(r'^(?:장치|속도)', k) for k in row_map)
@@ -712,11 +789,11 @@ def _extract_dissolution_conditions(doc) -> dict | None:
             # 영문 키
             if re.match(r"dissolution\s+medi", raw_key, re.IGNORECASE):
                 cond["medium_name"] = val
-            elif re.match(r"volume\b", raw_key, re.IGNORECASE):
+            elif re.search(r"\bvolume\b", raw_key, re.IGNORECASE) and "volume_per_vessel_ml" not in cond:
                 m = re.search(r"(\d+(?:\.\d+)?)\s*mL", val, re.IGNORECASE)
                 if m:
                     cond["volume_per_vessel_ml"] = float(m.group(1))
-            elif re.match(r"usp\s+apparatus", raw_key, re.IGNORECASE):
+            elif re.match(r"(?:usp\s+)?apparatus\b", raw_key, re.IGNORECASE):
                 cond["apparatus"] = val
             elif re.match(r"speed\b", raw_key, re.IGNORECASE):
                 ms = re.search(r"(\d+)", val)
@@ -780,9 +857,15 @@ def _extract_standard_medium_ml_for_dissolution(
     no_strength_total: float = 0.0
 
     for heading, lines in blocks:
-        if not re.search(r"\bstandard\b", heading, re.IGNORECASE):
-            continue
-        if re.search(r"\bsample\b", heading, re.IGNORECASE):
+        is_standard = (
+            re.search(r"\bstandard\b", heading, re.IGNORECASE) or
+            re.search(r"표준", heading)
+        )
+        is_sample = (
+            re.search(r"\bsample\b", heading, re.IGNORECASE) or
+            re.search(r"검액", heading)
+        )
+        if not is_standard or is_sample:
             continue
 
         # 헤딩의 "(for X mg)" 패턴
@@ -791,7 +874,7 @@ def _extract_standard_medium_ml_for_dissolution(
         if m_hs:
             heading_strength = m_hs.group(1).strip()
 
-        # 블록 내 함량 레이블로 서브 블록 분리
+        # 블록 내 함량 레이블로 서브 블록 분리 (영문 "30 mg" + 한글 "26 밀리그램/5 밀리그램")
         sub_blocks: list[tuple[str | None, list[str]]] = []
         cur_sub_str: str | None = None
         cur_sub_lines: list[str] = []
@@ -799,10 +882,17 @@ def _extract_standard_medium_ml_for_dissolution(
 
         for line in lines:
             m_sl = _RE_STRENGTH_LINE.match(line)
+            m_ko = _RE_KO_STRENGTH_LINE.match(line) if not m_sl else None
             if m_sl:
                 if cur_sub_lines:
                     sub_blocks.append((cur_sub_str, cur_sub_lines[:]))
                 cur_sub_str = m_sl.group(1).strip()
+                cur_sub_lines = []
+                found_str_in_lines = True
+            elif m_ko:
+                if cur_sub_lines:
+                    sub_blocks.append((cur_sub_str, cur_sub_lines[:]))
+                cur_sub_str = _normalize_ko_strength(line)
                 cur_sub_lines = []
                 found_str_in_lines = True
             else:
@@ -815,14 +905,16 @@ def _extract_standard_medium_ml_for_dissolution(
 
         for sub_strength, sub_lines in sub_blocks:
             combined = heading + " " + " ".join(sub_lines)
-            if not re.search(r"\bdissolution\s+(?:medium|media)\b", combined, re.IGNORECASE):
+            # 영문/한글 dissolution medium BTV 감지
+            if not re.search(
+                r"\bdissolution\s+(?:medium|media)\b|시험액",
+                combined, re.IGNORECASE
+            ):
                 continue
 
-            # volumetric flask 크기 합산
-            vol_sum = sum(
-                float(m.group(1))
-                for m in _RE_VOLUMETRIC_FLASK_SIZE.finditer(combined)
-            )
+            # volumetric flask 크기 합산 (영문 + 한글)
+            vol_sum = sum(float(m.group(1)) for m in _RE_VOLUMETRIC_FLASK_SIZE.finditer(combined))
+            vol_sum += sum(float(m.group(1)) for m in _RE_KO_VOLUMETRIC_FLASK_SIZE.finditer(combined))
             if vol_sum <= 0:
                 vol_sum = _extract_volume(heading, sub_lines) or 0.0
             if vol_sum <= 0:
@@ -1055,8 +1147,14 @@ def parse_document(doc_path: str) -> dict:
     else:
         strengths = _extract_strengths(all_lines)
 
-    # 시험항목 섹션 파싱 (영문 + 한글 헤딩 모두 처리)
-    sections = _parse_sections(all_lines)
+    # 국영문(bilingual) 감지: 한글·영문 줄이 모두 10개 이상이면 영문만 파싱
+    _ko_cnt = sum(1 for l in all_lines if _is_korean(l))
+    _en_cnt = len(all_lines) - _ko_cnt
+    _is_bilingual = _ko_cnt > 10 and _en_cnt > 10
+    parse_lines = english_lines if _is_bilingual else all_lines
+
+    # 시험항목 섹션 파싱
+    sections = _parse_sections(parse_lines)
     test_items: list[dict] = []
     for sec in sections:
         preps = _parse_preparations(sec["lines"])
@@ -1065,18 +1163,17 @@ def parse_document(doc_path: str) -> dict:
     # 용출 시험 조건 + 표준액용 시험액 볼륨 추출
     diss_conditions = _extract_dissolution_conditions(doc)
     if diss_conditions:
-        diss_sec_lines = next(
-            (s["lines"] for s in sections
-             if re.match(r"^dissolution\s*$", s["name"], re.IGNORECASE)),
-            [],
-        )
-        diss_conditions["standard_medium_ml_by_strength"] = (
-            _extract_standard_medium_ml_for_dissolution(diss_sec_lines, strengths)
-        )
+        # 각 용출 시험항목(Method A/B 포함)에 개별 standard_medium 계산 후 연결
         for item in test_items:
-            if re.match(r"^dissolution\s*$", item["name"], re.IGNORECASE):
-                item["dissolution_conditions"] = diss_conditions
-                break
+            if re.match(r"^dissolution\b", item["name"], re.IGNORECASE):
+                sec = next((s for s in sections if s["name"] == item["name"]), None)
+                method_conds = dict(diss_conditions)
+                method_conds["standard_medium_ml_by_strength"] = (
+                    _extract_standard_medium_ml_for_dissolution(
+                        sec["lines"] if sec else [], strengths
+                    )
+                )
+                item["dissolution_conditions"] = method_conds
 
     # Reagent 표 파싱 → ingredients에 tracking_no 추가
     reagents = _extract_all_reagents(doc)
