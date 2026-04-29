@@ -1,8 +1,1 @@
-Loaded 4 products from knowledge base.
-INFO:     127.0.0.1:62251 - "GET / HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53574 - "GET / HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53574 - "GET /app.js?v=18 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53574 - "GET /api/products HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53574 - "POST /api/calculate HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57608 - "POST /api/calculate HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54615 - "POST /api/calculate HTTP/1.1" 200 OK
+D:\Work Anti\.venv\Scripts\python.exe: No module named uvicorn

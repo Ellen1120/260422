@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import threading
 from pathlib import Path
 
@@ -88,9 +89,6 @@ def _needs_reparse() -> bool:
 async def startup():
     _state["products"] = load_knowledge_base()
     print(f"Loaded {len(_state['products'])} products from knowledge base.")
-    if _needs_reparse():
-        print("STM 폴더에 변경 감지 → 자동 파싱 시작...")
-        threading.Thread(target=_auto_reparse, daemon=True).start()
 
 
 def _auto_reparse():
@@ -186,13 +184,24 @@ def calculate(req: CalculateRequest):
     merged["standards"] = lookup_standards(merged.get("standard_names", []))
 
     selected_test_names = {tb.name for sc in req.strength_configs for tb in sc.test_items}
-    col_specs = list({
-        item.get("hplc_conditions", {}).get("column_spec")
-        for item in product.get("test_items", [])
-        if item.get("name") in selected_test_names
-        and item.get("hplc_conditions", {}).get("column_spec")
-    })
-    merged["columns"] = lookup_columns(col_specs)
+    # Uniformity 선택 시 Assay의 column_spec도 포함 (동일 HPLC 조건 사용)
+    assay_col_spec = next(
+        (item.get("hplc_conditions", {}).get("column_spec")
+         for item in product.get("test_items", [])
+         if re.match(r"^assay$", item.get("name", ""), re.IGNORECASE)
+         and item.get("hplc_conditions", {}).get("column_spec")),
+        None,
+    )
+    col_specs_set: set[str] = set()
+    for item in product.get("test_items", []):
+        if item.get("name") not in selected_test_names:
+            continue
+        spec = item.get("hplc_conditions", {}).get("column_spec")
+        if spec:
+            col_specs_set.add(spec)
+        elif re.match(r"uniformity", item.get("name", ""), re.IGNORECASE) and assay_col_spec:
+            col_specs_set.add(assay_col_spec)
+    merged["columns"] = lookup_columns(list(col_specs_set))
     return merged
 
 

@@ -915,6 +915,1031 @@
       ]
     },
     {
+      "id": "STM-CP001-T0.doc",
+      "doc_no": "STM-CP001-T0",
+      "stm_file": "STM-CP001-T0.doc.docx",
+      "product_name": "NesinaMet Tablets 12.5/",
+      "strengths": [
+        "500mg"
+      ],
+      "test_items": [
+        {
+          "name": "Identification",
+          "preparations": [
+            {
+              "section_name": "Diluent (0.1mol/L Hydrochloric acid) preparation",
+              "solution_name": "Diluent (0.1mol/L Hydrochloric acid)",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Dilute 8.5 mL of concentrated Hydrochloric acid to 1000 mL with purified water and mix well.",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Alogliptin sample solution preparation",
+              "solution_name": "Alogliptin sample solution",
+              "volume_per_batch_ml": 25.0,
+              "preparation_text": "Transfer 1 tablet to a 50 mL volumetric flask. Add approximately 35 mL of Diluent and shake the flask until tablet has disintegrated completely by using a mechanical shaker for 15 minutes. Dilute to volume with the Diluent.\nFilter the solution through 0.45 μm PVDF syringe filter. Discard the first 5 mL of the filtrate. Pipette 1 mL of the subsequent filtrate into a 25 mL volumetric flask. Dilute with Diluent to volume.",
+              "ingredients": [
+                {
+                  "name": "subsequent filtrate",
+                  "amount": 1.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "volumetric flask",
+                  "size": "25 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PVDF",
+                  "manufacturer": "",
+                  "filter_type": "syringe",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Metformin Hydrochloride sample solution preparation",
+              "solution_name": "Metformin Hydrochloride sample solution",
+              "volume_per_batch_ml": 250.0,
+              "preparation_text": "Transfer 1 tablet to a 250 mL volumetric flask. Add approximately 175 mL of water and shake the flask until tablet has disintegrated completely by using a mechanical shaker for 15 minutes. Dilute to volume with water.\nFilter the solution through 0.45 μm PVDF syringe filter. Discard the first 5 mL of the filtrate. Pipette 1 mL of the subsequent filtrate into a 250 mL volumetric flask. Dilute with water to volume.\nProcedure\nDetermine the absorption spectrum of the sample solution.\nUV-vis System\nRange of wavelength",
+              "ingredients": [
+                {
+                  "name": "subsequent filtrate",
+                  "amount": 1.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "250 mL",
+                  "count_per_batch": 2
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PVDF",
+                  "manufacturer": "",
+                  "filter_type": "syringe",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Dissolution",
+          "preparations": [
+            {
+              "section_name": "Dissolution medium (0.01 mol/L Hydrochloric acid solution) preparation",
+              "solution_name": "Dissolution medium (0.01 mol/L Hydrochloric acid solution)",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Dilute 8.5 mL of concentrated Hydrochloric acid to 10000 mL with purified water.",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Buffer solution preparation",
+              "solution_name": "Buffer solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Dilute 5.75 g of Ammonium Phosphate Monobasic to 1000 mL with purified water.",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Mobile phase preparation",
+              "solution_name": "Mobile phase",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Mix buffer and acetonitrile in the ratio of 500 : 500 v/v, respectively. Add 7.2 g of Sodium dodecyl sulfate in 1000mL of Mobile phase, dissolve and mix well.",
+              "ingredients": [
+                {
+                  "name": "Sodium dodecyl sulfate in 1000mL of Mobile phase, dissolve",
+                  "amount": 7.2,
+                  "unit": "g"
+                },
+                {
+                  "name": "buffer",
+                  "amount": 500.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "acetonitrile",
+                  "amount": 500.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Alogliptin standard stock solution preparation",
+              "solution_name": "Alogliptin standard stock solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Accurately weigh and transfer about 47.2 mg of Alogliptin benzoate standard into a 100 mL volumetric flask. Dissolve in and dilute to volume with the dissolution medium and mix.\nPipette 10.0 mL of this solution into 100 mL of volumetric flask and dilute with the dissolution medium to volume and mix.",
+              "ingredients": [
+                {
+                  "name": "Alogliptin benzoate",
+                  "amount": 47.2,
+                  "unit": "mg"
+                },
+                {
+                  "name": "this solution",
+                  "amount": 10.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 2
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Metformin Hydrochloride standard stock solution preparation",
+              "solution_name": "Metformin Hydrochloride standard stock solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Accurately weigh and transfer about 140 mg of Metformin hydrochloride standard into a 50 mL volumetric flask. Dissolve in and dilute to volume with the dissolution medium and mix.",
+              "ingredients": [
+                {
+                  "name": "Metformin hydrochloride",
+                  "amount": 140.0,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Standard solution preparation",
+              "solution_name": "Standard solution",
+              "volume_per_batch_ml": 25.0,
+              "preparation_text": "Pipette 10 mL of Alogliptin standard stock solution and 5 mL of Metformin Hydrochloride standard stock solution into 25 mL volumetric flask. Dissolve in and dilute to volume with the dissolution medium and mix.",
+              "ingredients": [
+                {
+                  "name": "Alogliptin standard stock solution",
+                  "amount": 10.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "25 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Place one tablet in each vessel and immediately operate the apparatus at the rate specified above. At sampling time point, withdraw 10 mL of the sample solution and filter through a membrane filter in the table below and discard more than the first 5 mL of the filtrate. Use the subsequent filtrate for the test as the sample solution.\nDissolution Parameter\nChromatographic System\nProcedure\nStart the analysis as described below.\nBlank solution can be measured once or more for stabilization.\nSystem Suitability\nNote: Benzoic acid (the retention time is about 4 minutes), Metformin (the retention time is about 5 minutes) and Alogliptin (the retention tiem is about 7 minutes) are eluted in this order.\nThe % RSD for peak area of Alogliptin and Metformin for replicate injections of Standard solution and bracketing standard solution should not be more than 2.0 %.\nThe theoretical plate for Alogliptin and Metformin in standard is not less than 8000, 6000.\nThe tailing factor for Alogliptin and Metformin in standard is not more than 2.0, 2.5.\nCalculation\nASAM\t: Peak area of Alogliptin or Metformin from Sample solution\nASTD\t: Average peak area of Alogliptin or Metformin from standard solution\nWSTD\t: Weight (mg) of Alogliptin benzoate or Metformin Hydrochloride standard taken for standard\nP\t: Content (%) for Alogliptin benzoate or Metformin Hydrochloride standard\nLC\t: Labeled amount of Alogliptin or Metformin hydrochloride\n339.39\t: Molecular weight of Alogliptin\n461.51\t: Molecular weight of Alogliptin benzoate\nNote: Continue testing through the three levels unless the results confirm at either S1 or S2.\n*Q: Quantity, the amount of dissolved active ingredient specified in the individual monograph, expressed as a percentage of the labeled content.\nChrmatogram\nBlend Uniformity\nNote: Chromatographic system, procedures, system suitability follow Assay.\nTest information\nStandard\nReagent\nNote: Use reagent of manufacturer in the above table or equivalent grade.\nSolution stability",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "50 mmol/L Ammonium dihydrogen phosphate solution preparation",
+              "solution_name": "50 mmol/L Ammonium dihydrogen phosphate solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Weigh and transfer about 5.75 g of Ammonium dihydrogen phosphate in water to make 1000 mL.",
+              "ingredients": [
+                {
+                  "name": "Ammonium dihydrogen phosphate",
+                  "amount": 5.75,
+                  "unit": "g"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Mobile phase preparation",
+              "solution_name": "Mobile phase",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix 500 mL of 50 mmol/L Ammonium dihydrogen phosphate solution and 500 mL of acetonitrile and then add about 7.2 g of Sodium dodecyl sulfate and mix well.",
+              "ingredients": [
+                {
+                  "name": "Sodium dodecyl sulfate",
+                  "amount": 7.2,
+                  "unit": "g"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Extracting solvent (0.1mol/L Hydrochloric acid) preparation",
+              "solution_name": "Extracting solvent (0.1mol/L Hydrochloric acid)",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Transfer 8.5 mL of Hydrochloric acid in water to make 1000 mL.",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Diluent solution preparation",
+              "solution_name": "Diluent solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix Methanol and 0.1 mol/L Hydrochloric acid (1:1 v/v).",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Metformin hydrochloride internal standard solution preparation",
+              "solution_name": "Metformin hydrochloride internal standard solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Note: Prepare in consideration of the necessary amount.\nWeigh and transfer about 30 mg of p-methoxyacetophenone into a 100 mL volumetric flask, dilute to volume with diluent. (Concentration: 0.3 mg/mL)",
+              "ingredients": [
+                {
+                  "name": "p-methoxyacetophenone",
+                  "amount": 30.0,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Alogliptin internal standard solution preparation",
+              "solution_name": "Alogliptin internal standard solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Note: Prepare in consideration of the necessary amount.\nTransfer 10 mL of Metformin hydrochloride Internal standard solution into a 100 mL volumetric flask, dilute to volume with diluent. (Concentration: 0.03 mg/mL)",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Alogliptin standard stock solution preparation",
+              "solution_name": "Alogliptin standard stock solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Weigh and transfer about 42.5 mg of Alogliptin benzoate standard (equivalent to 31.25 mg of Alogliptin) into a 50 mL volumetric flask, dilute to volume with extracting solvent.\nTransfer 10 mL of the above solution into a 50 mL volumetric flask, dilute to volume with extracting solvent.",
+              "ingredients": [
+                {
+                  "name": "Alogliptin benzoate",
+                  "amount": 42.5,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 2
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Alogliptin standard solution preparation",
+              "solution_name": "Alogliptin standard solution",
+              "volume_per_batch_ml": 20.0,
+              "preparation_text": "Transfer 5 mL of Alogliptin standard stock solution and transfer 5 mL of Alogliptin internal standard solution into a 20 mL volumetric flask, dilute to volume with extracting solvent.",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "20 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Metformin hydrochloride stock solution preparation",
+              "solution_name": "Metformin hydrochloride stock solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Weigh and transfer about 50 mg of Metformin hydrochloride standard into a 100 mL volumetric flask, dilute to volume with extracting solvent.",
+              "ingredients": [
+                {
+                  "name": "Metformin hydrochloride",
+                  "amount": 50.0,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Metformin hydrochloride standard solution preparation",
+              "solution_name": "Metformin hydrochloride standard solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Transfer 5 mL of Metformin hydrochloride standard stock solution and transfer 5 mL of Metformin hydrochloride internal standard solution into a 50 mL volumetric flask, dilute to volume with extracting solvent.",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Sample stock solution preparation",
+              "solution_name": "Sample stock solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Weigh and transfer whole blend sample (1X~3X) into a 100 mL volumetric flask. Add approximately 70 mL of extracting solvent and shake the flask until all the blend sample have disintegrated completely (usually for 30 minutes) by using a mechanical shaker. Make up to the mark with extracting solvent and mix well. Centrifuge 3000 rpm for 5 minutes.",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": null,
+                  "material": null,
+                  "manufacturer": null,
+                  "filter_type": "centrifuge",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Alogliptin sample solution preparation",
+              "solution_name": "Alogliptin sample solution",
+              "volume_per_batch_ml": 20.0,
+              "preparation_text": "Pipette 4 mL of resulting supernatant of the sample stock solution after centrifuge into a 20 mL volumetric flask. Add exactly 5 mL of internal standard solution for alogliptin, and then make up to the mark with extracting solvent to volume and mix well. Filter the solution through 0.45 µm membrane filter having a porosity of 0.45 μm. Discard more than the first 5 mL or more of the filtrate.",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "20 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": null,
+                  "material": null,
+                  "manufacturer": null,
+                  "filter_type": "centrifuge",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Metformin hydrochloride sample solution preparation",
+              "solution_name": "Metformin hydrochloride sample solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Calculation\nQSAM: Peak area ratio of Alogliptin or Metformin/Internal standard from Sample solution\nQSTD: Average peak area ratio of Alogliptin or Metformin/Internal standard from standard solution\nWSTD: Weight (mg) of Alogliptin benzoate or Metformin Hydrochloride standard taken for standard solution\nWSAM: Weight (mg) of Sample taken for sample solution\nTW: Theoretical weight of blend\nP: Content (%) for Alogliptin benzoate or Metformin Hydrochloride standard\nLC: Labeled amount of Alogliptin or Metformin hydrochloride\n0.735: Molecular weight of Alogliptin / Molecular weight of Alogliptin benzoate",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            }
+          ],
+          "standards": [
+            {
+              "std_name": "Alogliptin benzoate",
+              "grade": "working standard or reference standard"
+            },
+            {
+              "std_name": "Metformin Hydrochloride",
+              "grade": "working standard or reference standard"
+            }
+          ],
+          "hplc_conditions": {
+            "column_spec": "YMC-Pack Pro C8 (5µm, 6.0 mm x 15 cm) or Equivalent."
+          }
+        },
+        {
+          "name": "Uniformity of dosage units (Content Uniformity)",
+          "preparations": [
+            {
+              "section_name": "Sample stock solution preparation",
+              "solution_name": "Sample stock solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Transfer 1 tablet to a 50 mL volumetric flask, add about 35 mL of extracting solvent, shake the flask until tablet has disintegrated completely by using a mechanical shaker for 30 minutes. Dilute to volume with the extracting solvent to volume and centrifuge this solution (3000rpm, 5min)",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": null,
+                  "material": null,
+                  "manufacturer": null,
+                  "filter_type": "centrifuge",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Alogliptin sample solution preparation",
+              "solution_name": "Alogliptin sample solution",
+              "volume_per_batch_ml": 20.0,
+              "preparation_text": "Transfer 5 mL of of supernatant of the sample stock solution after centrifuge and transfer 5 mL of Alogliptin internal standard solution into a 20 mL volumetric flask, dilute to volume with extracting solvent.\nFilter the solution through 0.45 µm membrane filter in the table below and discard more than the first 5 mL of the filtrate and use the subsequent filtrate as Alogliptin sample solution.",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "20 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": null,
+                  "material": null,
+                  "manufacturer": null,
+                  "filter_type": "centrifuge",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Metformin hydrochloride sample solution preparation",
+              "solution_name": "Metformin hydrochloride sample solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Transfer 5 mL of supernatant of the sample stock solution after centrifuge into a 100 mL volumetric, dilute to volume with extracting solvent.\nTransfer 5 mL of this solution and transfer 5 mL of Metformin hydrochloride internal standard solution into a 50 mL volumetric flask, dilute to volume with extracting solvent. Filter the solution through 0.45 µm Nylon membrane filter and discard the more than first 5 mL of the filtrate and use the subsequent filtrate as Metformin Hydrochloride sample solution.\nCalculation\nQSAM\t: Peak area ratio of Alogliptin or Metformin/Internal standard from Sample solution\nQSTD\t: Average peak area ratio of Alogliptin or Metformin/Internal standard from standard solution\nWSTD\t: Weight (mg) of Alogliptin benzoate or Metformin Hydrochloride standard taken for standard\nP\t: Content (%) for Alogliptin benzoate or Metformin Hydrochloride standard\nLC\t: Labeled amount of Alogliptin or Metformin hydrochloride\n0.735\t: Molecular weight of Alogliptin / Molecular weight of Alogliptin benzoate\nAcceptance value (AV)\nCalculate the Acceptance value as follows:\nAcceptance value (AV) = | M –  | + ks\nThe requirements for dosage uniformity are met if the acceptance value of the first 10 dosage units is less than or equal to L1 %, maximum allowed acceptance value\nIf the acceptance value is > L1 %, test additional 20 units and calculate the acceptance value. The requirements are met if the final acceptance value of the 30 dosage units is ≤ L1 %, and no individual content of any dosage units is less than [1-(0.01) (L2)]M nor more than [1+(0.01) (L2)]M as specified in the calculation of Acceptance Value under Content Uniformity or weight variation. Unless otherwise specified in L1 is 15.0 and L2 is 25.0.",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": null,
+                  "material": null,
+                  "manufacturer": null,
+                  "filter_type": "centrifuge",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Assay",
+          "preparations": [
+            {
+              "section_name": "50mmol/L Ammonium dihydrogen phosphate solution preparation",
+              "solution_name": "50mmol/L Ammonium dihydrogen phosphate solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Weigh and transfer about 5.75 g of Ammonium dihydrogen phosphate in water to make 1000 mL.",
+              "ingredients": [
+                {
+                  "name": "Ammonium dihydrogen phosphate",
+                  "amount": 5.75,
+                  "unit": "g"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Mobile phase preparation",
+              "solution_name": "Mobile phase",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix 500 mL of 50 mmol/L Ammonium dihydrogen phosphate solution and 500 mL of acetonitrile and then add about 7.2 g of Sodium dodecyl sulfate and mix well.",
+              "ingredients": [
+                {
+                  "name": "Sodium dodecyl sulfate",
+                  "amount": 7.2,
+                  "unit": "g"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Extracting solvent (0.1mol/L Hydrochloric acid) preparation",
+              "solution_name": "Extracting solvent (0.1mol/L Hydrochloric acid)",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Transfer 8.5 mL of Hydrochloric acid in water to make 1000 mL.",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Diluent solution preparation",
+              "solution_name": "Diluent solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Mix Methanol and 0.1 mol/L Hydrochloric acid (1:1 v/v).",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Metformin hydrochloride internal standard solution preparation",
+              "solution_name": "Metformin hydrochloride internal standard solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Note: Prepare in consideration of the necessary amount.\nWeigh and transfer about 30 mg of p-methoxyacetophenone into a 100 mL volumetric flask, dilute to volume with diluent. (Concentration: 0.3 mg/mL)",
+              "ingredients": [
+                {
+                  "name": "p-methoxyacetophenone",
+                  "amount": 30.0,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Alogliptin internal standard solution preparation",
+              "solution_name": "Alogliptin internal standard solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Note: Prepare in consideration of the necessary amount.\nTransfer 10 mL of Metformin hydrochloride Internal standard solution into a 100 mL volumetric flask, dilute to volume with diluent. (Concentration: 0.03 mg/mL)",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Alogliptin standard stock solution preparation",
+              "solution_name": "Alogliptin standard stock solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Weigh and transfer about 42.5 mg of Alogliptin benzoate standard (equivalent to 31.25 mg of Alogliptin) into a 50 mL volumetric flask, dilute to volume with extracting solvent.\nTransfer 10 mL of above solution into a 50 mL volumetric flask, dilute to volume with extracting solvent.",
+              "ingredients": [
+                {
+                  "name": "Alogliptin benzoate",
+                  "amount": 42.5,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 2
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Alogliptin standard solution preparation",
+              "solution_name": "Alogliptin standard solution",
+              "volume_per_batch_ml": 20.0,
+              "preparation_text": "Transfer 5 mL of Alogliptin standard stock solution and transfer 5 mL of Alogliptin internalstandard solution into a 20 mL volumetric flask, dilute to volume with extracting solvent.",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "20 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Metformin hydrochloride stock solution preparation",
+              "solution_name": "Metformin hydrochloride stock solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Weigh and transfer about 50 mg of Metformin hydrochloride standard into a 100 mL volumetric flask, dilute to volume with extracting solvent.",
+              "ingredients": [
+                {
+                  "name": "Metformin hydrochloride",
+                  "amount": 50.0,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Metformin hydrochloride standard solution preparation",
+              "solution_name": "Metformin hydrochloride standard solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Transfer 5 mL of Metformin hydrochloride standard stock solution and transfer 5 mL of Metformin hydrochloride internal standard solution into a 50 mL volumetric flask, dilute to volume with extracting solvent.",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Sample stock solution preparation",
+              "solution_name": "Sample stock solution",
+              "volume_per_batch_ml": 500.0,
+              "preparation_text": "Transfer 10 tablets into a 500 mL volumetric flask, add about 350 mL of extracting solvent, shake for 30 minutes until the tablets completely disintegrate, dilute to volume with extracting solvent and then centrifuge. (3000 rpm, 5min)",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "500 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": null,
+                  "material": null,
+                  "manufacturer": null,
+                  "filter_type": "centrifuge",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Alogliptin sample solution preparation",
+              "solution_name": "Alogliptin sample solution",
+              "volume_per_batch_ml": 20.0,
+              "preparation_text": "Transfer 5 mL of the resulting supernatant of sample stock solution after centrifuge and transfer 5 mL of Alogliptin internal standard solution into a 20 mL volumetric flask, dilute to volume with extracting solvent.\nFilter the solution through 0.45 µm membrane filter in the table below and discard more than the first 5 mL of the filtrate and use the subsequent filtrate as Alogliptin sample solution.",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "20 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": null,
+                  "material": null,
+                  "manufacturer": null,
+                  "filter_type": "centrifuge",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Metformin hydrochloride sample solution preparation",
+              "solution_name": "Metformin hydrochloride sample solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Transfer 5 mL of above solution into a 100 mL volumetric, dilute to volume with extracting solvent.\nTransfer 5 mL of this solution and transfer 5 mL of Metformin hydrochloride internal standard solution into a 50 mL volumetric flask, dilute to volume with extracting solvent.\nFilter the solution through 0.45 µm Nylon membrane filter and discard more than the first 5 mL of the filtrate and use the subsequent filtrate as Metformin Hydrochloride sample solution.\nChromatographic System\nProcedure\nNote: Benzoate, p-Methoxyacetophenone, Alogliptin are eluted in that order in chromatogram of Alogliptin standard solution. Metformin, p-Methoxyacetophenone are eluted in that order in chromatogram of Metformin hydrochloride standard solution.\nNote: When Alogliptin and metformin analysis are performed separately, metformin hydrochloride standard solution is repeatedly injected 5 times and a bracketing analysis is performed with the metformin hydrochloride standard solution.\nStart the analysis as described below.\nBlank solution can be measured once or more for stabilization.\nSystem Suitability\nThe % RSD for peak area ratio of Alogliptin and Metformin for replicate injections of Standard solution and bracketing standard solution is not more than 1.0 %.\nNote: Peak area ratio = Alogliptin or Metformin peak area/Internal standard peak area\nThe Resolution between p-Methoxyacetophenone and Alogliptin in Alogliptin standard is not less than 2.5.\nThe Resolution between Metformin and p-Methoxyacetophenone in Metformin hydrochloride standard is not less than 2.5.\nThe tailing factor for Alogliptin in Alogliptin standard is not more than 2.0.\nThe tailing factor for Metformin hydrochloride in Metformin hydrochloride standard is not more than 2.5.\nCalculation\nQSAM\t: Peak area ratio of Alogliptin or Metformin/Internal standard from Sample solution\nQSTD\t: Average peak area ratio of Alogliptin or Metformin/Internal standard from standard solution\nWSTD\t: Weight (mg) of Alogliptin benzoate or Metformin Hydrochloride standard taken for standard\nP\t: Content (%) for Alogliptin benzoate or Metformin Hydrochloride standard\nN\t: Number of tablets\nLC\t: Labeled amount of Alogliptin or Metformin hydrochloride\n0.735\t: Molecular weight of Alogliptin / Molecular weight of Alogliptin benzoate\nChrmatogram",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            }
+          ],
+          "standards": [
+            {
+              "std_name": "Alogliptin benzoate",
+              "grade": "working standard or reference standard"
+            },
+            {
+              "std_name": "Metformin hydrochloride",
+              "grade": "working standard or reference standard"
+            },
+            {
+              "std_name": "p-Methoxyacetophenone",
+              "grade": "working standard or reference standard"
+            }
+          ],
+          "hplc_conditions": {
+            "column_spec": "YMC-Pack Pro C8 (5 μm, 6.0 mm x 15 cm), YMC Co., Ltd or Equivalent."
+          }
+        },
+        {
+          "name": "Related substances",
+          "preparations": [
+            {
+              "section_name": "Mobile phase A preparation",
+              "solution_name": "Mobile phase A",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Water: Acetonitrile: Trifluoroacetic acid (1900:100:1).",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Mobile phase B preparation",
+              "solution_name": "Mobile phase B",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Acetonitrile: Water: Trifluoroacetic acid (1900:100:1).",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Extracting solvent (0.1 mol/L Hydrochloric acid solution) preparation",
+              "solution_name": "Extracting solvent (0.1 mol/L Hydrochloric acid solution)",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Transfer 8.5 mL of Hydrochloric acid in water to make 1000 mL.",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Alogliptin standard stock solution preparation",
+              "solution_name": "Alogliptin standard stock solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Weigh and transfer about 42.5 mg of Alogliptin benzoate standard (equivalent to 31.25 mg of Alogliptin) into a 50 mL volumetric flask, dilute to volume with extracting solvent.\nTransfer 10 mL of above solution into a 25 mL volumetric flask, dilute to volume with extracting solvent.",
+              "ingredients": [
+                {
+                  "name": "Alogliptin benzoate",
+                  "amount": 42.5,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "volumetric flask",
+                  "size": "25 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Alogliptin standard solution preparation",
+              "solution_name": "Alogliptin standard solution",
+              "volume_per_batch_ml": 200.0,
+              "preparation_text": "Transfer 1 mL of Alogliptin standard stock solution into a 200 mL volumetric flask, dilute to volume with extracting solvent.",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "200 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Quantitation limit solution preparation",
+              "solution_name": "Quantitation limit solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Transfer 5 mL of Alogliptin standard solution into a 50 mL volumetric flask, dilute to volume with extracting solvent.",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": 500.0,
+              "preparation_text": "Transfer 10 tablets into a 500 mL volumetric flask, add about 350 mL of extracting solvent, shake for 30 minutes until the tablets completely disintegrate, dilute to volume with extracting solvent and then centrifuge (3000 rpm, 5 min).\nFilter the above solution through 0.45 µm membrane filter in the table below and discard more than the first 5 mL of the filtrate and use the subsequent filtrate as Alogliptin sample solution.\nChromatographic System\nProcedure\nStart the analysis as described below.\nBlank solution can be measured once or more for stabilization.\nInject once per 1 vial when injecting a standard solution.\nRRT and Corrective factor(F) information\nSystem Suitability\nThe % RSD for peak area ratio of Alogliptin for replicate injections of Standard solution and bracketing standard solution is not more than 5.7 %.\nBenzoic acid and Alogliptin are eluted in this order, the resolution between the Benzoic acid and Alogliptin peak in standard is not less than 3.0.\nThe tailing factor for Alogliptin in standard is not more than 3.0.\nThe peak area ratio of the standard solution and the quantitation limit solution is 7~13.\nCalculation\nASAM\t: Peak area of Alogliptin from Sample solution\nASTD\t: Average peak area of Alogliptin from standard solution\nWSTD\t: Weight (mg) of Alogliptin benzoate standard taken for standard\nP\t: Content (%) for Alogliptin benzoate standard\n0.735\t: Molecular weight of Alogliptin / Molecular weight of Alogliptin benzoate\nF\t: Correction factor\nLOD and LOQ Information (Alogliptin)\nLOD: 0.02%, LOQ: 0.05%\nLOD: 0.02%, LOQ: 0.05%\nChrmatogram\nMetformin hydrochloride\nTest information\nStandard\nReagent\nNote: Use reagent of manufacturer in the above table or equivalent grade.\nSolution stability",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "500 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": null,
+                  "material": null,
+                  "manufacturer": null,
+                  "filter_type": "centrifuge",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Mobile phase A preparation",
+              "solution_name": "Mobile phase A",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Weigh and dissolve about 1.74 g of Sodium 1-pentanesulfonate and about 1.15 g of Ammonium dihydrogen phosphate in water to 1000 mL. Mix well.",
+              "ingredients": [
+                {
+                  "name": "Sodium 1-pentanesulfonate",
+                  "amount": 1.74,
+                  "unit": "g"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Mobile phase B preparation",
+              "solution_name": "Mobile phase B",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Acetonitrile: Water (7:3).",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Diluent preparation",
+              "solution_name": "Diluent",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Use mobile phase A.",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Metformin hydrochloride standard stock solution preparation",
+              "solution_name": "Metformin hydrochloride standard stock solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Transfer about 25 mg of Metformin hydrochloride standard, accurately weighed, to a 100 mL volumetric flask. Dissolve in and dilute with diluent to volume.",
+              "ingredients": [
+                {
+                  "name": "Metformin hydrochloride",
+                  "amount": 25.0,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Metformin hydrochloride standard solution preparation",
+              "solution_name": "Metformin hydrochloride standard solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Pipette 2 mL of Metformin hydrochloride standard stock solution into 100 mL volumetric flask. Dilute with diluent to volume.",
+              "ingredients": [
+                {
+                  "name": "Metformin hydrochloride standard stock solution",
+                  "amount": 2.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Quantitation limit solution preparation",
+              "solution_name": "Quantitation limit solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Pipette 1 mL of Metformin hydrochloride standard solution into 50 mL volumetric flask. Dilute with diluent to volume.",
+              "ingredients": [
+                {
+                  "name": "Metformin hydrochloride standard solution",
+                  "amount": 1.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Resolution solution preparation",
+              "solution_name": "Resolution solution",
+              "volume_per_batch_ml": 25.0,
+              "preparation_text": "Transfer about 2.5 mg of Cyanoguanidine, about 2.5 mg of melamine and about 2.5 mg of N,N-dimethyl-1, 3, 5-triazine-2,4,6-triamine into 25 mL of volumetric flask. Dissolve in and dilute with diluent to volume.\nPipette 2 mL of this solution and 2 mL of Metformin hydrochloride standard stock solution into 100 mL volumetric flask. Dilute with diluent to volume.",
+              "ingredients": [
+                {
+                  "name": "Cyanoguanidine",
+                  "amount": 2.5,
+                  "unit": "mg"
+                },
+                {
+                  "name": "this solution",
+                  "amount": 2.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "25 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": 500.0,
+              "preparation_text": "Transfer 10 tablets into a 500 mL volumetric flask. Add about 350 mL of diluent, shake for about 30 minutes until the tablets completely disintegrate, dilute to volume with the diluent and then centrifuge (3000 rpm, 5min).\nTransfer 5 mL of the supernatant into 50 mL volumetric flask, dilute to volume with diluent. Filter this solution through 0.45 μm membrane filter in the table below and discard more than the first 5 mL of the filtrate and use the subsequent filtrate as sample solution.\nChromatographic System\nProcedure\nStart the analysis as described below.\nBlank solution can be measured once or more for stabilization.\nRRT and Corrective factor(F) information\nLOD and LOQ Information\nSystem Suitability\nThe % RSD for peak area of Metformin for replicate injections of Standard solution and bracketing standard solution is not more than 5.7 %.\nThe Resolution between Melamine and Metformin in resolution solution is not less than 4.\nThe tailing factor for Metformin in resolution solution is not more than 1.5.\nThe peak area ratio of the standard solution and the quantitation limit solution is 30~70.\nCalculation\nASAM\t: Peak area of Metformin from Sample solution\nASTD\t: Average peak area of Metformin from standard solution\nWSTD\t: Weight (mg) of Metformin hydrochloride standard taken for standard\nP\t: Content (%) for Metformin hydrochloride standard\nLC\t: Labeled amount of Metformin hydrochloride\nF\t: Correction factor\nChrmatogram",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "500 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": null,
+                  "material": null,
+                  "manufacturer": null,
+                  "filter_type": "centrifuge",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ],
+          "standards": [
+            {
+              "std_name": "Alogliptin benzoate",
+              "grade": "working standard or reference standard"
+            }
+          ],
+          "hplc_conditions": {
+            "column_spec": "Develosil C30-UG-5 (5 μm, 4.6 mm x 15 cm), or Equivalent"
+          }
+        }
+      ]
+    },
+    {
       "id": "STM-CP025-T0.doc",
       "doc_no": "STM-CP025-T0",
       "stm_file": "STM-CP025-T0.doc.docx",
@@ -1159,7 +2184,13 @@
                 "scales_with_batch": false
               }
             ]
-          }
+          },
+          "standards": [
+            {
+              "std_name": "Amlodipine besylate",
+              "grade": "Working standard or Reference standard"
+            }
+          ]
         },
         {
           "name": "Dissolution (Method B)",
@@ -1479,7 +2510,13 @@
                 "scales_with_batch": false
               }
             ]
-          }
+          },
+          "standards": [
+            {
+              "std_name": "Azilsartan medoxomil potassium",
+              "grade": "Working standard or Reference standard"
+            }
+          ]
         },
         {
           "name": "Uniformity of dosage units (Content Uniformity)",
@@ -1847,7 +2884,22 @@
                 }
               ]
             }
-          ]
+          ],
+          "standards": [
+            {
+              "std_name": "Azilsartan medoxomil potassium",
+              "grade": "Working standard or Reference standard"
+            },
+            {
+              "std_name": "Amlodipine besylate",
+              "grade": ""
+            }
+          ],
+          "hplc_conditions": {
+            "column_spec": "YMC Triart C18, 4.6 x 250 mm, 5 µm",
+            "flow_rate_ml_min": 1.0,
+            "run_time_min": 35.0
+          }
         },
         {
           "name": "Related substances (Method A)",
@@ -2049,7 +3101,20 @@
                 }
               ]
             }
-          ]
+          ],
+          "standards": [
+            {
+              "std_name": "Azilsartan medoxomil potassium",
+              "grade": "Working standard or Reference standard"
+            },
+            {
+              "std_name": "Amlodipine besylate",
+              "grade": ""
+            }
+          ],
+          "hplc_conditions": {
+            "column_spec": "INNO C18, 4.6 x 250 mm, 3 µm"
+          }
         },
         {
           "name": "Related substances (Method B)",
@@ -4833,98 +5898,6 @@
               }
             ]
           }
-        },
-        {
-          "name": "Water content by KF",
-          "preparations": []
-        },
-        {
-          "name": "Polymorphism by PXRD",
-          "preparations": [
-            {
-              "section_name": "Sample preparation",
-              "solution_name": "Sample (for 50 mg)",
-              "volume_per_batch_ml": null,
-              "preparation_text": "Take not less than 40 tablets into mortar. Crush gently with pestle. Filter the powder using the No.45 testing sieve(355μm). Place the filtered powder in the sample holder.",
-              "ingredients": [],
-              "glassware": [
-                {
-                  "type": "mortar",
-                  "size": "-",
-                  "count_per_batch": 1
-                }
-              ],
-              "filters": []
-            },
-            {
-              "section_name": "Sample preparation",
-              "solution_name": "Sample (for 100 mg)",
-              "volume_per_batch_ml": null,
-              "preparation_text": "Take not less than 50 tablets into mortar. Crush gently with pestle. Filter the powder using the No.45 testing sieve(355μm). Place the filtered powder in the sample holder.",
-              "ingredients": [],
-              "glassware": [
-                {
-                  "type": "mortar",
-                  "size": "-",
-                  "count_per_batch": 1
-                }
-              ],
-              "filters": []
-            },
-            {
-              "section_name": "Sample preparation",
-              "solution_name": "Sample (for 200 mg)",
-              "volume_per_batch_ml": null,
-              "preparation_text": "Take not less than 10 tablets into mortar. Crush gently with pestle. Filter the powder using the No.45 testing sieve(355μm). Place the filtered powder in the sample holder.\nXRD system\nProcedure\nPlace the test sample on sample holder, pack and smooth its surface with a glass slide (or equivalent) and place the sample holder carefully in auto sampler rack and record the diffractogram.\nThe diffractogram of the test sample should match with the Sacubitril Valsartan sodium crystalline form-I 2θ values(± 0.2 °) defined in the table below.\nInformation of 2θ peak",
-              "ingredients": [],
-              "glassware": [
-                {
-                  "type": "mortar",
-                  "size": "-",
-                  "count_per_batch": 1
-                }
-              ],
-              "filters": []
-            }
-          ]
-        },
-        {
-          "name": "Microbial Enumeration Test",
-          "preparations": [
-            {
-              "section_name": "Sample solution preparation (Dilution factor 1:10)",
-              "solution_name": "Sample solution (Dilution factor 1:10)",
-              "volume_per_batch_ml": null,
-              "preparation_text": "Put 10 g of sample into 90 mL of diluent and mix it to homogenize.",
-              "ingredients": [],
-              "glassware": [],
-              "filters": []
-            },
-            {
-              "section_name": "Sample solution preparation (Dilution factor 1:50)",
-              "solution_name": "Sample solution (Dilution factor 1:50)",
-              "volume_per_batch_ml": null,
-              "preparation_text": "Add 20 mL of the sample solution (Dilution factor 1:10) to 80 mL of diluent. And shake it to suspension.\nTotal Aerobic Microbial Count (TAMC) Test\nPlace 2 petri dishes and transfer 1 mL of sample solution (Dilution factor 1:50) into each petri dish.\nPour 15 ~ 20 mL of TSA to each petri dish with sample solution dispersed. Swirl the petri dishes slowly to mix sample with media.\nIncubate at 30 - 35 ˚C for 5 days.\nPerform interim colony counting on days 2-4 and final colony counting on days 5 of incubation.\nNote: It can be possible to incubate additionally 2 days (Total 7 days).\nAfter incubation, resulting value is calculated by averaging the values obtained by multiplying dilution rate 50 to colony number detected from each petri dish.\nTotal Combined Yeasts and Molds Count (TYMC) Test\nPlace 2 petri dishes and transfer 1 mL of sample solution (Dilution factor 1:10) into each petri dish.\nPour 15 ~ 20 mL of SDA to each petri dish with sample solution dispersed. Swirl the petri dishes slowly to mix sample with media.\nIncubate at 20 - 25 ˚C for 7 days.\nPerform Interim colony counting on days 3-5 and final colony counting on days 7 of incubation.\nAfter incubation, resulting value is calculated by averaging the values obtained by multiplying dilution rate 10 to colony number detected from each petri dish.\nNegative Control Test\nPerform tests using diluent without sample in the same as the above procedure.\nSpecified Microorganisms Test: Escherichia coli (E.coli)\nMedia\nTest Method\nNote: Test method is selection culture method of E. coli using selective media (MCB) and confirmatory medium (MCA).",
-              "ingredients": [
-                {
-                  "name": "sample solution (Dilution factor 1:10)",
-                  "amount": 20.0,
-                  "unit": "ml"
-                }
-              ],
-              "glassware": [],
-              "filters": []
-            },
-            {
-              "section_name": "Sample Solution Preparation",
-              "solution_name": "Sample Solution",
-              "volume_per_batch_ml": null,
-              "preparation_text": "Note: Sample solution (Dilution factor 1:10) of microbial enumeration test that is the same sample solution method can be used.\nPut 10 g of sample into 90 mL of diluent and mix it to homogenize.\nPre-incubation\nTransfer 10 mL of sample solution into the 90 mL of TSB. After that, mix the sample to homogenize.\nIncubate at 30-35 ℃ for 18-24 hours.\nSelection and Subculture\nShake the container, and transfer 1 mL of incubated TSB to 100 mL MCB.\nIncubate at 42-44 ℃ for 24-48 hours.\nStreak incubated MCB on the surface of MCA using inoculating loop.\nIncubate at 30-35 ℃ for 18-72 hours.\nNote: It can be possible to incubate additionally 48 hours (Total 120 hours).\nAfter incubation, confirm the growth of colonies on the surface of MCA.\nGrowth of colonies indicates the possible presence of E.coli, This is confirmed by identification tests, and follow the QS09004 Microbial Impact Assessment Procedure to determine whether MIA is required.\nNegative Control Test\nPerform tests without sample in the same as the above procedure.",
-              "ingredients": [],
-              "glassware": [],
-              "filters": []
-            }
-          ]
         }
       ]
     }

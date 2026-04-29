@@ -378,7 +378,7 @@ def calculate_resources(
             other_theor = other.get("theoretical_volume_ml") or 0
             scale = (other_theor / other_vol) if other_vol else 1.0
             for ing in other.get("ingredients", []):
-                if (ing.get("name") or "") == sol_name_exact and \
+                if (ing.get("name") or "").lower() == sol_name_exact.lower() and \
                    ing.get("unit", "").lower() == "ml":
                     total_used += float(ing.get("amount", 0)) * scale
         if total_used > 0:

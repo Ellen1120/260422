@@ -708,6 +708,9 @@ def _extract_hplc_conditions_per_section(doc) -> dict[str, dict]:
         if elem_type == 'para':
             canonical = _get_canonical_test_item_name(elem_data)
             if canonical:
+                # 섹션 전환 시 미처리 pending_hplc가 있으면 현재 섹션에 저장
+                if pending_hplc is not None and current_section and current_section not in result:
+                    result[current_section] = pending_hplc
                 current_section = canonical
                 pending_hplc = None
             continue
@@ -721,35 +724,53 @@ def _extract_hplc_conditions_per_section(doc) -> dict[str, dict]:
         run_key  = next((k for k in row_map if re.match(r'^(?:run\s*time|분석\s*시간)', k, re.IGNORECASE)), None)
 
         col_key = next((k for k in row_map if re.match(r'^(?:column|칼럼)\s*$', k, re.IGNORECASE)), None)
+        # 첫 행이 'Column | <spec>' 형태인 경우도 col_key로 처리
+        col_spec_from_header = None
+        if not col_key and len(rows) > 0 and len(rows[0]) >= 2:
+            if re.match(r'^(?:column|칼럼)\s*$', rows[0][0], re.IGNORECASE):
+                col_spec_from_header = rows[0][1].strip()
         if flow_key and run_key and current_section not in result:
             fm = re.search(r'(\d+(?:\.\d+)?)', row_map[flow_key])
             rm = re.search(r'(\d+(?:\.\d+)?)', row_map[run_key])
             if fm and rm:
+                col_val = (row_map[col_key].strip() if col_key else col_spec_from_header)
                 pending_hplc = {
                     "flow_rate_ml_min": float(fm.group(1)),
                     "run_time_min":     float(rm.group(1)),
-                    "column_spec": row_map[col_key].strip() if col_key else None,
+                    "column_spec": col_val,
+                    "injections": [],
+                }
+            continue
+        # Run time 없이 Column + Flow rate만 있어도 column_spec 추출 목적으로 pending_hplc 설정
+        if (col_key or col_spec_from_header) and flow_key and not run_key and current_section not in result:
+            fm = re.search(r'(\d+(?:\.\d+)?)', row_map[flow_key])
+            col_val = (row_map[col_key].strip() if col_key else col_spec_from_header)
+            if fm and col_val:
+                pending_hplc = {
+                    "flow_rate_ml_min": float(fm.group(1)),
+                    "run_time_min":     None,
+                    "column_spec": col_val,
                     "injections": [],
                 }
             continue
 
         if pending_hplc is not None:
             header = rows[0]
-            if (len(header) >= 2
-                    and re.match(r'^solution', header[0], re.IGNORECASE)
-                    and re.match(r'^injection', header[1], re.IGNORECASE)):
+            # [Solution, Injection] 또는 [No., Solution, Injection] 형태 모두 처리
+            sol_col = next((i for i, h in enumerate(header) if re.match(r'^solution', h, re.IGNORECASE)), None)
+            inj_col = next((i for i, h in enumerate(header) if re.match(r'^injection', h, re.IGNORECASE)), None)
+            if sol_col is not None and inj_col is not None:
                 for row in rows[1:]:
-                    if len(row) < 2:
+                    if len(row) <= max(sol_col, inj_col):
                         continue
                     # 각주 표기 제거: "2¹⁾" → "21)" → "2"
-                    # 후미 단일 숫자+")" 패턴(각주 마커)만 제거
-                    raw_count = re.sub(r'\d\)\s*$', '', row[1].strip()).strip()
-                    count_m = re.search(r'(\d+)', raw_count) or re.search(r'(\d+)', row[1])
+                    raw_count = re.sub(r'\d\)\s*$', '', row[inj_col].strip()).strip()
+                    count_m = re.search(r'(\d+)', raw_count) or re.search(r'(\d+)', row[inj_col])
                     count   = int(count_m.group(1)) if count_m else 1
                     pending_hplc["injections"].append({
-                        "solution":          row[0].strip(),
+                        "solution":          row[sol_col].strip(),
                         "count":             count,
-                        "scales_with_batch": bool(re.search(r'\bsample\b|검액', row[0], re.IGNORECASE)),
+                        "scales_with_batch": bool(re.search(r'\bsample\b|검액', row[sol_col], re.IGNORECASE)),
                     })
                 result[current_section] = pending_hplc
                 pending_hplc = None
@@ -958,7 +979,7 @@ def _extract_standards_per_section(doc) -> dict[str, list[dict]]:
 
         header = rows[0]
         std_name_col = next(
-            (i for i, h in enumerate(header) if re.match(r'(?:std\s*name|표준품)', h, re.IGNORECASE)),
+            (i for i, h in enumerate(header) if re.match(r'(?:std(?:\s*name)?|standard(?:\s+name)?|표준품)', h, re.IGNORECASE)),
             None,
         )
         if std_name_col is None:
