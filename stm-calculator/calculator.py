@@ -17,8 +17,9 @@ _RE_ASSAY       = re.compile(r'^assay$', re.IGNORECASE)
 _RE_STD_PREP    = re.compile(r'standard\s+(?:stock\s+)?solution', re.IGNORECASE)
 # 함량 지정 조제 패턴: "Standard solution (for 50 mg)"
 _RE_FOR_STRENGTH = re.compile(r'\(\s*for\s+(.+?)\s*\)', re.IGNORECASE)
-# 피펫 집계 대상: 표준원액/표준액/이동상/희석액 포함 (검액 제외 - 대용량 vessel 전달)
-_RE_PIPETTE_SOURCE  = re.compile(r'sample|standard|이동상|희석액|표준원액|표준액|mobile\s*phase|diluent', re.IGNORECASE)
+# 피펫 집계 대상: 검액 및 표준액만 포함 (용액 조제 시약류 제외 규칙 반영)
+_RE_PIPETTE_SOURCE  = re.compile(r'sample|standard|표준원액|표준액', re.IGNORECASE)
+
 _RE_SAMPLE_OR_STD   = re.compile(r'sample|standard', re.IGNORECASE)
 _RE_RATIO = re.compile(
     r'Mix\s+(.+?)\s+and\s+(.+?)\s+in\s+the\s+ratio\s+of\s+'

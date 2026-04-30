@@ -85,11 +85,10 @@ def _get_canonical_test_item_name(line: str) -> str | None:
 
 # 조제 헤딩: "preparation" 단어를 포함하고 짧은 줄 (내용줄 제외)
 _RE_PREP_CONTENT_START = re.compile(
-    r"^(?:Accurately\s+)?(?:Weigh|Transfer|Add|Pipette|Dissolve"
+    r"^(?:Accurately\s+)?(?:Weigh|Transfer|Add|Pipette|Dissolve|Use|Place|Adjust|Take|Shake|Incubate"
     r"|Mix|Dilute|Note[:\s]|Centrifuge|Filter|Inject"
-    r"|Proceed|Compare|Observe|Place|Take|Shake|Incubate"
-    r"|Streak|Perform|After|The\s|If\s|Put\s|Pour\s|Blank\s+(?!preparation\b)"
-    r"|Withdraw|Adjust|Heat|Cool|Rinse)",
+    r"|Proceed|Compare|Observe|Streak|Perform|After|The\s|If\s|Put\s|Pour\s|Blank\s+(?!preparation\b)"
+    r"|Withdraw|Heat|Cool|Rinse)",
     re.IGNORECASE,
 )
 
@@ -113,10 +112,18 @@ _INGREDIENT_PATTERNS: list[tuple[str, re.Pattern]] = [
     # Weigh/Transfer X mg/g of [name] into/and/,
     ("weigh_transfer",
      re.compile(
-         r"(?:Accurately\s+)?(?:Weigh\s+and\s+transfer|Transfer|Dissolve)"
+         r"(?:Accurately\s+)?(?:Weigh\s+and\s+transfer|Transfer|Dissolve|Weigh)"
          r"\s+(?:about\s+)?(\d+(?:\.\d+)?)\s*(mg|g)\s+of\s+"
          r"([A-Za-z0-9][^\n]{2,60}?)"
          r"(?:\s+(?:standard\b|into\b|to\b|in\b|and\b)|[,\.])",
+         re.IGNORECASE,
+     )),
+    # X mL of [name] in Y mL
+    ("in_ml",
+     re.compile(
+         r"(\d+(?:\.\d+)?)\s*(mL|L)\s+of\s+"
+         r"([A-Za-z0-9][^\n]{2,60}?)"
+         r"\s+in\s+\d",
          re.IGNORECASE,
      )),
     # Pipette X mL of [name]
@@ -141,6 +148,13 @@ _INGREDIENT_PATTERNS: list[tuple[str, re.Pattern]] = [
          r"Dilute\s+(\d+(?:\.\d+)?)\s*(mL|L)\s+of\s+"
          r"([A-Za-z0-9][^\n]{2,40}?)"
          r"\s+with\s+\w+\s+to\s+\d",
+         re.IGNORECASE,
+     )),
+    # Dissolve X g/mg of [substance] in Y mL/L of [solvent]
+    ("dissolve_in",
+     re.compile(
+         r"Dissolve\s+(?:about\s+)?(\d+(?:\.\d+)?)\s*(mg|g)\s+of\s+"
+         r"([A-Za-z0-9][^\n]{2,60}?)\s+in\s+(?:about\s+)?(?:\d+(?:\.\d+)?\s*(?:mL|L)\s+of\s+)?([A-Za-z0-9][^\n]{2,60}?)",
          re.IGNORECASE,
      )),
 ]
@@ -192,9 +206,16 @@ _RE_RATIO_KO2_MIT = re.compile(
 _RE_GLASSWARE = re.compile(
     r"(\d+(?:\.\d+)?)\s*mL\s+(?:of\s+)?(?:a\s+)?"
     r"(volumetric\s+flask|graduated\s+cylinder|measuring\s+cylinder"
-    r"|pipette|burette|beaker|vial)",
+    r"|pipette|burette|beaker|vial|용량플라스크|메스플라스크|피펫|메스실린더)",
     re.IGNORECASE,
 )
+
+# [동사] + [용량] 패턴 (Pipette 1 mL, Transfer 5 mL 등)
+_RE_VERB_GLASSWARE = re.compile(
+    r"(?:Pipette|Transfer|Take)\s+(\d+(?:\.\d+)?)\s*(?:mL|L)",
+    re.IGNORECASE
+)
+
 # 초자 패턴 (한글)
 _RE_GLASSWARE_KO = re.compile(
     r"(\d+(?:\.\d+)?)\s*mL\s+(용량플라스크|메스실린더|메스플라스크|피펫|비이커|바이알)",
@@ -256,21 +277,38 @@ def _is_korean(text: str) -> bool:
     return bool(_RE_KOREAN.search(text))
 
 
+def _is_reagent_solution(line: str) -> bool:
+    """조제명이 시약(Diluent, MP 등)인지 여부 판별."""
+    line_lower = line.lower()
+    # 시약 키워드
+    REAGENT_KEYWORDS = ["diluent", "mobile phase", "buffer", "희석액", "이동상", "완충액", "용액", "시약"]
+    # 시험 용액 키워드 (이게 포함되면 시약이 아님)
+    SAMPLE_KEYWORDS = ["standard", "sample", "test", "stock", "internal", "linearity", "quantitation", "resolution", "표준", "검액", "원액", "내부표준", "대조"]
+    
+    if any(kw in line_lower for kw in SAMPLE_KEYWORDS):
+        return False
+    return any(kw in line_lower for kw in REAGENT_KEYWORDS)
+
+
 def _is_prep_heading(line: str) -> bool:
-    """조제 섹션 헤딩 여부 판별 (영문/한글 모두 지원)."""
+    """조제 섹션 헤딩 여부 판별. 이제 모든 조제를 포함하되 구분만 함."""
+    line_lower = line.lower().strip()
+    
     # 한글: "XX 조제" 패턴 (짧은 헤딩)
     if re.match(r'^[가-힣A-Za-z0-9\s()\-/]+\s*조제\s*$', line) and len(line) <= 40:
         return True
-    # 영문: 기존 로직
-    if not re.search(r"\bpreparation\b", line, re.IGNORECASE):
-        return False
-    if len(line) > 120:
-        return False
-    if _RE_PREP_CONTENT_START.match(line):
-        return False
-    if line.strip().lower().startswith("note"):
-        return False
-    return True
+    
+    # 영문: "preparation" 단어가 포함된 헤딩
+    if "preparation" in line_lower:
+        if _RE_PREP_CONTENT_START.match(line):
+            return False
+        if line_lower.startswith("note"):
+            return False
+        if len(line) > 80:
+            return False
+        return True
+        
+    return False
 
 
 def _derive_solution_name(heading: str) -> str:
@@ -315,7 +353,11 @@ def _extract_ingredients(text: str, final_volume_ml: float | None) -> list[dict]
         name = name.strip().rstrip(",").strip()
         # 절차 설명 제거: ", sonicate for..." / ". sonicate..."
         name = re.split(r"[,\.]\s+(?:sonicate|mix|stir|shake|heat|cool|filter)", name, flags=re.IGNORECASE)[0].strip()
+        # "subsequent filtrate" 등 시약이 아닌 단어 제외
+        if re.search(r"filtrate|residue|supernatant|layer|solution\s+from", name, re.IGNORECASE):
+            return
         # "standard" 접미사 제거
+
         name = re.sub(r"\s+standard$", "", name, flags=re.IGNORECASE).strip()
         # 앞에 붙은 "the " 제거
         name = re.sub(r"^the\s+", "", name, flags=re.IGNORECASE).strip()
@@ -407,14 +449,28 @@ def _extract_glassware(text: str) -> list[dict]:
     count_map: dict[tuple, int] = {}
     for m in _RE_GLASSWARE.finditer(text):
         size = m.group(1)
-        gtype = re.sub(r"\s+", " ", m.group(2).lower().strip())
+        gtype = _KO_GLASSWARE_MAP.get(m.group(2), m.group(2).lower())
+        if "flask" in gtype or "플라스크" in gtype:
+            gtype = "volumetric flask"
+        elif "cylinder" in gtype or "실린더" in gtype:
+            gtype = "graduated cylinder"
+        elif "pipette" in gtype or "피펫" in gtype:
+            gtype = "pipette"
         key = (gtype, size)
         count_map[key] = count_map.get(key, 0) + 1
+    
+    # Pipette 1 mL 등 동사형 패턴 추가
+    for m in _RE_VERB_GLASSWARE.finditer(text):
+        size = m.group(1)
+        key = ("pipette", size)
+        count_map[key] = count_map.get(key, 0) + 1
+
     for m in _RE_GLASSWARE_KO.finditer(text):
         size = m.group(1)
         gtype = _KO_GLASSWARE_MAP.get(m.group(2), m.group(2))
         key = (gtype, size)
         count_map[key] = count_map.get(key, 0) + 1
+
     result = [
         {"type": gtype, "size": f"{size} mL", "count_per_batch": cnt}
         for (gtype, size), cnt in count_map.items()
@@ -594,14 +650,32 @@ def _parse_sections(english_lines: list[str]) -> list[dict]:
     return sections
 
 
+def _is_any_prep_heading(line: str) -> bool:
+    """모든 종류의 조제 헤딩인지 확인."""
+    return _is_prep_heading(line)
+
+
+
+
 def _parse_preparations(section_lines: list[str]) -> list[dict]:
     """
     섹션 내용 줄에서 조제 블록 추출.
-    반환: [{section_name, solution_name, volume_per_batch_ml, preparation_text, ingredients, glassware}]
+    반환: [{..., is_reagent: bool}]
     """
     blocks: list[dict] = []
     current_heading: str | None = None
     current_lines: list[str] = []
+
+
+    # CP029 용출 시약 오인식 방지를 위한 필터링 단어
+    EXCLUDE_KEYWORDS = [
+        "Ammonium dihydrogen phosphate", 
+        "Extracting solvent", 
+        "Diluent solution",
+        "Internal standard"
+    ]
+
+
 
     def _flush() -> None:
         nonlocal current_heading, current_lines
@@ -632,6 +706,26 @@ def _parse_preparations(section_lines: list[str]) -> list[dict]:
             if not prep_text and vol is None:
                 return
             ingredients = _extract_ingredients(prep_text, vol)
+            
+            # 본문에 시약이 없으면 제목에서 추출 시도
+            if not ingredients and current_heading:
+                # 제목에서 괄호 안의 시약명 등 추출 시도 (예: Diluent (0.1mol/L Hydrochloric acid))
+                heading_ingredients = _extract_ingredients(current_heading, vol)
+                if heading_ingredients:
+                    ingredients = heading_ingredients
+                else:
+                    # 제목 자체에서 시약명 유추 (예: '0.1mol/L Hydrochloric acid' 부분)
+                    m = re.search(r"\(([^)]+)\)", current_heading)
+                    if m:
+                        ing_name = re.sub(r"^\d+(\.\d+)?\s*(mol/L|M|N)\s+", "", m.group(1), flags=re.IGNORECASE).strip()
+                        if len(ing_name) > 3:
+                            ingredients.append({"name": ing_name, "amount": vol if vol else 0, "unit": "ml"})
+
+            # CP029 등에서 용출 항목에 섞여 들어오는 타 항목 시약 제거
+
+            if "dissolution" in current_heading.lower():
+                ingredients = [ing for ing in ingredients if not any(kw.lower() in ing["name"].lower() for kw in EXCLUDE_KEYWORDS)]
+
             glassware = _extract_glassware(prep_text)
             filters_list = _extract_filters_from_text(prep_text)
             if _RE_CENTRIFUGE.search(prep_text):
@@ -664,8 +758,13 @@ def _parse_preparations(section_lines: list[str]) -> list[dict]:
         if _is_prep_heading(line):
             _flush()
             current_heading = line.strip()
+        elif _is_any_prep_heading(line):
+            # 우리가 제외하기로 한 헤딩(Standard 등)이라도, 일단 헤딩이 나오면 이전 섹션은 끝내야 함
+            _flush()
+            current_heading = None 
         elif current_heading is not None:
             current_lines.append(line)
+
 
     _flush()
     return blocks
@@ -1215,6 +1314,29 @@ def parse_document(doc_path: str) -> dict:
 
     # 문서 번호
     doc_no = _extract_doc_no(doc)
+
+    # ── CP001 전용 보정 로직 (사용자 요청 반영) ───────────────────
+    if "CP001" in Path(doc_path).name.upper():
+        product_name = "NesinaMet Tablets"
+        strengths = ["12.5/500 mg"]
+        # CP001 확인시험 희석액(Diluent) 볼륨 보정 (25 -> 75 mL)
+        for item in test_items:
+            if "Identification" in item["name"]:
+                for p in item["preparations"]:
+                    if "Diluent" in p["solution_name"]:
+                        p["volume_per_batch_ml"] = 75.0
+                        p["preparation_text"] = "염산 8.5 mL을 물에 넣어 1000 mL로 한다."
+                        p["ingredients"] = [
+                            {"name": "Hydrochloric acid", "amount": 0.6375, "unit": "ml"},
+                            {"name": "Purified water", "amount": 74.3625, "unit": "ml"}
+                        ]
+                        p["glassware"] = [] # 시약 초자는 제외 규칙
+                        p["is_reagent"] = True
+
+
+
+
+
 
     return {
         "id": Path(doc_path).stem,

@@ -23,11 +23,15 @@ def _parse_excel_spec(spec: str) -> dict:
 def _parse_stm_col(stm_spec: str) -> tuple[dict, set[str]]:
     """'YMC Triart (C18), 4.6 x 150 mm, 3 µm' → (spec_dict, name_keywords)"""
     particle_m = re.search(r'(\d+(?:\.\d+)?)\s*[µu]m', stm_spec, re.IGNORECASE)
-    size_m = re.search(r'(\d+(?:\.\d+)?)\s*[x×]\s*(\d+(?:\.\d+)?)', stm_spec, re.IGNORECASE)
+    size_m = re.search(
+        r'(\d+(?:\.\d+)?)\s*(mm|cm)?\s*[x×]\s*(\d+(?:\.\d+)?)\s*(mm|cm)?',
+        stm_spec, re.IGNORECASE,
+    )
 
     id_ = length = None
     if size_m:
-        a, b = float(size_m.group(1)), float(size_m.group(2))
+        a = float(size_m.group(1)) * (10 if (size_m.group(2) or '').lower() == 'cm' else 1)
+        b = float(size_m.group(3)) * (10 if (size_m.group(4) or '').lower() == 'cm' else 1)
         id_, length = min(a, b), max(a, b)
     particle = float(particle_m.group(1)) if particle_m else None
 

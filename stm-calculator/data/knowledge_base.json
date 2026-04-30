@@ -116,6 +116,11 @@
                   "type": "volumetric flask",
                   "size": "100 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -126,7 +131,13 @@
               "volume_per_batch_ml": null,
               "preparation_text": "Transfer 900 mL dissolution medium into each dissolution bowl. Drop one tablet into each bowl, run the dissolution as per the dissolution parameters.\nWithdraw sufficient volume of the sample aliquot from each bowl at 37 °C. Filter the sample 0.45 µm PVDF (Hyundai micro) or 0.45 µm Nylon (Hyundai micro) or 0.45 µm PTFE (Hyundai micro) syringe filter.\nDissolution Parameters\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected two or more for stabilization.\nSystem Suitability\nThe relative standard deviation for peak areas of Vonoprazan from the replicate standard injections should not be more than 2.0 %.\nTailing factor for Vonoprazan peak obtained from standard chromatogram should not be more than 2.0.\nThe relative standard deviation for peak areas of Vonoprazan from the replicate standard injections and bracketing should not be more than 2.0 %.\nCalculation\nAS\t: Average peak area of Vonoprazan peak in the standard solutio\nAT\t: Peak area of Vonoprazan in the sample solution\nWs\t: Weight of standard taken in mg as Vonoprazan fumarate\nP\t: Potency of the standard as Vonoprazan fumarate, on as is basis\nL\t: Label claim of the tablets in mg as Vonoprazan.\n345.4\t: Label claim of the tablets in mg as Vonoprazan.\n461.46\t: Label claim of the tablets in mg as Vonoprazan fumarate.\nNote: Continue testing through the three levels unless the results confirm at either S1 or S2.\n*Q: Quantity, the amount of dissolved active ingredient specified in the individual monograph, expressed as a percentage of the labeled content.\nChrmatogram",
               "ingredients": [],
-              "glassware": [],
+              "glassware": [
+                {
+                  "type": "pipette",
+                  "size": "900 mL",
+                  "count_per_batch": 1
+                }
+              ],
               "filters": [
                 {
                   "size_um": 0.45,
@@ -382,6 +393,11 @@
                   "type": "volumetric flask",
                   "size": "25 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -575,6 +591,11 @@
                   "type": "volumetric flask",
                   "size": "50 mL",
                   "count_per_batch": 2
+                },
+                {
+                  "type": "pipette",
+                  "size": "2 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -595,6 +616,11 @@
                 {
                   "type": "volumetric flask",
                   "size": "50 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
                   "count_per_batch": 1
                 }
               ],
@@ -792,6 +818,11 @@
                   "type": "volumetric flask",
                   "size": "50 mL",
                   "count_per_batch": 2
+                },
+                {
+                  "type": "pipette",
+                  "size": "2 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -812,6 +843,11 @@
                 {
                   "type": "volumetric flask",
                   "size": "50 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
                   "count_per_batch": 1
                 }
               ],
@@ -918,9 +954,9 @@
       "id": "STM-CP001-T0.doc",
       "doc_no": "STM-CP001-T0",
       "stm_file": "STM-CP001-T0.doc.docx",
-      "product_name": "NesinaMet Tablets 12.5/",
+      "product_name": "NesinaMet Tablets",
       "strengths": [
-        "500mg"
+        "12.5/500 mg"
       ],
       "test_items": [
         {
@@ -929,24 +965,30 @@
             {
               "section_name": "Diluent (0.1mol/L Hydrochloric acid) preparation",
               "solution_name": "Diluent (0.1mol/L Hydrochloric acid)",
-              "volume_per_batch_ml": null,
-              "preparation_text": "Dilute 8.5 mL of concentrated Hydrochloric acid to 1000 mL with purified water and mix well.",
-              "ingredients": [],
+              "volume_per_batch_ml": 75.0,
+              "preparation_text": "염산 8.5 mL을 물에 넣어 1000 mL로 한다.",
+              "ingredients": [
+                {
+                  "name": "Hydrochloric acid",
+                  "amount": 0.6375,
+                  "unit": "ml"
+                },
+                {
+                  "name": "Purified water",
+                  "amount": 74.3625,
+                  "unit": "ml"
+                }
+              ],
               "glassware": [],
-              "filters": []
+              "filters": [],
+              "is_reagent": true
             },
             {
               "section_name": "Alogliptin sample solution preparation",
               "solution_name": "Alogliptin sample solution",
               "volume_per_batch_ml": 25.0,
               "preparation_text": "Transfer 1 tablet to a 50 mL volumetric flask. Add approximately 35 mL of Diluent and shake the flask until tablet has disintegrated completely by using a mechanical shaker for 15 minutes. Dilute to volume with the Diluent.\nFilter the solution through 0.45 μm PVDF syringe filter. Discard the first 5 mL of the filtrate. Pipette 1 mL of the subsequent filtrate into a 25 mL volumetric flask. Dilute with Diluent to volume.",
-              "ingredients": [
-                {
-                  "name": "subsequent filtrate",
-                  "amount": 1.0,
-                  "unit": "ml"
-                }
-              ],
+              "ingredients": [],
               "glassware": [
                 {
                   "type": "volumetric flask",
@@ -956,6 +998,11 @@
                 {
                   "type": "volumetric flask",
                   "size": "25 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "1 mL",
                   "count_per_batch": 1
                 }
               ],
@@ -974,18 +1021,17 @@
               "solution_name": "Metformin Hydrochloride sample solution",
               "volume_per_batch_ml": 250.0,
               "preparation_text": "Transfer 1 tablet to a 250 mL volumetric flask. Add approximately 175 mL of water and shake the flask until tablet has disintegrated completely by using a mechanical shaker for 15 minutes. Dilute to volume with water.\nFilter the solution through 0.45 μm PVDF syringe filter. Discard the first 5 mL of the filtrate. Pipette 1 mL of the subsequent filtrate into a 250 mL volumetric flask. Dilute with water to volume.\nProcedure\nDetermine the absorption spectrum of the sample solution.\nUV-vis System\nRange of wavelength",
-              "ingredients": [
-                {
-                  "name": "subsequent filtrate",
-                  "amount": 1.0,
-                  "unit": "ml"
-                }
-              ],
+              "ingredients": [],
               "glassware": [
                 {
                   "type": "volumetric flask",
                   "size": "250 mL",
                   "count_per_batch": 2
+                },
+                {
+                  "type": "pipette",
+                  "size": "1 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": [
@@ -1008,7 +1054,13 @@
               "solution_name": "Dissolution medium (0.01 mol/L Hydrochloric acid solution)",
               "volume_per_batch_ml": null,
               "preparation_text": "Dilute 8.5 mL of concentrated Hydrochloric acid to 10000 mL with purified water.",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "Hydrochloric acid solution",
+                  "amount": 0,
+                  "unit": "ml"
+                }
+              ],
               "glassware": [],
               "filters": []
             },
@@ -1068,6 +1120,11 @@
                   "type": "volumetric flask",
                   "size": "100 mL",
                   "count_per_batch": 2
+                },
+                {
+                  "type": "pipette",
+                  "size": "10.0 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -1109,6 +1166,11 @@
                 {
                   "type": "volumetric flask",
                   "size": "25 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "10 mL",
                   "count_per_batch": 1
                 }
               ],
@@ -1158,8 +1220,20 @@
               "solution_name": "Extracting solvent (0.1mol/L Hydrochloric acid)",
               "volume_per_batch_ml": null,
               "preparation_text": "Transfer 8.5 mL of Hydrochloric acid in water to make 1000 mL.",
-              "ingredients": [],
-              "glassware": [],
+              "ingredients": [
+                {
+                  "name": "Hydrochloric acid",
+                  "amount": 0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "pipette",
+                  "size": "8.5 mL",
+                  "count_per_batch": 1
+                }
+              ],
               "filters": []
             },
             {
@@ -1203,6 +1277,11 @@
                   "type": "volumetric flask",
                   "size": "100 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "10 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -1224,6 +1303,11 @@
                   "type": "volumetric flask",
                   "size": "50 mL",
                   "count_per_batch": 2
+                },
+                {
+                  "type": "pipette",
+                  "size": "10 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -1239,6 +1323,11 @@
                   "type": "volumetric flask",
                   "size": "20 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 2
                 }
               ],
               "filters": []
@@ -1275,6 +1364,11 @@
                   "type": "volumetric flask",
                   "size": "50 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 2
                 }
               ],
               "filters": []
@@ -1313,6 +1407,11 @@
                   "type": "volumetric flask",
                   "size": "20 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "4 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": [
@@ -1346,7 +1445,10 @@
             }
           ],
           "hplc_conditions": {
-            "column_spec": "YMC-Pack Pro C8 (5µm, 6.0 mm x 15 cm) or Equivalent."
+            "flow_rate_ml_min": 5.0,
+            "run_time_min": 10.0,
+            "column_spec": "YMC-Pack Pro C8 (5µm, 6.0 mm x 15 cm) or Equivalent.",
+            "injections": []
           }
         },
         {
@@ -1386,6 +1488,11 @@
                   "type": "volumetric flask",
                   "size": "20 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 2
                 }
               ],
               "filters": [
@@ -1409,6 +1516,11 @@
                   "type": "volumetric flask",
                   "size": "50 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 3
                 }
               ],
               "filters": [
@@ -1461,8 +1573,20 @@
               "solution_name": "Extracting solvent (0.1mol/L Hydrochloric acid)",
               "volume_per_batch_ml": null,
               "preparation_text": "Transfer 8.5 mL of Hydrochloric acid in water to make 1000 mL.",
-              "ingredients": [],
-              "glassware": [],
+              "ingredients": [
+                {
+                  "name": "Hydrochloric acid",
+                  "amount": 0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "pipette",
+                  "size": "8.5 mL",
+                  "count_per_batch": 1
+                }
+              ],
               "filters": []
             },
             {
@@ -1506,6 +1630,11 @@
                   "type": "volumetric flask",
                   "size": "100 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "10 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -1527,6 +1656,11 @@
                   "type": "volumetric flask",
                   "size": "50 mL",
                   "count_per_batch": 2
+                },
+                {
+                  "type": "pipette",
+                  "size": "10 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -1542,6 +1676,11 @@
                   "type": "volumetric flask",
                   "size": "20 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 2
                 }
               ],
               "filters": []
@@ -1578,6 +1717,11 @@
                   "type": "volumetric flask",
                   "size": "50 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 2
                 }
               ],
               "filters": []
@@ -1616,6 +1760,11 @@
                   "type": "volumetric flask",
                   "size": "20 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 2
                 }
               ],
               "filters": [
@@ -1639,6 +1788,11 @@
                   "type": "volumetric flask",
                   "size": "50 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 3
                 }
               ],
               "filters": []
@@ -1659,7 +1813,10 @@
             }
           ],
           "hplc_conditions": {
-            "column_spec": "YMC-Pack Pro C8 (5 μm, 6.0 mm x 15 cm), YMC Co., Ltd or Equivalent."
+            "flow_rate_ml_min": 7.0,
+            "run_time_min": 10.0,
+            "column_spec": "YMC-Pack Pro C8 (5 μm, 6.0 mm x 15 cm), YMC Co., Ltd or Equivalent.",
+            "injections": []
           }
         },
         {
@@ -1688,8 +1845,20 @@
               "solution_name": "Extracting solvent (0.1 mol/L Hydrochloric acid solution)",
               "volume_per_batch_ml": null,
               "preparation_text": "Transfer 8.5 mL of Hydrochloric acid in water to make 1000 mL.",
-              "ingredients": [],
-              "glassware": [],
+              "ingredients": [
+                {
+                  "name": "Hydrochloric acid solution",
+                  "amount": 0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "pipette",
+                  "size": "8.5 mL",
+                  "count_per_batch": 1
+                }
+              ],
               "filters": []
             },
             {
@@ -1714,6 +1883,11 @@
                   "type": "volumetric flask",
                   "size": "25 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "10 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -1729,6 +1903,11 @@
                   "type": "volumetric flask",
                   "size": "200 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "1 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -1743,6 +1922,11 @@
                 {
                   "type": "volumetric flask",
                   "size": "50 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
                   "count_per_batch": 1
                 }
               ],
@@ -1842,6 +2026,11 @@
                   "type": "volumetric flask",
                   "size": "100 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "2 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -1862,6 +2051,11 @@
                 {
                   "type": "volumetric flask",
                   "size": "50 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "1 mL",
                   "count_per_batch": 1
                 }
               ],
@@ -1894,6 +2088,11 @@
                   "type": "volumetric flask",
                   "size": "100 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "2 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -1913,6 +2112,11 @@
                 {
                   "type": "volumetric flask",
                   "size": "50 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
                   "count_per_batch": 1
                 }
               ],
@@ -1934,8 +2138,155 @@
             }
           ],
           "hplc_conditions": {
-            "column_spec": "Develosil C30-UG-5 (5 μm, 4.6 mm x 15 cm), or Equivalent"
+            "flow_rate_ml_min": 9.0,
+            "run_time_min": 40.0,
+            "column_spec": "Develosil C30-UG-5 (5 μm, 4.6 mm x 15 cm), or Equivalent",
+            "injections": []
           }
+        },
+        {
+          "name": "Microbial Enumeration Test",
+          "preparations": [
+            {
+              "section_name": "Sample solution (Dilution factor 1:10) preparation",
+              "solution_name": "Sample solution (Dilution factor 1:10)",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Put about 10 g of sample into 90 mL of SCPB and mix the sample to suspension.\nTotal Aerobic Microbial Count (TAMC) Test\nPlace 2 petri dishes and distribute 1 mL of prepared 1:10 sample solution to each petri dishes.\nPour 15-20 mL of TSA to each 2-petri dish with sample solution dispensed. Swirl the petri dishes slowly to mix sample solution with media.\nIncubate at 30 - 35 ˚C for 5 days.\nPerform Interim colony counting on days 2-4 and final colony counting on days 5 of incubation.\nNote: It can be possible to incubate additionally 2 days. (Total 7 days)\nAfter incubation, resulting value is calculated by averaging the values obtained by multiplying dilution rate 10 to colony number detected from each petri dish.\nTotal Combined Yeasts and Molds Count (TYMC) Test\nPlace 2 petri dishes and distribute 1 mL of prepared 1:10 sample solution to each petri dishes.\nPour 15-20 mL of SDA to each 2-petri dish with sample solution dispensed. Swirl the petri dishes slowly to mix sample solution with media.\nIncubate at 20 - 25 ˚C for 7 days.\nPerform Interim colony counting on days 3-5 and final colony counting on days 7 of incubation.\nAfter incubation, resulting value is calculated by averaging the values obtained by multiplying dilution rate 10 to colony number detected from each petri dish.\nNegative Control Test\nPerform the TAMC test and TYMC test using diluent without sample in the same manner.\nSpecified Microorganisms Test\nProcedure\nDiluent and Media\nSpecified Microorganisms Test: Escherichia coli (E. coli)\nTest Method\nTest method is selection culture method of E. coli using selective media (MCB) and confirmatory media (MCA).",
+              "ingredients": [
+                {
+                  "name": "Dilution factor 1:10",
+                  "amount": 0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Sample Solution Preparation",
+              "solution_name": "Sample Solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Note: Sample solution (Dilution factor 1:10) of microbial enumeration test that is the same sample preparation method can be used.\nPut about 10 g of sample into 90 mL of SCPB and mix the sample to suspension.\nPre-incubation\nPut 10mL of sample solution into 90 mL of TSB.\nIncubate the prepared solution at 30-35 ℃ for 18-24 hours.\nSelection and Subculture\nShake the container and transfer 1 mL of incubated TSB to 100 mL MCB.\nIncubate at 42-44 ℃ for 24-48 hours.\nStreak incubated MCB on the surface of MCA using inoculating loop.\nIncubate at 30-35 ℃ for 18-72 hours.\nNote: It can be possible to incubate additionally 48 hours (Total 120 hours).\nAfter incubation, confirm the growth of colonies on the surface of MCA.\nGrowth of colonies indicates the possible presence of E. coli. This is confirmed by identification test, and follow the QS09004 Microbial Impact Assessment Procedure to determine whether.\nNegative Control Test\nPerform the E. coli test putting 10mL of SCPB into the 90mL TSB without sample in the same manner.\nSpecified Microorganisms Test: Staphylococcus aureus (S.aureus)\nTest Method\nTest method is selection culture method of S.aureus using selective Media and confirmatory Media (MSA).",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "pipette",
+                  "size": "1 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Sample Solution Preparation and Pre-incubation",
+              "solution_name": "Sample Solution and Pre-incubation",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Note: It can possible to use the diluent and sample solution prepared in microbial enumeration test.\nPut 10 g of sample into 90 mL of SCPB and mix the sample to suspension.\nPut 10mL(Dilution factor 1:10) of sample solution into 90 mL of TSB.\nIncubate at 30 - 35 ˚C for 18 - 24 hours.\nSelection and Subculture\nStreak the incubated TSB on the surface of MSA using inoculating loop.\nIncubate at 30 - 35 ˚C for 18 - 72 hours.\nNote: It can be possible to incubate additionally 48 hours (Total 120 hours).\nAfter incubation, confirm the growth of colonies on the surface of MSA.\nGrowth of colonies indicates the possible presence of S.aureus. This is confirmed by identification test, and follow the QS09004 Microbial Impact Assessment Procedure to determine whether.\nNegative Control Test\nPerform the S.aureus test putting 10mL of SCPB into the 90mL TSB without sample in the same manner.\nSpecified Microorganisms Test: Pseudomonas aeruginosa (P.aeruginosa)\nTest Method\nTest method is selection culture method of P.aeruginosa using selective Media and confirmatory Media (CMA).",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Sample Solution Preparation and Pre-incubation",
+              "solution_name": "Sample Solution and Pre-incubation",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Note: It can possible to use the diluent and sample solution prepared in microbial enumeration test.\nPut 10 g of sample into 90 mL of SCPB and mix the sample to suspension.\nPut 10mL(Dilution factor 1:10) of sample solution into 90 mL of TSB.\nIncubate at 30 - 35 ˚C for 18 - 24 hours.\nSelection and Subculture\nStreak the incubated TSB on the surface of CMA using inoculating loop.\nIncubate at 30 - 35 ˚C for 18 - 72 hours.\nNote: It can be possible to incubate additionally 48 hours as per (Total 120 hours).\nAfter incubation, confirm the growth of colonies on the surface of CMA.\nGrowth of colonies indicates the possible presence of P.aeruginosa. This is confirmed by identification test, and follow the QS09004 Microbial Impact Assessment Procedure to determine whether.\nNegative Control Test\nPerform the P.aeruginosa test putting 10mL of SCPB into the 90mL TSB without sample in the same manner.\nSpecified Microorganisms Test: Salmonella Typhimurium (S.Typhimurium)\nTest Method\nTest method is selection culture method of S.Typhimurium using selective Media (RVSE broth) and confirmatory Media (XLD).",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Sample Solution Preparation and Pre-incubation",
+              "solution_name": "Sample Solution and Pre-incubation",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Put not less than 10 g of sample into the 290 mL of TSB. And then, stir the sample to suspension.\nIncubate at 30 – 35 ˚C for 18 - 24 hours.\nSelection and Subculture\nShake the incubated TSB and then Transfer 0.1 mL to 10 mL of RVSE.\nIncubate at 30 - 35 ˚C for 18 - 24 hours.\nStreak incubated RVSE broth on the surface of XLD using inoculating loop.\nIncubate at 30 - 35 ˚C for 18 - 48 hours.\nNote: It can be possible to incubate additionally 72 hours (Total 120 hours).\nAfter incubation, confirm the growth of colonies on the surface of XLD.\nGrowth of colonies indicates the possible presence of S.Typhimurium.. This is confirmed by identification test, and follow the QS09004 Microbial Impact Assessment Procedure to determine whether.\nNegative Control Test\nPerform the S.Typhimurium test putting 10mL of SCPB into the 90mL TSB without sample in the same manner.\nN-Nitrosodimethylamine (NDMA)\nNote: This item is limited to outsourced testing conducted exclusively for the Korean market.",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "pipette",
+                  "size": "0.1 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Internal standard solution preparation",
+              "solution_name": "Internal standard solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Dissolve NDMA-d6, internal standard, in methanol with a concentration of 1 μg/mL.",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Standard solution preparation",
+              "solution_name": "Standard solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Dissolve NDMA standard solution in methanol to achieve a concentration of 1 μg/mL.",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Linearity standard solution preparation",
+              "solution_name": "Linearity standard solution",
+              "volume_per_batch_ml": 10.0,
+              "preparation_text": "Mix the standard solution and internal standard solution in the amounts specified in the table below and dilute to 10 mL with dichloromethane accurately.",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Accurately weigh not less than 20 tablets and finely powder. Accurately weigh equivalent to 500 mg of Metformin Hydrochloride, add 5 mL of 1 mol/L hydrochloric acid, then accurately take 50 μL of the internal standard solution and shake thoroughly to mix.\nAdd 5 mL of dichloromethane to this solution accurately, shake thoroughly to mix, and then centrifuge at 4,000 rpm for 10 minutes.1) Carefully take an appropriate amount of the dichloromethane layer, filter it through a 0.22 μm membrane filter, discard the first filtrate, and use the subsequent filtrate as the sample solution.\n1) If necessary, carefully take an appropriate amount of the dichloromethane layer and further centrifuge at 13,000 rpm for 10 minutes.\nGC-MS/MS operating condition\nSystem suitability\nThe coefficient of determination (R2) of the calibration curve should be not less than 0.998.\nThe S/N ratio at a standard solution concentration of 1 ng/mL should be not less than 10.\nThe tailing factor of NDMA peak at a standard solution concentration of 5 ng/mL should be not more than 2.0.\nThe relative standard deviation of the NDMA peak area to the internal standard peak area for standard solution concentration of 5 ng/mL six replicate injection should be not more than 5.0 %.",
+              "ingredients": [
+                {
+                  "name": "dichloromethane",
+                  "amount": 5.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [],
+              "filters": [
+                {
+                  "size_um": null,
+                  "material": null,
+                  "manufacturer": null,
+                  "filter_type": "centrifuge",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ],
+          "standards": [
+            {
+              "std_name": "1",
+              "grade": ""
+            },
+            {
+              "std_name": "2",
+              "grade": ""
+            },
+            {
+              "std_name": "5",
+              "grade": ""
+            },
+            {
+              "std_name": "10",
+              "grade": ""
+            },
+            {
+              "std_name": "20",
+              "grade": ""
+            },
+            {
+              "std_name": "50",
+              "grade": ""
+            }
+          ]
         }
       ]
     },
@@ -1963,7 +2314,13 @@
               "solution_name": "Dissolution medium (0.01 N Hydrochloric acid)",
               "volume_per_batch_ml": 1000.0,
               "preparation_text": "Dilute 0.85 mL of concentrated hydrochloric acid in 1000 ml of Milli-Q water and mix well.",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "concentrated hydrochloric acid",
+                  "amount": 0.85,
+                  "unit": "ml"
+                }
+              ],
               "glassware": [],
               "filters": []
             },
@@ -2069,6 +2426,11 @@
                   "type": "volumetric flask",
                   "size": "100 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -2090,6 +2452,11 @@
                   "type": "volumetric flask",
                   "size": "200 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -2100,7 +2467,13 @@
               "volume_per_batch_ml": null,
               "preparation_text": "Transfer 900 mL of dissolution medium into each dissolution vessel. Drop one tablet into each vessel, run the dissolution as per the dissolution parameters.\nWithdraw sufficient volume of the sample from each vessel at specified time at 37 °C. Filter the sample solution through 0.45 µm PVDF syringe filter or 0.45 µm Nylon syringe filter or 0.45 µm PTFE syringe filter.\nChromatographic system\nProcedure\nStart the analysis as described below.\n1) Blank solution can be injected more for stabilization\n2) Prepare bracketing vials of amlodipine separately.\nSystem suitability\nThe tailing factor for Amlodipine peak obtained from standard chromatogram should not be more than 2.0.\nThe relative standard deviation for peak areas of Amlodipine from the repeated injection of standard should not be more than 2.0 %.\nThe relative standard deviation for peak areas of Amlodipine from the repeated injection of standard and injection of bracketing should not be more than 2.0 %.\nCalculation\nNote: Continue testing through the three levels unless the results confirm at either S1 or S2.\n*Q: Quantity, the amount of dissolved active ingredient specified in the individual monograph, expressed as a percentage of the labeled content.\nChromatogram",
               "ingredients": [],
-              "glassware": [],
+              "glassware": [
+                {
+                  "type": "pipette",
+                  "size": "900 mL",
+                  "count_per_batch": 1
+                }
+              ],
               "filters": [
                 {
                   "size_um": 0.45,
@@ -2138,6 +2511,12 @@
               "80/5 mg, 40/5 mg": 200.0
             }
           },
+          "standards": [
+            {
+              "std_name": "Amlodipine besylate",
+              "grade": "Working standard or Reference standard"
+            }
+          ],
           "hplc_conditions": {
             "flow_rate_ml_min": 1.2,
             "run_time_min": 20.0,
@@ -2184,13 +2563,7 @@
                 "scales_with_batch": false
               }
             ]
-          },
-          "standards": [
-            {
-              "std_name": "Amlodipine besylate",
-              "grade": "Working standard or Reference standard"
-            }
-          ]
+          }
         },
         {
           "name": "Dissolution (Method B)",
@@ -2411,6 +2784,16 @@
                   "type": "volumetric flask",
                   "size": "50 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "3 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -2437,6 +2820,16 @@
                   "type": "volumetric flask",
                   "size": "100 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "3 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -2453,7 +2846,18 @@
                   "unit": "ml"
                 }
               ],
-              "glassware": [],
+              "glassware": [
+                {
+                  "type": "pipette",
+                  "size": "900 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "3 mL",
+                  "count_per_batch": 1
+                }
+              ],
               "filters": [
                 {
                   "size_um": 0.45,
@@ -2484,6 +2888,12 @@
               "40/10 mg & 40/5 mg": 100.0
             }
           },
+          "standards": [
+            {
+              "std_name": "Azilsartan medoxomil potassium",
+              "grade": "Working standard or Reference standard"
+            }
+          ],
           "hplc_conditions": {
             "flow_rate_ml_min": 1.2,
             "run_time_min": 20.0,
@@ -2510,13 +2920,7 @@
                 "scales_with_batch": false
               }
             ]
-          },
-          "standards": [
-            {
-              "std_name": "Azilsartan medoxomil potassium",
-              "grade": "Working standard or Reference standard"
-            }
-          ]
+          }
         },
         {
           "name": "Uniformity of dosage units (Content Uniformity)",
@@ -2552,6 +2956,11 @@
                 {
                   "type": "volumetric flask",
                   "size": "20 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "4 mL",
                   "count_per_batch": 1
                 }
               ],
@@ -2759,6 +3168,11 @@
                   "type": "volumetric flask",
                   "size": "20 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "4 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -2779,6 +3193,11 @@
                 {
                   "type": "volumetric flask",
                   "size": "20 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "4 mL",
                   "count_per_batch": 1
                 }
               ],
@@ -2801,6 +3220,11 @@
                   "type": "volumetric flask",
                   "size": "20 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "2 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -2821,6 +3245,11 @@
                 {
                   "type": "volumetric flask",
                   "size": "20 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "2 mL",
                   "count_per_batch": 1
                 }
               ],
@@ -2857,6 +3286,11 @@
                 {
                   "type": "volumetric flask",
                   "size": "20 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "4 mL",
                   "count_per_batch": 1
                 }
               ],
@@ -2896,9 +3330,31 @@
             }
           ],
           "hplc_conditions": {
-            "column_spec": "YMC Triart C18, 4.6 x 250 mm, 5 µm",
             "flow_rate_ml_min": 1.0,
-            "run_time_min": 35.0
+            "run_time_min": 35.0,
+            "column_spec": "YMC Triart C18, 4.6 x 250 mm, 5 µm",
+            "injections": [
+              {
+                "solution": "Blank solution",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 5,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Bracketing standard solution",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
           }
         },
         {
@@ -2979,6 +3435,11 @@
                   "type": "volumetric flask",
                   "size": "100 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -3015,6 +3476,11 @@
                   "type": "volumetric flask",
                   "size": "100 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -3046,6 +3512,11 @@
                   "type": "volumetric flask",
                   "size": "200 mL",
                   "count_per_batch": 2
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": [
@@ -3113,7 +3584,10 @@
             }
           ],
           "hplc_conditions": {
-            "column_spec": "INNO C18, 4.6 x 250 mm, 3 µm"
+            "flow_rate_ml_min": 0.5,
+            "run_time_min": 140.0,
+            "column_spec": "INNO C18, 4.6 x 250 mm, 3 µm",
+            "injections": []
           }
         },
         {
@@ -3136,6 +3610,11 @@
                   "type": "volumetric flask",
                   "size": "20 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "2 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -3157,6 +3636,11 @@
                   "type": "volumetric flask",
                   "size": "20 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "1 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -3177,6 +3661,11 @@
                 {
                   "type": "volumetric flask",
                   "size": "20 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "4 mL",
                   "count_per_batch": 1
                 }
               ],
@@ -3303,7 +3792,7 @@
                 {
                   "type": "volumetric flask",
                   "size": "50 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 }
               ],
               "filters": []
@@ -3329,7 +3818,7 @@
                 {
                   "type": "volumetric flask",
                   "size": "100 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 }
               ],
               "filters": []
@@ -3360,7 +3849,7 @@
                 {
                   "type": "volumetric flask",
                   "size": "200 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 }
               ],
               "filters": []
@@ -3391,7 +3880,7 @@
                 {
                   "type": "volumetric flask",
                   "size": "200 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 }
               ],
               "filters": []
@@ -3422,7 +3911,7 @@
                 {
                   "type": "volumetric flask",
                   "size": "200 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 }
               ],
               "filters": []
@@ -3453,7 +3942,7 @@
                 {
                   "type": "volumetric flask",
                   "size": "100 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 }
               ],
               "filters": []
@@ -3558,12 +4047,12 @@
                 {
                   "type": "volumetric flask",
                   "size": "100 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 },
                 {
                   "type": "volumetric flask",
                   "size": "20 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 }
               ],
               "filters": [
@@ -3708,7 +4197,7 @@
                 {
                   "type": "volumetric flask",
                   "size": "200 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 }
               ],
               "filters": []
@@ -3734,7 +4223,7 @@
                 {
                   "type": "volumetric flask",
                   "size": "200 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 }
               ],
               "filters": []
@@ -3760,7 +4249,7 @@
                 {
                   "type": "volumetric flask",
                   "size": "20 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 }
               ],
               "filters": []
@@ -3786,7 +4275,7 @@
                 {
                   "type": "volumetric flask",
                   "size": "20 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 }
               ],
               "filters": []
@@ -3812,7 +4301,7 @@
                 {
                   "type": "volumetric flask",
                   "size": "20 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 }
               ],
               "filters": []
@@ -3838,7 +4327,7 @@
                 {
                   "type": "volumetric flask",
                   "size": "20 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 }
               ],
               "filters": []
@@ -3864,12 +4353,12 @@
                 {
                   "type": "volumetric flask",
                   "size": "500 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 },
                 {
                   "type": "volumetric flask",
                   "size": "20 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 }
               ],
               "filters": [
@@ -4030,12 +4519,12 @@
                 {
                   "type": "volumetric flask",
                   "size": "100 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 },
                 {
                   "type": "volumetric flask",
                   "size": "50 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 }
               ],
               "filters": []
@@ -4066,17 +4555,17 @@
                 {
                   "type": "volumetric flask",
                   "size": "50 mL",
-                  "count_per_batch": 4
+                  "count_per_batch": 8
                 },
                 {
                   "type": "volumetric flask",
                   "size": "200 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 },
                 {
                   "type": "volumetric flask",
                   "size": "100 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 },
                 {
                   "type": "mortar",
@@ -4107,7 +4596,7 @@
                 {
                   "type": "volumetric flask",
                   "size": "100 mL",
-                  "count_per_batch": 2
+                  "count_per_batch": 4
                 }
               ],
               "filters": []
@@ -4133,7 +4622,7 @@
                 {
                   "type": "volumetric flask",
                   "size": "50 mL",
-                  "count_per_batch": 2
+                  "count_per_batch": 4
                 }
               ],
               "filters": []
@@ -4154,7 +4643,7 @@
                 {
                   "type": "volumetric flask",
                   "size": "100 mL",
-                  "count_per_batch": 1
+                  "count_per_batch": 2
                 },
                 {
                   "type": "mortar",
@@ -4254,6 +4743,17 @@
                   "amount": 2.0,
                   "unit": "g",
                   "tracking_no": "SS004"
+                },
+                {
+                  "name": "hydrochloric acid",
+                  "amount": 7.0,
+                  "unit": "ml",
+                  "tracking_no": "LH001"
+                },
+                {
+                  "name": "sodium chloride and 7.0 mL of hydrochloric acid",
+                  "amount": 2.0,
+                  "unit": "g"
                 }
               ],
               "glassware": [],
@@ -4357,6 +4857,11 @@
                   "type": "volumetric flask",
                   "size": "200 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "6 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -4377,6 +4882,11 @@
                 {
                   "type": "volumetric flask",
                   "size": "200 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "6 mL",
                   "count_per_batch": 1
                 }
               ],
@@ -4399,6 +4909,11 @@
                   "type": "volumetric flask",
                   "size": "200 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "3 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -4420,6 +4935,11 @@
                   "type": "volumetric flask",
                   "size": "200 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "3 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -4430,7 +4950,13 @@
               "volume_per_batch_ml": null,
               "preparation_text": "Transfer 900 mL dissolution medium into each dissolution bowl. Drop one tablet into each bow, run the dissolution as per the dissolution parameters.\nWithdraw sufficient volume of the sample aliquot from each bowl at 37 °C. Filter the sample solution through 0.45 µm PVDF syringe filter (Millipore) or 0.45 µm Nylon syringe filter (Millipore).\nDissolution Parameters\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nSystem Suitability\nThe tailing factor of Pioglitazone peak and Empagliflozin peak obtained from standard solution chromatogram should not be more than 2.0.\nThe relative standard deviation for peak areas of Pioglitazone peak and Empagliflozin peak from the replicate standard solution injections should not be more than 2.0 %.\nThe relative standard deviation for peak areas of Pioglitazone peak and Empagliflozin peak from the replicate standard solution and bracketing standard solution injections should not be more than 2.0 %.\nCalculation\nPioglitazone\n30 mg/25 mg and 30 mg/10 mg\n15 mg/25 mg and 15 mg/10 mg\nAS\t: Average peak area of Pioglitazone peak in the standard solution\nAT\t: Peak area of Pioglitazone in the sample solution\nWs\t: Weight of standard taken in mg as Pioglitazone hydrochloride.\nP\t: Potency of the standard as Pioglitazone hydrochloride, on as is basis\nL\t: Label claim of the tablets in mg as Pioglitazone\n356.44\t: The molecular weight of Pioglitazone.\n392.9\t: The molecular weight of Pioglitazone hydrochloride.\nEmpagliflozin\n30 mg/25 mg and 15 mg/25 mg\n30 mg/10 mg and 15 mg/10 mg\nAS\t: Average peak area of Empagliflozin peak in the standard solution\nAT\t: Peak area of Empagliflozin in the sample solution\nWs\t: Weight of standard taken in mg as Empagliflozin\nP\t: Potency of the standard as Empagliflozin, on as is basis\nL\t: Label claim of the tablets in mg as Empagliflozin\nNote: Continue testing through the three levels unless the results confirm at either S1 or S2.\n*Q: Quantity, the amount of dissolved active ingredient specified in the individual monograph, expressed as a percentage of the labeled content.\nChrmatogram",
               "ingredients": [],
-              "glassware": [],
+              "glassware": [
+                {
+                  "type": "pipette",
+                  "size": "900 mL",
+                  "count_per_batch": 1
+                }
+              ],
               "filters": [
                 {
                   "size_um": 0.45,
@@ -4976,6 +5502,11 @@
                   "type": "volumetric flask",
                   "size": "200 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "2 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -4996,6 +5527,11 @@
                 {
                   "type": "volumetric flask",
                   "size": "200 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "2 mL",
                   "count_per_batch": 1
                 }
               ],
@@ -5018,6 +5554,11 @@
                   "type": "volumetric flask",
                   "size": "200 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "1 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -5038,6 +5579,11 @@
                 {
                   "type": "volumetric flask",
                   "size": "200 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "1 mL",
                   "count_per_batch": 1
                 }
               ],
@@ -5272,6 +5818,11 @@
                   "type": "volumetric flask",
                   "size": "20 mL",
                   "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -5334,7 +5885,13 @@
               "volume_per_batch_ml": null,
               "preparation_text": "Transfer 900 mL dissolution medium into each dissolution bowl. Drop one tablet into each bow, run the dissolution as per the dissolution parameters.\nWithdraw sufficient volume of the sample aliquot from each bowl at 37 °C. Filter the sample solution through 0.45 µm PVDF syringe filter (Millipore), 0.45 µm Nylon syringe filter (Hyundai Micro) or 0.45 µm PTFE syringe filter (Hyundai Micro).\nDissolution Parameters\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nSystem Suitability\nThe relative standard deviation for peak areas of Sacubitril and Valsartan from the replicate standard injections should not be more than 2.0 %.\nTailing factor for Sacubitril and Valsartan peak obtained from standard chromatogram should not be more than 1.5.\nThe relative standard deviation for peak areas of Sacubitril and Valsartan from the replicate standard injections and bracketing should not be more than 2.0 %.\nDetailed Label Claim\nCalculation\n50 mg\n100 mg\n200 mg\nAS\t: Average peak area of Sacubitril or Valsartan peak in the standard solution\nAT\t: Peak area of Sacubitril or Valsartan in the sample solution\nWs\t: Weight of standard taken in mg as Sacubitril Valsartan Sodium.\nP\t: Potency of the standard as Sacubitril or Valsartan, on as is basis\nL\t: Label claim of the tablets in mg as Sacubitril or Valsartan\nNote: Continue testing through the three levels unless the results confirm at either S1 or S2.\n*Q: Quantity, the amount of dissolved active ingredient specified in the individual monograph, expressed as a percentage of the labeled content.\nChrmatogram",
               "ingredients": [],
-              "glassware": [],
+              "glassware": [
+                {
+                  "type": "pipette",
+                  "size": "900 mL",
+                  "count_per_batch": 1
+                }
+              ],
               "filters": [
                 {
                   "size_um": 0.45,
@@ -5742,6 +6299,11 @@
                   "count_per_batch": 1
                 },
                 {
+                  "type": "pipette",
+                  "size": "0.5 mL",
+                  "count_per_batch": 1
+                },
+                {
                   "type": "mortar",
                   "size": "-",
                   "count_per_batch": 1
@@ -5798,6 +6360,11 @@
                   "type": "volumetric flask",
                   "size": "100 mL",
                   "count_per_batch": 2
+                },
+                {
+                  "type": "pipette",
+                  "size": "2 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": []
@@ -5898,6 +6465,121 @@
               }
             ]
           }
+        },
+        {
+          "name": "Water content by KF",
+          "preparations": []
+        },
+        {
+          "name": "Polymorphism by PXRD",
+          "preparations": [
+            {
+              "section_name": "Sample preparation",
+              "solution_name": "Sample (for 50 mg)",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Take not less than 40 tablets into mortar. Crush gently with pestle. Filter the powder using the No.45 testing sieve(355μm). Place the filtered powder in the sample holder.",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "mortar",
+                  "size": "-",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Sample preparation",
+              "solution_name": "Sample (for 100 mg)",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Take not less than 50 tablets into mortar. Crush gently with pestle. Filter the powder using the No.45 testing sieve(355μm). Place the filtered powder in the sample holder.",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "mortar",
+                  "size": "-",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Sample preparation",
+              "solution_name": "Sample (for 200 mg)",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Take not less than 10 tablets into mortar. Crush gently with pestle. Filter the powder using the No.45 testing sieve(355μm). Place the filtered powder in the sample holder.\nXRD system\nProcedure\nPlace the test sample on sample holder, pack and smooth its surface with a glass slide (or equivalent) and place the sample holder carefully in auto sampler rack and record the diffractogram.\nThe diffractogram of the test sample should match with the Sacubitril Valsartan sodium crystalline form-I 2θ values(± 0.2 °) defined in the table below.\nInformation of 2θ peak",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "mortar",
+                  "size": "-",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            }
+          ]
+        },
+        {
+          "name": "Microbial Enumeration Test",
+          "preparations": [
+            {
+              "section_name": "Sample solution preparation (Dilution factor 1:10)",
+              "solution_name": "Sample solution (Dilution factor 1:10)",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Put 10 g of sample into 90 mL of diluent and mix it to homogenize.",
+              "ingredients": [
+                {
+                  "name": "Dilution factor 1:10",
+                  "amount": 0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Sample solution preparation (Dilution factor 1:50)",
+              "solution_name": "Sample solution (Dilution factor 1:50)",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Add 20 mL of the sample solution (Dilution factor 1:10) to 80 mL of diluent. And shake it to suspension.\nTotal Aerobic Microbial Count (TAMC) Test\nPlace 2 petri dishes and transfer 1 mL of sample solution (Dilution factor 1:50) into each petri dish.\nPour 15 ~ 20 mL of TSA to each petri dish with sample solution dispersed. Swirl the petri dishes slowly to mix sample with media.\nIncubate at 30 - 35 ˚C for 5 days.\nPerform interim colony counting on days 2-4 and final colony counting on days 5 of incubation.\nNote: It can be possible to incubate additionally 2 days (Total 7 days).\nAfter incubation, resulting value is calculated by averaging the values obtained by multiplying dilution rate 50 to colony number detected from each petri dish.\nTotal Combined Yeasts and Molds Count (TYMC) Test\nPlace 2 petri dishes and transfer 1 mL of sample solution (Dilution factor 1:10) into each petri dish.\nPour 15 ~ 20 mL of SDA to each petri dish with sample solution dispersed. Swirl the petri dishes slowly to mix sample with media.\nIncubate at 20 - 25 ˚C for 7 days.\nPerform Interim colony counting on days 3-5 and final colony counting on days 7 of incubation.\nAfter incubation, resulting value is calculated by averaging the values obtained by multiplying dilution rate 10 to colony number detected from each petri dish.\nNegative Control Test\nPerform tests using diluent without sample in the same as the above procedure.\nSpecified Microorganisms Test: Escherichia coli (E.coli)\nMedia\nTest Method\nNote: Test method is selection culture method of E. coli using selective media (MCB) and confirmatory medium (MCA).",
+              "ingredients": [
+                {
+                  "name": "sample solution (Dilution factor 1:10)",
+                  "amount": 20.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "pipette",
+                  "size": "1 mL",
+                  "count_per_batch": 2
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Sample Solution Preparation",
+              "solution_name": "Sample Solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Note: Sample solution (Dilution factor 1:10) of microbial enumeration test that is the same sample solution method can be used.\nPut 10 g of sample into 90 mL of diluent and mix it to homogenize.\nPre-incubation\nTransfer 10 mL of sample solution into the 90 mL of TSB. After that, mix the sample to homogenize.\nIncubate at 30-35 ℃ for 18-24 hours.\nSelection and Subculture\nShake the container, and transfer 1 mL of incubated TSB to 100 mL MCB.\nIncubate at 42-44 ℃ for 24-48 hours.\nStreak incubated MCB on the surface of MCA using inoculating loop.\nIncubate at 30-35 ℃ for 18-72 hours.\nNote: It can be possible to incubate additionally 48 hours (Total 120 hours).\nAfter incubation, confirm the growth of colonies on the surface of MCA.\nGrowth of colonies indicates the possible presence of E.coli, This is confirmed by identification tests, and follow the QS09004 Microbial Impact Assessment Procedure to determine whether MIA is required.\nNegative Control Test\nPerform tests without sample in the same as the above procedure.",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "pipette",
+                  "size": "10 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "1 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            }
+          ]
         }
       ]
     }

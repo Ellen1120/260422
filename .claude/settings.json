@@ -128,7 +128,9 @@
       "PowerShell(python -c \"import uvicorn; print\\('uvicorn ok', uvicorn.__version__\\)\" 2>&1)",
       "PowerShell(Get-ChildItem \"C:\\\\Users\\\\220216\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\\" -ErrorAction SilentlyContinue | Select Name; $py314 = \"C:\\\\Users\\\\220216\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python314\\\\python.exe\"; if \\(Test-Path $py314\\) { & $py314 -c \"import uvicorn; print\\('uvicorn ok'\\)\" 2>&1 })",
       "PowerShell(Start-Process -FilePath \"C:\\\\Users\\\\220216\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python314\\\\python.exe\" -ArgumentList \"-m\",\"uvicorn\",\"main:app\",\"--host\",\"0.0.0.0\",\"--port\",\"8502\" -WorkingDirectory \"d:\\\\Work Anti\\\\stm-calculator\" -WindowStyle Hidden; Start-Sleep -Seconds 4; \\(Invoke-RestMethod -Uri \"http://127.0.0.1:8502/api/products\" -TimeoutSec 5\\).id)",
-      "PowerShell($products = Invoke-RestMethod -Uri \"http://127.0.0.1:8502/api/products\" -TimeoutSec 5; foreach \\($p in $products\\) { Write-Host \"$\\($p.id\\): $\\($p.test_items -join ', '\\)\" })"
+      "PowerShell($products = Invoke-RestMethod -Uri \"http://127.0.0.1:8502/api/products\" -TimeoutSec 5; foreach \\($p in $products\\) { Write-Host \"$\\($p.id\\): $\\($p.test_items -join ', '\\)\" })",
+      "Bash(start /B python main.py)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'Products: {len\\(d\\)}'\\)\")"
     ]
   }
 }

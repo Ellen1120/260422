@@ -12,10 +12,10 @@ if "%ANTHROPIC_API_KEY%"=="" (
     echo.
 )
 
-echo 브라우저에서 http://localhost:8000 을 열어주세요.
-echo 같은 네트워크의 다른 PC에서는 http://10.160.76.111:8000 으로 접속하세요.
+echo 브라우저에서 http://localhost:8502 을 열어주세요.
+echo 같은 네트워크의 다른 PC에서는 http://10.160.76.111:8502 으로 접속하세요.
 echo 종료하려면 Ctrl+C 를 누르세요.
 echo.
 
-"%PY%" -m uvicorn main:app --host 0.0.0.0 --port 8000
+"%PY%" -m uvicorn main:app --host 0.0.0.0 --port 8502
 pause
