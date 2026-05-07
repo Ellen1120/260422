@@ -1,6 +1,2091 @@
 {
   "products": [
     {
+      "id": "STM-300286-T0.doc",
+      "doc_no": "STM-300286-T0",
+      "stm_file": "STM-300286-T0.doc.docx",
+      "product_name": "Alogliptin benzoate/Empagliflozin tablets",
+      "strengths": [
+        "25/10 mg"
+      ],
+      "test_items": [
+        {
+          "name": "Description",
+          "preparations": []
+        },
+        {
+          "name": "Identification",
+          "preparations": []
+        },
+        {
+          "name": "Dissolution",
+          "preparations": [
+            {
+              "section_name": "Dissolution medium preparation",
+              "solution_name": "Dissolution medium",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Transfer 6.81 g of Potassium phosphate monobasic and 0.9 g of sodium hydroxide to a suitable container, dissolve and dilute in 1000 mL of Milli-Q water, mix well and adjust the pH to 6.8 ± 0.05.",
+              "ingredients": [
+                {
+                  "name": "Potassium phosphate monobasic",
+                  "amount": 6.81,
+                  "unit": "g",
+                  "tracking_no": "SP118"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Mobile phase preparation",
+              "solution_name": "Mobile phase",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Weigh and transfer about 5.8 g of Ammonium dihydrogen phosphate in 1000 mL of Milli-Q- water.\nMix above solution, acetonitrile in the ratio of 600: 400 v/v. Add about 4.3 g of sodium dodecyl sulfate.\nFilter through 0.45 µm membrane filter. Dagas in a sonicator for about 10 minutes.",
+              "ingredients": [
+                {
+                  "name": "Ammonium dihydrogen phosphate",
+                  "amount": 5.8,
+                  "unit": "g",
+                  "tracking_no": "SA008"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Standard stock solution for Alogliptin preparation",
+              "solution_name": "Standard stock solution for Alogliptin",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Weigh and transfer about 75.8 mg of Alogliptin benzoate standard into a 50 mL of volumetric flask.\nAdd about 30 mL of Methanol, sonicate for about 5 minutes to dissolve, and dilute to volume with Methanol.",
+              "ingredients": [
+                {
+                  "name": "Alogliptin benzoate",
+                  "amount": 75.8,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Methanol",
+                  "amount": 30.0,
+                  "unit": "ml",
+                  "tracking_no": "LM035"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Standard stock solution for Empagliflozin preparation",
+              "solution_name": "Standard stock solution for Empagliflozin",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Weigh and transfer about 55.6 mg of Empagliflozin standard into a 50 mL of volumetric flask.\nAdd about 30 mL of Methanol, sonicate for about 5 minutes to dissolve, and dilute to volume with Methanol.",
+              "ingredients": [
+                {
+                  "name": "Empagliflozin",
+                  "amount": 55.6,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Methanol",
+                  "amount": 30.0,
+                  "unit": "ml",
+                  "tracking_no": "LM035"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Standard solution preparation",
+              "solution_name": "Standard solution",
+              "volume_per_batch_ml": 200.0,
+              "preparation_text": "Pipette 5 mL of standard stock solution for Alogliptin, 2 mL of standard stock solution for Empagliflozin and 3 mL of methanol into 200 mL volumetric flask and dilute to volume with pH 6.8 dissolution medium and mix well.",
+              "ingredients": [
+                {
+                  "name": "standard stock solution for Alogliptin",
+                  "amount": 5.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "200 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Transfer 900 mL dissolution medium into each dissolution bowl. Drop one tablet into each bow, run the dissolution as per the dissolution parameters.\nWithdraw sufficient volume of the sample aliquot from each bowl at 37 °C. Filter the sample solution through 0.45 µm PVDF syringe filter.\nNote: After 15 minutes of sampling, replace with the same volume of the dissolution medium maintained at 37°C ± 0.5 °C at each specified time interval.\nDissolution Parameters\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nPrepare and inject one vial for standard and bracketing standard.\nSystem Suitability\nThe tailing factor of Alogliptin peak and Empagliflozin peak obtained from standard solution chromatogram should not be more than 2.0.\nThe relative standard deviation for peak areas of Alogliptin peak and Empagliflozin peak from the replicate standard solution injections should not be more than 2.0 %.\nThe relative standard deviation for peak areas of Alogliptin peak and Empagliflozin peak from the replicate standard solution and bracketing standard solution injections should not be more than 2.0 %.\nCalculation\nAS\t: Average peak area of Alogliptin peak in the standard solution\nAT\t: Peak area of Alogliptin in the sample solution\nWs\t: Weight of standard taken in mg as Alogliptin benzoate.\nP\t: Potency of the standard as Alogliptin benzoate, on as is basis\nL\t: Label claim of the tablets in mg as Alogliptin\n339.39\t: The molecular weight of Alogliptin.\n461.51\t: The molecular weight of Alogliptin benzoate.\nAS\t: Average peak area of Empagliflozin peak in the standard solution\nAT\t: Peak area of Empagliflozin in the sample solution\nWs\t: Weight of standard taken in mg as Empagliflozin\nP\t: Potency of the standard as Empagliflozin, on as is basis\nL\t: Label claim of the tablets in mg as Empagliflozin\nCalculation of Correction factors\nNote: Here “V” is sampled volume and “D” is dissolution rate.\n% Empagliflozin present in sampled volume after 1st time interval,\nF1 = (D1/900) × V\nCalculation of Corrected results\nFor 1st time interval = D1 (No correction required).\nFor 2nd time interval = D2 + F1\nNote: Continue testing through the three levels unless the results confirm at either S1 or S2.\n*Q: Quantity, the amount of dissolved active ingredient specified in the individual monograph, expressed as a percentage of the labeled content.\nChrmatogram",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "pipette",
+                  "size": "900 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PVDF",
+                  "manufacturer": "",
+                  "filter_type": "syringe",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ],
+          "dissolution_conditions": {
+            "vessels_per_batch": 6,
+            "medium_name": "pH 6.8 phosphate buffer",
+            "apparatus": "USP-II (Paddle)",
+            "speed_rpm": 50,
+            "volume_per_vessel_ml": 900.0,
+            "sampling_time": "Alogliptin",
+            "standard_medium_ml_by_strength": {
+              "25/10 mg": 200.0
+            }
+          },
+          "standards": [
+            {
+              "std_name": "Alogliptin benzoate",
+              "grade": "working standard or reference standard"
+            },
+            {
+              "std_name": "Empagliflozin",
+              "grade": "working standard or reference standard"
+            }
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 1.5,
+            "run_time_min": 10.0,
+            "column_spec": "YMC Pack pro (C18), 4.6 x 150 mm, 5 µm",
+            "injections": [
+              {
+                "solution": "Blank solution (Dissolution medium)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 5,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Bracketing (Standard solution)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
+        },
+        {
+          "name": "Uniformity of dosage unit (Content Uniformity)",
+          "preparations": [
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Weigh and transfer 1 tablet into a 100 mL volumetric flask (Do not grind tablet). Add 70 mL of diluent and sonicate for 20 minutes with intermediate shaking (at least per every 5 minutes).\nPipette 4 mL of the above solution into 10 mL volumetric flask and dilute to volume with diluent.\nCentrifuge the above sample solution at 4500 rpm for 10 minutes or filter through 0.45 µm PVDF or Nylon or PTFE syringe filter.\nCalculation\nAS\t: Average peak area of Alogliptin peak in the standard solution\nAT\t: Peak area of Alogliptin in the sample solution\nWs\t: Weight of standard taken in mg as Alogliptin benzoate.\nP\t: Potency of the standard as Alogliptin benzoate, on as is basis\nN\t: The number of tablets\nL\t: Label claim of the tablets in mg as Alogliptin\n339.39\t: The molecular weight of Alogliptin.\n461.51\t: The molecular weight of Alogliptin benzoate.\nAS\t: Average peak area of Empagliflozin peak in the standard solution\nAT\t: Peak area of Empagliflozin in the sample solution\nWs\t: Weight of standard taken in mg as Empagliflozin\nP\t: Potency of the standard as Empagliflozin, on as is basis\nN\t: The number of tablets\nL\t: Label claim of the tablets in mg as Empagliflozin\nAcceptance value (AV)\nCalculate the Acceptance value as follows:\nAcceptance value (AV) = | M –  | + ks\nThe requirements for dosage uniformity are met if the acceptance value of the first 10 dosage units is less than or equal to L1 %, maximum allowed acceptance value\nIf the acceptance value is > L1 %, test additional 20 units and calculate the acceptance value. The requirements are met if the final acceptance value of the 30 dosage units is ≤ L1 %, and no individual content of any dosage units is less than [1-(0.01)(L2)]M nor more than [1+(0.01)(L2)]M as specified in the calculation of Acceptance Value under Content Uniformity or weight variation. Unless otherwise specified in L1 is 15.0 and L2 is 25.0.",
+              "ingredients": [
+                {
+                  "name": "above solution",
+                  "amount": 4.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "diluent",
+                  "amount": 70.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "volumetric flask",
+                  "size": "10 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "4 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PVDF",
+                  "manufacturer": "",
+                  "filter_type": "syringe",
+                  "count_per_batch": 1
+                },
+                {
+                  "size_um": null,
+                  "material": null,
+                  "manufacturer": null,
+                  "filter_type": "centrifuge",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Assay",
+          "preparations": [
+            {
+              "section_name": "Buffer preparation",
+              "solution_name": "Buffer",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Weigh and transfer about 3.4 g of Potassium phosphate monobasic into 1000 mL of Milli-Q-water. Adjust the pH 3.0 ± 0.02 with ortho-phosphoric acid.",
+              "ingredients": [
+                {
+                  "name": "Potassium phosphate monobasic",
+                  "amount": 3.4,
+                  "unit": "g",
+                  "tracking_no": "SP118"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Mobile phase A preparation",
+              "solution_name": "Mobile phase A",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 900:100 v/v, respectively. Degas in a sonicator for about 10 minutes.",
+              "ingredients": [
+                {
+                  "name": "buffer solution",
+                  "amount": 900.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "acetonitrile",
+                  "amount": 100.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Mobile phase B preparation",
+              "solution_name": "Mobile phase B",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 400:600 v/v, respectively. Degas in a sonicator for about 10 minutes.",
+              "ingredients": [
+                {
+                  "name": "buffer solution",
+                  "amount": 400.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "acetonitrile",
+                  "amount": 600.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Diluent preparation",
+              "solution_name": "Diluent",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Weight and transfer about 3.4 g of Potassium phosphate monobasic into 1000 mL of Milli-Q water. Adjust the pH 2.0 ± 0.02 with ortho-phosphate acid.\nMix this solution and acetonitrile in the ratio of 800:200 v/v, respectively.",
+              "ingredients": [
+                {
+                  "name": "Potassium phosphate monobasic",
+                  "amount": 3.4,
+                  "unit": "g",
+                  "tracking_no": "SP118"
+                },
+                {
+                  "name": "this solution",
+                  "amount": 800.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "acetonitrile",
+                  "amount": 200.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Standard stock solution for Alogliptin preparation",
+              "solution_name": "Standard stock solution for Alogliptin",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Weigh and transfer about 34 mg of Alogliptin benzoate standard into a 50 mL of volumetric flask.\nAdd about 30 mL of diluent, sonicate for 5 minutes to dissolve, and dilute to volume with diluent.",
+              "ingredients": [
+                {
+                  "name": "Alogliptin benzoate",
+                  "amount": 34.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "diluent",
+                  "amount": 30.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Standard stock solution for Empagliflozin preparation",
+              "solution_name": "Standard stock solution for Empagliflozin",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Weigh and transfer about 25 mg of Empagliflozin standard into a 50 mL of volumetric flask.\nAdd about 30 mL of diluent, sonicate for 5 minutes to dissolve, and dilute to volume with diluent.",
+              "ingredients": [
+                {
+                  "name": "Empagliflozin",
+                  "amount": 25.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "diluent",
+                  "amount": 30.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Standard solution preparation",
+              "solution_name": "Standard solution",
+              "volume_per_batch_ml": 25.0,
+              "preparation_text": "Pipette 5 mL of standard stock solution for Alogliptin, 2 mL of standard stock solution for Empagliflozin into 25 mL volumetric flask and dilute to volume with diluent and mix well.",
+              "ingredients": [
+                {
+                  "name": "standard stock solution for Alogliptin",
+                  "amount": 5.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "25 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": 500.0,
+              "preparation_text": "Transfer 5 tablets into 500 mL volumetric flask (Do not grind tablet).\nAdd 350 mL of diluent and sonicate for 20 minutes with intermediate shaking (at least per every 5 minutes). Then dilute to volume with diluent and mix well.\nPipette 4 mL of the above solution into 10 mL volumetric flask and dilute to volume with diluent.\nCentrifuge the above sample solution at 4500 rpm for 10 minutes or filter through 0.45 µm PVDF or Nylon or PTFE syringe filter.\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nSystem Suitability\nThe tailing factor of Alogliptin peak and Empagliflozin peak obtained from standard solution chromatogram should not be more than 2.0.\nThe relative standard deviation for peak areas of Alogliptin peak and Empagliflozin peak from the replicate standard solution injections should not be more than 2.0 %.\nThe relative standard deviation for peak areas of Alogliptin peak and Empagliflozin peak from the replicate standard solution and bracketing standard solution injections should not be more than 2.0 %.\nCalculation\nAS\t: Average peak area of Alogliptin peak in the standard solution\nAT\t: Peak area of Alogliptin in the sample solution\nWs\t: Weight of standard taken in mg as Alogliptin benzoate.\nP\t: Potency of the standard as Alogliptin benzoate, on as is basis\nN\t: The number of tablets\nL\t: Label claim of the tablets in mg as Alogliptin\n339.39\t: The molecular weight of Alogliptin.\n461.51\t: The molecular weight of Alogliptin benzoate.\nAS\t: Average peak area of Empagliflozin peak in the standard solution\nAT\t: Peak area of Empagliflozin in the sample solution\nWs\t: Weight of standard taken in mg as Empagliflozin\nP\t: Potency of the standard as Empagliflozin, on as is basis\nN\t: The number of tablets\nL\t: Label claim of the tablets in mg as Empagliflozin\nChrmatogram",
+              "ingredients": [
+                {
+                  "name": "above solution",
+                  "amount": 4.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "diluent",
+                  "amount": 350.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "500 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "volumetric flask",
+                  "size": "10 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "4 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PVDF",
+                  "manufacturer": "",
+                  "filter_type": "syringe",
+                  "count_per_batch": 1
+                },
+                {
+                  "size_um": null,
+                  "material": null,
+                  "manufacturer": null,
+                  "filter_type": "centrifuge",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ],
+          "standards": [
+            {
+              "std_name": "Alogliptin benzoate",
+              "grade": "working standard or reference standard"
+            },
+            {
+              "std_name": "Empagliflozin",
+              "grade": "working standard or reference standard"
+            }
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 0.7,
+            "run_time_min": 40.0,
+            "column_spec": "Inertsil ODS-3 C18, 4.6 x 250 mm, 3 µm",
+            "injections": [
+              {
+                "solution": "Blank solution (Diluent)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 5,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Bracketing (Standard solution)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
+        },
+        {
+          "name": "Related substances",
+          "preparations": [
+            {
+              "section_name": "Buffer preparation",
+              "solution_name": "Buffer",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Weigh and transfer about 3.4 g of Potassium phosphate monobasic into 1000 mL of Milli-Q-water. Adjust the pH 3.0 ± 0.02 with ortho-phosphoric acid.",
+              "ingredients": [
+                {
+                  "name": "Potassium phosphate monobasic",
+                  "amount": 3.4,
+                  "unit": "g",
+                  "tracking_no": "SP118"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Mobile phase A preparation",
+              "solution_name": "Mobile phase A",
+              "volume_per_batch_ml": 10.0,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 9:1 v/v, respectively.",
+              "ingredients": [
+                {
+                  "name": "buffer solution",
+                  "amount": 9.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "acetonitrile",
+                  "amount": 1.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Mobile phase B preparation",
+              "solution_name": "Mobile phase B",
+              "volume_per_batch_ml": 10.0,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 3:7 v/v, respectively.",
+              "ingredients": [
+                {
+                  "name": "buffer solution",
+                  "amount": 3.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "acetonitrile",
+                  "amount": 7.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Diluent preparation",
+              "solution_name": "Diluent",
+              "volume_per_batch_ml": 10.0,
+              "preparation_text": "Mix buffer and acetonitrile in the ratio of 6 : 4 v/v, respectively.",
+              "ingredients": [
+                {
+                  "name": "buffer",
+                  "amount": 6.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "acetonitrile",
+                  "amount": 4.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Standard stock solution preparation",
+              "solution_name": "Standard stock solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Accurately weigh and transfer about 34 mg of Alogliptin benzoate standard and about 25 mg Empagliflozin standard into a 100 mL volumetric flask, then dissolve in and dilute to volume with diluent and mix well. Sonicate, if necessary to dissolve.\nPipette 5 mL of the above solution into a 50 mL volumetric flask and dilute to volume with diluent and mix well.",
+              "ingredients": [
+                {
+                  "name": "Alogliptin benzoate",
+                  "amount": 34.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "above solution",
+                  "amount": 5.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Standard solution preparation",
+              "solution_name": "Standard solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Pipette 4 mL of standard stock solution into a 50 mL volumetric flask and dilute to volume with diluent and mix well.",
+              "ingredients": [
+                {
+                  "name": "standard stock solution",
+                  "amount": 4.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "4 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Weigh and crush not less than 20 tablets to a fine powder in mortar with pestle.\nAccurately weigh and transfer the tablet powder equivalent to 75 mg of Alogliptin (about 834 mg), transfer into 50 mL volumetric flask.\nAdd 30 mL of diluent and sonicate for 20 min with intermediate shaking. Allow the flask cool to room temperature and dilute to volume with diluent and mix well.\nCentrifuge this solution at 5000 RPM for 10 minutes.\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nSystem Suitability\nThe tailing factor of Alogliptin peak and Empagliflozin obtained from standard solution chromatogram should not be more than 2.0.\nThe relative standard deviation for peak areas of Alogliptin and Empagliflozin for three replicate injections of standard solution should not be more than 10.0 %.\nThe relative standard deviation for peak areas of Alogliptin and Empagliflozin for three replicate injections of standard solution and bracketing should not be more than 10.0 %.\nCalculation\nNote: Do not calculate benzoic acid peak (RRT 1.2)\nAS\t: Average peak area of Alogliptin peak in the standard solution\nAT\t: Peak area of unknown impurity in the sample solution\nWs\t: Weight of standard taken in mg as Alogliptin benzoate.\nWT\t: Weight of sample in mg.\nAw\t: Average weight in mg.\nP\t: Potency of the standard as Alogliptin benzoate, on as is basis\nL\t: Label claim of the tablets in mg as Alogliptin\n339.39\t: The molecular weight of Alogliptin.\n461.51\t: The molecular weight of Alogliptin benzoate.\nAS\t: Average peak area of Empagliflozin peak in the standard solution\nAT\t: Peak area of unknown impurity in the sample solution\nWs\t: Weight of standard taken in mg as Empagliflozin\nWT\t: Weight of sample in mg.\nAw\t: Average weight in mg.\nP\t: Potency of the standard as Empagliflozin, on as is basis\nL\t: Label claim of the tablets in mg as Empagliflozin\nLOD (%) and LOQ (%) Information\nChrmatogram",
+              "ingredients": [
+                {
+                  "name": "diluent",
+                  "amount": 30.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "mortar",
+                  "size": "-",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": null,
+                  "material": null,
+                  "manufacturer": null,
+                  "filter_type": "centrifuge",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ],
+          "standards": [
+            {
+              "std_name": "Alogliptin benzoate",
+              "grade": "working standard or reference standard"
+            },
+            {
+              "std_name": "Empagliflozin",
+              "grade": "working standard or reference standard"
+            }
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 1.0,
+            "run_time_min": 130.0,
+            "column_spec": "Kromasil 100-5-C18, 4.6 x 250 mm, 5μm",
+            "injections": [
+              {
+                "solution": "Blank solution (Diluent)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 3,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Blank solution (Diluent, 100 µL)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Bracketing (Standard solution)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "STM-300287-T0.doc",
+      "doc_no": "STM-300287-T0",
+      "stm_file": "STM-300287-T0.doc.docx",
+      "product_name": "Alogliptin benzoate/Empagliflozin tablets",
+      "strengths": [
+        "25/25 mg"
+      ],
+      "test_items": [
+        {
+          "name": "Description",
+          "preparations": []
+        },
+        {
+          "name": "Identification",
+          "preparations": []
+        },
+        {
+          "name": "Dissolution",
+          "preparations": [
+            {
+              "section_name": "Dissolution medium preparation",
+              "solution_name": "Dissolution medium",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Transfer 6.81 g of Potassium phosphate monobasic and 0.9 g of sodium hydroxide to a suitable container, dissolve and dilute in 1000 mL of Milli-Q water, mix well and adjust the pH to 6.8 ± 0.05.",
+              "ingredients": [
+                {
+                  "name": "Potassium phosphate monobasic",
+                  "amount": 6.81,
+                  "unit": "g",
+                  "tracking_no": "SP118"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Mobile phase preparation",
+              "solution_name": "Mobile phase",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Weigh and transfer about 5.8 g of Ammonium dihydrogen phosphate in 1000 mL of Milli-Q- water.\nMix above solution, acetonitrile in the ratio of 600: 400 v/v. Add about 4.3 g of sodium dodecyl sulfate.\nFilter through 0.45 µm membrane filter. Dagas in a sonicator for about 10 minutes.",
+              "ingredients": [
+                {
+                  "name": "Ammonium dihydrogen phosphate",
+                  "amount": 5.8,
+                  "unit": "g",
+                  "tracking_no": "SA008"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Standard stock solution for Alogliptin preparation",
+              "solution_name": "Standard stock solution for Alogliptin",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Weigh and transfer about 75.8 mg of Alogliptin benzoate standard into a 50 mL of volumetric flask.\nAdd about 30 mL of Methanol, sonicate for about 5 minutes to dissolve, and dilute to volume with Methanol.",
+              "ingredients": [
+                {
+                  "name": "Alogliptin benzoate",
+                  "amount": 75.8,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Methanol",
+                  "amount": 30.0,
+                  "unit": "ml",
+                  "tracking_no": "LM035"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Standard stock solution for Empagliflozin preparation",
+              "solution_name": "Standard stock solution for Empagliflozin",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Weigh and transfer about 55.6 mg of Empagliflozin standard into a 50 mL of volumetric flask.\nAdd about 30 mL of Methanol, sonicate for about 5 minutes to dissolve, and dilute to volume with Methanol.",
+              "ingredients": [
+                {
+                  "name": "Empagliflozin",
+                  "amount": 55.6,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Methanol",
+                  "amount": 30.0,
+                  "unit": "ml",
+                  "tracking_no": "LM035"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Standard solution preparation",
+              "solution_name": "Standard solution",
+              "volume_per_batch_ml": 200.0,
+              "preparation_text": "Pipette 5 mL of standard stock solution for Alogliptin, 5 mL of standard stock solution for Empagliflozin into 200 mL volumetric flask and dilute to volume with pH 6.8 dissolution medium and mix well.",
+              "ingredients": [
+                {
+                  "name": "standard stock solution for Alogliptin",
+                  "amount": 5.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "200 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Transfer 900 mL dissolution medium into each dissolution bowl. Drop one tablet into each bow, run the dissolution as per the dissolution parameters.\nWithdraw sufficient volume of the sample aliquot from each bowl at 37 °C. Filter the sample solution through 0.45 µm PVDF syringe filter.\nNote: After 15 minutes of sampling, replace with the same volume of the dissolution medium maintained at 37°C ± 0.5 °C at each specified time interval.\nDissolution Parameters\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nPrepare and inject one vial for standard and bracketing standard.\nSystem Suitability\nThe tailing factor of Alogliptin peak and Empagliflozin peak obtained from standard solution chromatogram should not be more than 2.0.\nThe relative standard deviation for peak areas of Alogliptin peak and Empagliflozin peak from the replicate standard solution injections should not be more than 2.0 %.\nThe relative standard deviation for peak areas of Alogliptin peak and Empagliflozin peak from the replicate standard solution and bracketing standard solution injections should not be more than 2.0 %.\nCalculation\nAS\t: Average peak area of Alogliptin peak in the standard solution\nAT\t: Peak area of Alogliptin in the sample solution\nWs\t: Weight of standard taken in mg as Alogliptin benzoate.\nP\t: Potency of the standard as Alogliptin benzoate, on as is basis\nL\t: Label claim of the tablets in mg as Alogliptin\n339.39\t: The molecular weight of Alogliptin.\n461.51\t: The molecular weight of Alogliptin benzoate.\nAS\t: Average peak area of Empagliflozin peak in the standard solution\nAT\t: Peak area of Empagliflozin in the sample solution\nWs\t: Weight of standard taken in mg as Empagliflozin\nP\t: Potency of the standard as Empagliflozin, on as is basis\nL\t: Label claim of the tablets in mg as Empagliflozin\nCalculation of Correction factors\nNote: Here “V” is sampled volume and “D” is dissolution rate.\n% Empagliflozin present in sampled volume after 1st time interval,\nF1 = (D1/900) × V\nCalculation of Corrected results\nFor 1st time interval = D1 (No correction required).\nFor 2nd time interval = D2 + F1\nNote: Continue testing through the three levels unless the results confirm at either S1 or S2.\n*Q: Quantity, the amount of dissolved active ingredient specified in the individual monograph, expressed as a percentage of the labeled content.\nChrmatogram",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "pipette",
+                  "size": "900 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PVDF",
+                  "manufacturer": "",
+                  "filter_type": "syringe",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ],
+          "dissolution_conditions": {
+            "vessels_per_batch": 6,
+            "medium_name": "pH 6.8 phosphate buffer",
+            "apparatus": "USP-II (Paddle)",
+            "speed_rpm": 50,
+            "volume_per_vessel_ml": 900.0,
+            "sampling_time": "Alogliptin",
+            "standard_medium_ml_by_strength": {
+              "25/25 mg": 200.0
+            }
+          },
+          "standards": [
+            {
+              "std_name": "Alogliptin benzoate",
+              "grade": "working standard or reference standard"
+            },
+            {
+              "std_name": "Empagliflozin",
+              "grade": "working standard or reference standard"
+            }
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 1.5,
+            "run_time_min": 10.0,
+            "column_spec": "YMC Pack pro (C18), 4.6 x 150 mm, 5 µm",
+            "injections": [
+              {
+                "solution": "Blank solution (Dissolution medium)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 5,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Bracketing (Standard solution)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
+        },
+        {
+          "name": "Uniformity of dosage unit (Content Uniformity)",
+          "preparations": [
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Weigh and transfer 1 tablet into a 100 mL volumetric flask (Do not grind tablet). Add 70 mL of diluent and sonicate for 20 minutes with intermediate shaking (at least per every 5 minutes).\nPipette 4 mL of the above solution into 10 mL volumetric flask and dilute to volume with diluent.\nCentrifuge the above sample solution at 4500 rpm for 10 minutes or filter through 0.45 µm PVDF or Nylon or PTFE syringe filter.\nCalculation\nAS\t: Average peak area of Alogliptin peak in the standard solution\nAT\t: Peak area of Alogliptin in the sample solution\nWs\t: Weight of standard taken in mg as Alogliptin benzoate.\nP\t: Potency of the standard as Alogliptin benzoate, on as is basis\nN\t: The number of tablets\nL\t: Label claim of the tablets in mg as Alogliptin\n339.39\t: The molecular weight of Alogliptin.\n461.51\t: The molecular weight of Alogliptin benzoate.\nAS\t: Average peak area of Empagliflozin peak in the standard solution\nAT\t: Peak area of Empagliflozin in the sample solution\nWs\t: Weight of standard taken in mg as Empagliflozin\nP\t: Potency of the standard as Empagliflozin, on as is basis\nN\t: The number of tablets\nL\t: Label claim of the tablets in mg as Empagliflozin\nAcceptance value (AV)\nCalculate the Acceptance value as follows:\nAcceptance value (AV) = | M –  | + ks\nThe requirements for dosage uniformity are met if the acceptance value of the first 10 dosage units is less than or equal to L1 %, maximum allowed acceptance value\nIf the acceptance value is > L1 %, test additional 20 units and calculate the acceptance value. The requirements are met if the final acceptance value of the 30 dosage units is ≤ L1 %, and no individual content of any dosage units is less than [1-(0.01)(L2)]M nor more than [1+(0.01)(L2)]M as specified in the calculation of Acceptance Value under Content Uniformity or weight variation. Unless otherwise specified in L1 is 15.0 and L2 is 25.0.",
+              "ingredients": [
+                {
+                  "name": "above solution",
+                  "amount": 4.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "diluent",
+                  "amount": 70.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "volumetric flask",
+                  "size": "10 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "4 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PVDF",
+                  "manufacturer": "",
+                  "filter_type": "syringe",
+                  "count_per_batch": 1
+                },
+                {
+                  "size_um": null,
+                  "material": null,
+                  "manufacturer": null,
+                  "filter_type": "centrifuge",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Assay",
+          "preparations": [
+            {
+              "section_name": "Buffer preparation",
+              "solution_name": "Buffer",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Weigh and transfer about 3.4 g of Potassium phosphate monobasic into 1000 mL of Milli-Q-water. Adjust the pH 3.0 ± 0.02 with ortho-phosphoric acid.",
+              "ingredients": [
+                {
+                  "name": "Potassium phosphate monobasic",
+                  "amount": 3.4,
+                  "unit": "g",
+                  "tracking_no": "SP118"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Mobile phase A preparation",
+              "solution_name": "Mobile phase A",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 900:100 v/v, respectively. Degas in a sonicator for about 10 minutes.",
+              "ingredients": [
+                {
+                  "name": "buffer solution",
+                  "amount": 900.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "acetonitrile",
+                  "amount": 100.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Mobile phase B preparation",
+              "solution_name": "Mobile phase B",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 400:600 v/v, respectively. Degas in a sonicator for about 10 minutes.",
+              "ingredients": [
+                {
+                  "name": "buffer solution",
+                  "amount": 400.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "acetonitrile",
+                  "amount": 600.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Diluent preparation",
+              "solution_name": "Diluent",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Weight and transfer about 3.4 g of Potassium phosphate monobasic into 1000 mL of Milli-Q water. Adjust the pH 2.0 ± 0.02 with ortho-phosphate acid.\nMix this solution and acetonitrile in the ratio of 800:200 v/v, respectively.",
+              "ingredients": [
+                {
+                  "name": "Potassium phosphate monobasic",
+                  "amount": 3.4,
+                  "unit": "g",
+                  "tracking_no": "SP118"
+                },
+                {
+                  "name": "this solution",
+                  "amount": 800.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "acetonitrile",
+                  "amount": 200.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Standard stock solution for Alogliptin preparation",
+              "solution_name": "Standard stock solution for Alogliptin",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Weigh and transfer about 34 mg of Alogliptin benzoate standard into a 50 mL of volumetric flask.\nAdd about 30 mL of diluent, sonicate for 5 minutes to dissolve, and dilute to volume with diluent.",
+              "ingredients": [
+                {
+                  "name": "Alogliptin benzoate",
+                  "amount": 34.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "diluent",
+                  "amount": 30.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Standard stock solution for Empagliflozin preparation",
+              "solution_name": "Standard stock solution for Empagliflozin",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Weigh and transfer about 25 mg of Empagliflozin standard into a 50 mL of volumetric flask.\nAdd about 30 mL of diluent, sonicate for 5 minutes to dissolve, and dilute to volume with diluent.",
+              "ingredients": [
+                {
+                  "name": "Empagliflozin",
+                  "amount": 25.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "diluent",
+                  "amount": 30.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Standard solution preparation",
+              "solution_name": "Standard solution",
+              "volume_per_batch_ml": 20.0,
+              "preparation_text": "Pipette 4 mL of standard stock solution for Alogliptin, 4 mL of standard stock solution for Empagliflozin into 20 mL volumetric flask and dilute to volume with diluent and mix well.",
+              "ingredients": [
+                {
+                  "name": "standard stock solution for Alogliptin",
+                  "amount": 4.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "20 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "4 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": 500.0,
+              "preparation_text": "Transfer 5 tablets into 500 mL volumetric flask (Do not grind tablet).\nAdd 350 mL of diluent and sonicate for 20 minutes with intermediate shaking (at least per every 5 minutes). Then dilute to volume with diluent and mix well.\nPipette 4 mL of the above solution into 10 mL volumetric flask and dilute to volume with diluent.\nCentrifuge the above sample solution at 4500 rpm for 10 minutes or filter through 0.45 µm PVDF or Nylon or PTFE syringe filter.\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nSystem Suitability\nThe tailing factor of Alogliptin peak and Empagliflozin peak obtained from standard solution chromatogram should not be more than 2.0.\nThe relative standard deviation for peak areas of Alogliptin peak and Empagliflozin peak from the replicate standard solution injections should not be more than 2.0 %.\nThe relative standard deviation for peak areas of Alogliptin peak and Empagliflozin peak from the replicate standard solution and bracketing standard solution injections should not be more than 2.0 %.\nCalculation\nAS\t: Average peak area of Alogliptin peak in the standard solution\nAT\t: Peak area of Alogliptin in the sample solution\nWs\t: Weight of standard taken in mg as Alogliptin benzoate.\nP\t: Potency of the standard as Alogliptin benzoate, on as is basis\nN\t: The number of tablets\nL\t: Label claim of the tablets in mg as Alogliptin\n339.39\t: The molecular weight of Alogliptin.\n461.51\t: The molecular weight of Alogliptin benzoate.\nAS\t: Average peak area of Empagliflozin peak in the standard solution\nAT\t: Peak area of Empagliflozin in the sample solution\nWs\t: Weight of standard taken in mg as Empagliflozin\nP\t: Potency of the standard as Empagliflozin, on as is basis\nN\t: The number of tablets\nL\t: Label claim of the tablets in mg as Empagliflozin\nChrmatogram",
+              "ingredients": [
+                {
+                  "name": "above solution",
+                  "amount": 4.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "diluent",
+                  "amount": 350.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "500 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "volumetric flask",
+                  "size": "10 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "4 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PVDF",
+                  "manufacturer": "",
+                  "filter_type": "syringe",
+                  "count_per_batch": 1
+                },
+                {
+                  "size_um": null,
+                  "material": null,
+                  "manufacturer": null,
+                  "filter_type": "centrifuge",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ],
+          "standards": [
+            {
+              "std_name": "Alogliptin benzoate",
+              "grade": "working standard or reference standard"
+            },
+            {
+              "std_name": "Empagliflozin",
+              "grade": "working standard or reference standard"
+            }
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 0.7,
+            "run_time_min": 40.0,
+            "column_spec": "Inertsil ODS-3 C18, 4.6 x 250 mm, 3 µm",
+            "injections": [
+              {
+                "solution": "Blank solution (Diluent)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 5,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Bracketing (Standard solution)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
+        },
+        {
+          "name": "Related substances",
+          "preparations": [
+            {
+              "section_name": "Buffer preparation",
+              "solution_name": "Buffer",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Weigh and transfer about 3.4 g of Potassium phosphate monobasic into 1000 mL of Milli-Q-water. Adjust the pH 3.0 ± 0.02 with ortho-phosphoric acid.",
+              "ingredients": [
+                {
+                  "name": "Potassium phosphate monobasic",
+                  "amount": 3.4,
+                  "unit": "g",
+                  "tracking_no": "SP118"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Mobile phase A preparation",
+              "solution_name": "Mobile phase A",
+              "volume_per_batch_ml": 10.0,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 9:1 v/v, respectively.",
+              "ingredients": [
+                {
+                  "name": "buffer solution",
+                  "amount": 9.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "acetonitrile",
+                  "amount": 1.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Mobile phase B preparation",
+              "solution_name": "Mobile phase B",
+              "volume_per_batch_ml": 10.0,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 3:7 v/v, respectively.",
+              "ingredients": [
+                {
+                  "name": "buffer solution",
+                  "amount": 3.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "acetonitrile",
+                  "amount": 7.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Diluent preparation",
+              "solution_name": "Diluent",
+              "volume_per_batch_ml": 10.0,
+              "preparation_text": "Mix buffer and acetonitrile in the ratio of 6 : 4 v/v, respectively.",
+              "ingredients": [
+                {
+                  "name": "buffer",
+                  "amount": 6.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "acetonitrile",
+                  "amount": 4.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Standard stock solution preparation",
+              "solution_name": "Standard stock solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Accurately weigh and transfer about 34 mg of Alogliptin benzoate standard and about 25 mg Empagliflozin standard into a 100 mL volumetric flask, then dissolve in and dilute to volume with diluent and mix well. Sonicate, if necessary to dissolve.\nPipette 5 mL of the above solution into a 50 mL volumetric flask and dilute to volume with diluent and mix well.",
+              "ingredients": [
+                {
+                  "name": "Alogliptin benzoate",
+                  "amount": 34.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "above solution",
+                  "amount": 5.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Standard solution preparation",
+              "solution_name": "Standard solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Pipette 4 mL of standard stock solution into a 50 mL volumetric flask and dilute to volume with diluent and mix well.",
+              "ingredients": [
+                {
+                  "name": "standard stock solution",
+                  "amount": 4.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "4 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Weigh and crush not less than 20 tablets to a fine powder in mortar with pestle.\nAccurately weigh and transfer the tablet powder equivalent to 50 mg of Alogliptin (about 720 mg), transfer into 50 mL volumetric flask.\nAdd 30 mL of diluent and sonicate for 20 min with intermediate shaking. Allow the flask cool to room temperature and dilute to volume with diluent and mix well.\nCentrifuge this solution at 5000 RPM for 10 minutes.\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nSystem Suitability\nThe tailing factor of Alogliptin peak and Empagliflozin obtained from standard solution chromatogram should not be more than 2.0.\nThe relative standard deviation for peak areas of Alogliptin and Empagliflozin for three replicate injections of standard solution should not be more than 10.0 %.\nThe relative standard deviation for peak areas of Alogliptin and Empagliflozin for three replicate injections of standard solution and bracketing should not be more than 10.0 %.\nCalculation\nNote: Do not calculate benzoic acid peak (RRT 1.2)\nAS\t: Average peak area of Alogliptin peak in the standard solution\nAT\t: Peak area of unknown impurity in the sample solution\nWs\t: Weight of standard taken in mg as Alogliptin benzoate.\nWT\t: Weight of sample in mg.\nAw\t: Average weight in mg.\nP\t: Potency of the standard as Alogliptin benzoate, on as is basis\nL\t: Label claim of the tablets in mg as Alogliptin\n339.39\t: The molecular weight of Alogliptin.\n461.51\t: The molecular weight of Alogliptin benzoate.\nAS\t: Average peak area of Empagliflozin peak in the standard solution\nAT\t: Peak area of unknown impurity in the sample solution\nWs\t: Weight of standard taken in mg as Empagliflozin\nWT\t: Weight of sample in mg.\nAw\t: Average weight in mg.\nP\t: Potency of the standard as Empagliflozin, on as is basis\nL\t: Label claim of the tablets in mg as Empagliflozin\nLOD (%) and LOQ (%) Information\nChrmatogram",
+              "ingredients": [
+                {
+                  "name": "diluent",
+                  "amount": 30.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "mortar",
+                  "size": "-",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": null,
+                  "material": null,
+                  "manufacturer": null,
+                  "filter_type": "centrifuge",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ],
+          "standards": [
+            {
+              "std_name": "Alogliptin benzoate",
+              "grade": "working standard or reference standard"
+            },
+            {
+              "std_name": "Empagliflozin",
+              "grade": "working standard or reference standard"
+            }
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 1.0,
+            "run_time_min": 130.0,
+            "column_spec": "Kromasil 100-5-C18, 4.6 x 250 mm, 5μm",
+            "injections": [
+              {
+                "solution": "Blank solution (Diluent)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 3,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Blank solution (Diluent, 100 µL)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Bracketing (Standard solution)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "STM-300288-T4.doc",
+      "doc_no": "STM-300288-T4",
+      "stm_file": "STM-300288-T4.doc.docx",
+      "product_name": "Azilsartan Tablets",
+      "strengths": [
+        "26 mg"
+      ],
+      "test_items": [
+        {
+          "name": "Description",
+          "preparations": []
+        },
+        {
+          "name": "Identification",
+          "preparations": []
+        },
+        {
+          "name": "Dissolution",
+          "preparations": [
+            {
+              "section_name": "Dissolution medium preparation",
+              "solution_name": "Dissolution medium",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Transfer 6.81 g of Potassium phosphate monobasic and 0.9 g of sodium hydroxide to a suitable container, dissolve and dilute in 1000 mL of Milli-Q water, mix well and adjust the pH to 6.8 ± 0.05.",
+              "ingredients": [
+                {
+                  "name": "Potassium phosphate monobasic",
+                  "amount": 6.81,
+                  "unit": "g",
+                  "tracking_no": "SP104"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Mobile phase preparation",
+              "solution_name": "Mobile phase",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Weight and transfer about 2.0 g of Ammonium phosphate monobasic in 1000 mL of Milli-Q water. Adjust the pH to 2.0 ± 0.02 with phosphoric acid and mix well.\nMix about pH 2.0 solution, acetonitrile in the ratio of 50:50 v/v. Degas in a sonicator for about 10 minutes.",
+              "ingredients": [
+                {
+                  "name": "Ammonium phosphate monobasic",
+                  "amount": 2.0,
+                  "unit": "g"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Standard stock solution preparation",
+              "solution_name": "Standard stock solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Weigh and transfer about 48 mg of Azilsartan standard into a 50 mL volumetric flask.\nAdd about 30 mL of Methanol, sonicate for about 3 minutes to dissolve, and dilute to volume with Methanol.",
+              "ingredients": [
+                {
+                  "name": "Azilsartan",
+                  "amount": 48.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Methanol",
+                  "amount": 30.0,
+                  "unit": "ml",
+                  "tracking_no": "LM035"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Standard solution preparation",
+              "solution_name": "Standard solution",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Pipette 3 mL of above standard stock solution into a 100 mL volumetric flask and dilute to volume with dissolution media and mix well.",
+              "ingredients": [
+                {
+                  "name": "above standard stock solution",
+                  "amount": 3.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "3 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": null,
+              "preparation_text": "Transfer 900 mL of Dissolution medium into each dissolution bowl. Drop one tablet into each bowl, run the dissolution apparatus as per the dissolution parameters.\nWithdraw sufficient volume of the sample aliquot from each bowl at 37 °C. Filter the sample solution through 0.45 µm PVDF (Millipore) syringe filter.\nDissolution Parameters\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nSystem Suitability\nThe tailing factor of Azilsartan peak obtained from standard solution chromatogram should not be more than 2.0.\nThe relative standard deviation for peak areas of Azilsartan peak from the replicate standard solution injections should not be more than 2.0 %.\nThe relative standard deviation for peak areas of Azilsartan peak from the replicate standard solution and bracketing standard solution injections should not be more than 2.0 %.\nCalculation\nAS\t: Average peak area of Azilsartan peak in the standard solution\nAT\t: Peak area of Azilsartan in the sample solution\nWs\t: Weight of standard taken in mg as Azilsartan.\nP\t: Potency of the standard as Azilsartan, on as is basis\nLC\t: Label claim of the tablets in mg as Azilsartan.\nNote: Continue testing through the three levels unless the results confirm at either S1 or S2.\n*Q: Quantity, the amount of dissolved active ingredient specified in the individual monograph, expressed as a percentage of the labeled content.\nChrmatogram",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "pipette",
+                  "size": "900 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PVDF",
+                  "manufacturer": "Millipore",
+                  "filter_type": "syringe",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ],
+          "dissolution_conditions": {
+            "vessels_per_batch": 6,
+            "medium_name": "pH 6.8 phosphate buffer",
+            "apparatus": "USP-II (Paddle)",
+            "speed_rpm": 50,
+            "volume_per_vessel_ml": 900.0,
+            "sampling_time": "20 minutes",
+            "standard_medium_ml_by_strength": {
+              "26 mg": 100.0
+            }
+          },
+          "standards": [
+            {
+              "std_name": "Azilsartan",
+              "grade": "working standard or reference standard"
+            }
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 1.5,
+            "run_time_min": 10.0,
+            "column_spec": "YMC Triart (C18) 4.6 x 250 mm, 5 µm",
+            "injections": [
+              {
+                "solution": "Blank solution (Dissolution medium)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 5,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Bracketing (Standard solution)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
+        },
+        {
+          "name": "Uniformity of dosage units (Weight variation)",
+          "preparations": []
+        },
+        {
+          "name": "Assay",
+          "preparations": [
+            {
+              "section_name": "Buffer preparation",
+              "solution_name": "Buffer",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Weigh and transfer about 2.0 g of Ammonium phosphate monobasic into 1000 mL of Milli-Q water. Adjust the pH 2.0 ± 0.02 with ortho-phosphoric acid.",
+              "ingredients": [
+                {
+                  "name": "Ammonium phosphate monobasic",
+                  "amount": 2.0,
+                  "unit": "g"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Mobile phase preparation",
+              "solution_name": "Mobile phase",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Mix buffer solution and acetonitrile in the ratio of 50:50 v/v, respectively. Degas in a sonicator for about 10 minutes.",
+              "ingredients": [
+                {
+                  "name": "buffer solution",
+                  "amount": 50.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "acetonitrile",
+                  "amount": 50.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Diluent preparation",
+              "solution_name": "Diluent",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Mix methanol and Milli-Q water in the ratio of 70:30 v/v, respectively.",
+              "ingredients": [
+                {
+                  "name": "methanol",
+                  "amount": 70.0,
+                  "unit": "ml",
+                  "tracking_no": "LM035"
+                },
+                {
+                  "name": "Milli-Q water",
+                  "amount": 30.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Standard stock solution preparation",
+              "solution_name": "Standard stock solution",
+              "volume_per_batch_ml": 200.0,
+              "preparation_text": "Weigh and transfer about 52 mg of Azilsartan reference standard or working standard into a 200 mL volumetric flask.\nAdd about 120 mL of diluent and sonicate for 10 minutes to dissolve and then dilute to volume with diluent.",
+              "ingredients": [
+                {
+                  "name": "Azilsartan reference",
+                  "amount": 52.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "diluent",
+                  "amount": 120.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "200 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Standard solution preparation",
+              "solution_name": "Standard solution",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Pipette 10 mL of Standard stock solution into a 50 mL volumetric flask and dilute to volume with Diluent.",
+              "ingredients": [
+                {
+                  "name": "Standard stock solution",
+                  "amount": 10.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "10 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": 250.0,
+              "preparation_text": "Weigh and transfer 5 tablets into 250 mL volumetric flask (Do not grind tablet).\nAdd 150 mL of diluent and sonicate for 30 minutes with intermediate shaking (at least per every 5minutes). Then dilute to volume with diluent and mix well.\nCentrifuge the above sample solution at 4000 rpm for 10 minutes or filter through 0.45 µm PVDF syringe filter (Millipore).\nPipette 5 mL of the above solution into 50 mL volumetric flask and then dilute to volume with diluent and mix well.\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nSystem Suitability\nThe tailing factor of Azilsartan peak obtained from standard solution chromatogram should not be more than 2.0.\nThe relative standard deviation for peak areas of Azilsartan peak from the replicate standard solution injections should not be more than 2.0 %.\nThe relative standard deviation for peak areas of Azilsartan peak from the replicate standard solution and bracketing standard solution injections should not be more than 2.0 %.\nCalculation\nAS\t: Average peak area of Azilsartan peak in the standard solution\nAT\t: Peak area of Azilsartan in the sample solution\nWs\t: Weight of standard taken in mg as Azilsartan.\nP\t: Potency of the standard as Azilsartan, on as is basis\nLC\t: Label claim of the tablets in mg as Azilsartan.\nN\t: The number of tablets\nChrmatogram",
+              "ingredients": [
+                {
+                  "name": "above solution",
+                  "amount": 5.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "diluent",
+                  "amount": 150.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "250 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PVDF",
+                  "manufacturer": "",
+                  "filter_type": "syringe",
+                  "count_per_batch": 1
+                },
+                {
+                  "size_um": null,
+                  "material": null,
+                  "manufacturer": null,
+                  "filter_type": "centrifuge",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ],
+          "standards": [
+            {
+              "std_name": "Azilsartan",
+              "grade": "working standard or reference standard"
+            }
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 1.5,
+            "run_time_min": 25.0,
+            "column_spec": "YMC Triart (C18) 4.6 x 250 mm, 5 µm",
+            "injections": [
+              {
+                "solution": "Blank solution (Diluent)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 5,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Bracketing (Standard solution)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
+        },
+        {
+          "name": "Related substances",
+          "preparations": [
+            {
+              "section_name": "Buffer (50 mM KH2PO4) preparation",
+              "solution_name": "Buffer (50 mM KH2PO4)",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Weigh and transfer about 6.80 g of Potassium phosphate monobasic into 1000 mL Milli-Q water.",
+              "ingredients": [
+                {
+                  "name": "Potassium phosphate monobasic",
+                  "amount": 6.8,
+                  "unit": "g",
+                  "tracking_no": "SP104"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Buffer (30 mM KH2PO4) preparation",
+              "solution_name": "Buffer (30 mM KH2PO4)",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Weigh and transfer about 4.08 g of Potassium phosphate monobasic into 1000 mL Milli-Q water.",
+              "ingredients": [
+                {
+                  "name": "Potassium phosphate monobasic",
+                  "amount": 4.08,
+                  "unit": "g",
+                  "tracking_no": "SP104"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "1M phosphoric acid solution preparation",
+              "solution_name": "1M phosphoric acid solution",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Transfer 68 mL of phosphoric acid to a 1000 mL volumetric flask containing about 500 mL of water. Cool down to room temperature and dilute with water to volume.",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "1000 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "68 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Mobile phase A preparation",
+              "solution_name": "Mobile phase A",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Mix Methanol, Buffer (50 mM KH2PO4) and 1 M phosphoric acid solution in the ratio of 65 : 35: 1 v/v/v, respectively.",
+              "ingredients": [
+                {
+                  "name": "Methanol, Buffer (50 mM KH2PO4)",
+                  "amount": 65.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "1 M phosphoric acid solution",
+                  "amount": 35.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Mobile phase B preparation",
+              "solution_name": "Mobile phase B",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "Mix Methanol, Buffer (30 mM KH2PO4) and 1 M phosphoric acid solution in the ratio of 90 : 10: 1 v/v/v, respectively.",
+              "ingredients": [
+                {
+                  "name": "Methanol, Buffer (30 mM KH2PO4)",
+                  "amount": 90.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "1 M phosphoric acid solution",
+                  "amount": 10.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Diluent preparation",
+              "solution_name": "Diluent",
+              "volume_per_batch_ml": 20.0,
+              "preparation_text": "Mix Methanol and Milli-Q Water in the ratio of 13 : 7 v/v, respectively.",
+              "ingredients": [
+                {
+                  "name": "Methanol",
+                  "amount": 13.0,
+                  "unit": "ml",
+                  "tracking_no": "LM035"
+                },
+                {
+                  "name": "Milli-Q Water",
+                  "amount": 7.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Standard solution preparation",
+              "solution_name": "Standard solution",
+              "volume_per_batch_ml": 200.0,
+              "preparation_text": "Accurately weigh and transfer about 40 mg of Azilsartan standard into a 200 mL volumetric flask, then dissolve in and dilute to volume with diluent and mix well. Sonicate, if necessary to dissolve.\nPipette 1.0 mL of the above solution into a 100 mL volumetric flask and dilute to volume with diluent and mix well.",
+              "ingredients": [
+                {
+                  "name": "Azilsartan",
+                  "amount": 40.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "above solution",
+                  "amount": 1.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "200 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "1 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Sample solution preparation",
+              "solution_name": "Sample solution",
+              "volume_per_batch_ml": 200.0,
+              "preparation_text": "Weigh and crush not less than 20 tablets to fine powder in mortar with pestle.\nAccurately weigh and transfer the tablet powder equivalent to 40 mg of Azilsartan into a 200 mL volumetric flask.\nAdd 140 mL of diluent and sonicate for 20 min with intermediate shaking. Allow the flask cool to room temperature and dilute to volume with diluent and mix well.\nFilter the sample solution through 0.45 µm PVDF Millipore syringe filter.\nChromatographic System\nProcedure\nInject the following solutions as mentioned below.\nBlank solution can be injected more for stabilization.\nRRT, RRF, LOD (%) and LOQ (%) Information\nSystem Suitability\nThe tailing factor of Azilsartan peak obtained from standard solution chromatogram should not be more than 2.0.\nThe relative standard deviation for peak areas of Azilsartan peak from the replicate standard solution injections should not be more than 10.0 %.\nThe relative standard deviation for peak areas of Azilsartan peak from the replicate standard solution and bracketing standard solution injections should not be more than 10.0 %.\nCalculation\nAS\t: Average peak area of Azilsartan peak from standard solution\nAT\t: Peak area of Azilsartan tablets impurity from sample solution\nWs\t: Weight of standard taken in mg as Azilsartan.\nWt\t: Weight of sample taken in mg.\nAw\t: Average weight of the tablet in mg.\nP\t: Potency of the standard as Azilsartan, on as is basis\nLC\t: Label claim of the tablets in mg as Azilsartan.\nRRF\t: Relative response factor (unknown impurity = 1)\nChrmatogram",
+              "ingredients": [
+                {
+                  "name": "diluent",
+                  "amount": 140.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "200 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "mortar",
+                  "size": "-",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PVDF",
+                  "manufacturer": "",
+                  "filter_type": "syringe",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ],
+          "standards": [
+            {
+              "std_name": "Azilsartan",
+              "grade": "working standard or reference standard"
+            }
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 0.8,
+            "run_time_min": 45.0,
+            "column_spec": "Inertsil ODS-3V, 4.6 x 150 mm, 5 µm",
+            "injections": [
+              {
+                "solution": "Blank solution (Diluent)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 3,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Blank solution (Diluent, 100 µL)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Bracketing (Standard solution)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
       "id": "STM-300599-T4.doc",
       "doc_no": "STM-300599-T4",
       "stm_file": "STM-300599-T4.doc.docx",
@@ -972,11 +3057,6 @@
                   "name": "Hydrochloric acid",
                   "amount": 0.6375,
                   "unit": "ml"
-                },
-                {
-                  "name": "Purified water",
-                  "amount": 74.3625,
-                  "unit": "ml"
                 }
               ],
               "glassware": [],
@@ -1051,52 +3131,45 @@
           "preparations": [
             {
               "section_name": "Dissolution medium (0.01 mol/L Hydrochloric acid solution) preparation",
-              "solution_name": "Dissolution medium (0.01 mol/L Hydrochloric acid solution)",
-              "volume_per_batch_ml": null,
-              "preparation_text": "Dilute 8.5 mL of concentrated Hydrochloric acid to 10000 mL with purified water.",
+              "solution_name": "시험액 (Dissolution medium)",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Ammonium phosphate monobasic 2.3 g을 물 1000 mL에 녹이고 인산으로 pH 6.0으로 맞춘다.",
               "ingredients": [
                 {
-                  "name": "Hydrochloric acid solution",
-                  "amount": 0,
-                  "unit": "ml"
+                  "name": "Ammonium phosphate monobasic",
+                  "amount": 2.3,
+                  "unit": "g"
                 }
               ],
               "glassware": [],
-              "filters": []
-            },
-            {
-              "section_name": "Buffer solution preparation",
-              "solution_name": "Buffer solution",
-              "volume_per_batch_ml": null,
-              "preparation_text": "Dilute 5.75 g of Ammonium Phosphate Monobasic to 1000 mL with purified water.",
-              "ingredients": [],
-              "glassware": [],
-              "filters": []
+              "filters": [],
+              "is_reagent": true
             },
             {
               "section_name": "Mobile phase preparation",
               "solution_name": "Mobile phase",
               "volume_per_batch_ml": 1000.0,
-              "preparation_text": "Mix buffer and acetonitrile in the ratio of 500 : 500 v/v, respectively. Add 7.2 g of Sodium dodecyl sulfate in 1000mL of Mobile phase, dissolve and mix well.",
+              "preparation_text": "Mix Buffer and acetonitrile in the ratio of 500 : 500 v/v. Then add 7.2 g of Sodium dodecyl sulfate.",
               "ingredients": [
                 {
-                  "name": "Sodium dodecyl sulfate in 1000mL of Mobile phase, dissolve",
+                  "name": "Buffer",
+                  "amount": 500.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "Acetonitrile",
+                  "amount": 500.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "Sodium dodecyl sulfate",
                   "amount": 7.2,
                   "unit": "g"
-                },
-                {
-                  "name": "buffer",
-                  "amount": 500.0,
-                  "unit": "ml"
-                },
-                {
-                  "name": "acetonitrile",
-                  "amount": 500.0,
-                  "unit": "ml"
                 }
               ],
               "glassware": [],
-              "filters": []
+              "filters": [],
+              "is_reagent": true
             },
             {
               "section_name": "Alogliptin standard stock solution preparation",
@@ -1123,7 +3196,7 @@
                 },
                 {
                   "type": "pipette",
-                  "size": "10.0 mL",
+                  "size": "10 mL",
                   "count_per_batch": 1
                 }
               ],
@@ -1180,16 +3253,31 @@
               "section_name": "Sample solution preparation",
               "solution_name": "Sample solution",
               "volume_per_batch_ml": null,
-              "preparation_text": "Place one tablet in each vessel and immediately operate the apparatus at the rate specified above. At sampling time point, withdraw 10 mL of the sample solution and filter through a membrane filter in the table below and discard more than the first 5 mL of the filtrate. Use the subsequent filtrate for the test as the sample solution.\nDissolution Parameter\nChromatographic System\nProcedure\nStart the analysis as described below.\nBlank solution can be measured once or more for stabilization.\nSystem Suitability\nNote: Benzoic acid (the retention time is about 4 minutes), Metformin (the retention time is about 5 minutes) and Alogliptin (the retention tiem is about 7 minutes) are eluted in this order.\nThe % RSD for peak area of Alogliptin and Metformin for replicate injections of Standard solution and bracketing standard solution should not be more than 2.0 %.\nThe theoretical plate for Alogliptin and Metformin in standard is not less than 8000, 6000.\nThe tailing factor for Alogliptin and Metformin in standard is not more than 2.0, 2.5.\nCalculation\nASAM\t: Peak area of Alogliptin or Metformin from Sample solution\nASTD\t: Average peak area of Alogliptin or Metformin from standard solution\nWSTD\t: Weight (mg) of Alogliptin benzoate or Metformin Hydrochloride standard taken for standard\nP\t: Content (%) for Alogliptin benzoate or Metformin Hydrochloride standard\nLC\t: Labeled amount of Alogliptin or Metformin hydrochloride\n339.39\t: Molecular weight of Alogliptin\n461.51\t: Molecular weight of Alogliptin benzoate\nNote: Continue testing through the three levels unless the results confirm at either S1 or S2.\n*Q: Quantity, the amount of dissolved active ingredient specified in the individual monograph, expressed as a percentage of the labeled content.\nChrmatogram\nBlend Uniformity\nNote: Chromatographic system, procedures, system suitability follow Assay.\nTest information\nStandard\nReagent\nNote: Use reagent of manufacturer in the above table or equivalent grade.\nSolution stability",
+              "preparation_text": "위의 용출 조건에 따라 시험을 실시하고, 각 시간별로 검액 10 mL를 취하여 0.45 um PVDF 또는 Nylon 필터로 여과한다.",
               "ingredients": [],
               "glassware": [],
-              "filters": []
+              "filters": [
+                {
+                  "size_um": 0.45,
+                  "material": "PVDF",
+                  "manufacturer": "Hyundai micro",
+                  "filter_type": "syringe",
+                  "count_per_batch": 1
+                },
+                {
+                  "size_um": 0.45,
+                  "material": "Nylon",
+                  "manufacturer": "Hyundai micro",
+                  "filter_type": "syringe",
+                  "count_per_batch": 1
+                }
+              ]
             },
             {
               "section_name": "50 mmol/L Ammonium dihydrogen phosphate solution preparation",
-              "solution_name": "50 mmol/L Ammonium dihydrogen phosphate solution",
-              "volume_per_batch_ml": null,
-              "preparation_text": "Weigh and transfer about 5.75 g of Ammonium dihydrogen phosphate in water to make 1000 mL.",
+              "solution_name": "Buffer",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "Ammonium dihydrogen phosphate 5.75 g을 물에 녹여 1000 mL로 한다.",
               "ingredients": [
                 {
                   "name": "Ammonium dihydrogen phosphate",
@@ -1198,240 +3286,8 @@
                 }
               ],
               "glassware": [],
-              "filters": []
-            },
-            {
-              "section_name": "Mobile phase preparation",
-              "solution_name": "Mobile phase",
-              "volume_per_batch_ml": null,
-              "preparation_text": "Mix 500 mL of 50 mmol/L Ammonium dihydrogen phosphate solution and 500 mL of acetonitrile and then add about 7.2 g of Sodium dodecyl sulfate and mix well.",
-              "ingredients": [
-                {
-                  "name": "Sodium dodecyl sulfate",
-                  "amount": 7.2,
-                  "unit": "g"
-                }
-              ],
-              "glassware": [],
-              "filters": []
-            },
-            {
-              "section_name": "Extracting solvent (0.1mol/L Hydrochloric acid) preparation",
-              "solution_name": "Extracting solvent (0.1mol/L Hydrochloric acid)",
-              "volume_per_batch_ml": null,
-              "preparation_text": "Transfer 8.5 mL of Hydrochloric acid in water to make 1000 mL.",
-              "ingredients": [
-                {
-                  "name": "Hydrochloric acid",
-                  "amount": 0,
-                  "unit": "ml"
-                }
-              ],
-              "glassware": [
-                {
-                  "type": "pipette",
-                  "size": "8.5 mL",
-                  "count_per_batch": 1
-                }
-              ],
-              "filters": []
-            },
-            {
-              "section_name": "Diluent solution preparation",
-              "solution_name": "Diluent solution",
-              "volume_per_batch_ml": null,
-              "preparation_text": "Mix Methanol and 0.1 mol/L Hydrochloric acid (1:1 v/v).",
-              "ingredients": [],
-              "glassware": [],
-              "filters": []
-            },
-            {
-              "section_name": "Metformin hydrochloride internal standard solution preparation",
-              "solution_name": "Metformin hydrochloride internal standard solution",
-              "volume_per_batch_ml": 100.0,
-              "preparation_text": "Note: Prepare in consideration of the necessary amount.\nWeigh and transfer about 30 mg of p-methoxyacetophenone into a 100 mL volumetric flask, dilute to volume with diluent. (Concentration: 0.3 mg/mL)",
-              "ingredients": [
-                {
-                  "name": "p-methoxyacetophenone",
-                  "amount": 30.0,
-                  "unit": "mg"
-                }
-              ],
-              "glassware": [
-                {
-                  "type": "volumetric flask",
-                  "size": "100 mL",
-                  "count_per_batch": 1
-                }
-              ],
-              "filters": []
-            },
-            {
-              "section_name": "Alogliptin internal standard solution preparation",
-              "solution_name": "Alogliptin internal standard solution",
-              "volume_per_batch_ml": 100.0,
-              "preparation_text": "Note: Prepare in consideration of the necessary amount.\nTransfer 10 mL of Metformin hydrochloride Internal standard solution into a 100 mL volumetric flask, dilute to volume with diluent. (Concentration: 0.03 mg/mL)",
-              "ingredients": [],
-              "glassware": [
-                {
-                  "type": "volumetric flask",
-                  "size": "100 mL",
-                  "count_per_batch": 1
-                },
-                {
-                  "type": "pipette",
-                  "size": "10 mL",
-                  "count_per_batch": 1
-                }
-              ],
-              "filters": []
-            },
-            {
-              "section_name": "Alogliptin standard stock solution preparation",
-              "solution_name": "Alogliptin standard stock solution",
-              "volume_per_batch_ml": 50.0,
-              "preparation_text": "Weigh and transfer about 42.5 mg of Alogliptin benzoate standard (equivalent to 31.25 mg of Alogliptin) into a 50 mL volumetric flask, dilute to volume with extracting solvent.\nTransfer 10 mL of the above solution into a 50 mL volumetric flask, dilute to volume with extracting solvent.",
-              "ingredients": [
-                {
-                  "name": "Alogliptin benzoate",
-                  "amount": 42.5,
-                  "unit": "mg"
-                }
-              ],
-              "glassware": [
-                {
-                  "type": "volumetric flask",
-                  "size": "50 mL",
-                  "count_per_batch": 2
-                },
-                {
-                  "type": "pipette",
-                  "size": "10 mL",
-                  "count_per_batch": 1
-                }
-              ],
-              "filters": []
-            },
-            {
-              "section_name": "Alogliptin standard solution preparation",
-              "solution_name": "Alogliptin standard solution",
-              "volume_per_batch_ml": 20.0,
-              "preparation_text": "Transfer 5 mL of Alogliptin standard stock solution and transfer 5 mL of Alogliptin internal standard solution into a 20 mL volumetric flask, dilute to volume with extracting solvent.",
-              "ingredients": [],
-              "glassware": [
-                {
-                  "type": "volumetric flask",
-                  "size": "20 mL",
-                  "count_per_batch": 1
-                },
-                {
-                  "type": "pipette",
-                  "size": "5 mL",
-                  "count_per_batch": 2
-                }
-              ],
-              "filters": []
-            },
-            {
-              "section_name": "Metformin hydrochloride stock solution preparation",
-              "solution_name": "Metformin hydrochloride stock solution",
-              "volume_per_batch_ml": 100.0,
-              "preparation_text": "Weigh and transfer about 50 mg of Metformin hydrochloride standard into a 100 mL volumetric flask, dilute to volume with extracting solvent.",
-              "ingredients": [
-                {
-                  "name": "Metformin hydrochloride",
-                  "amount": 50.0,
-                  "unit": "mg"
-                }
-              ],
-              "glassware": [
-                {
-                  "type": "volumetric flask",
-                  "size": "100 mL",
-                  "count_per_batch": 1
-                }
-              ],
-              "filters": []
-            },
-            {
-              "section_name": "Metformin hydrochloride standard solution preparation",
-              "solution_name": "Metformin hydrochloride standard solution",
-              "volume_per_batch_ml": 50.0,
-              "preparation_text": "Transfer 5 mL of Metformin hydrochloride standard stock solution and transfer 5 mL of Metformin hydrochloride internal standard solution into a 50 mL volumetric flask, dilute to volume with extracting solvent.",
-              "ingredients": [],
-              "glassware": [
-                {
-                  "type": "volumetric flask",
-                  "size": "50 mL",
-                  "count_per_batch": 1
-                },
-                {
-                  "type": "pipette",
-                  "size": "5 mL",
-                  "count_per_batch": 2
-                }
-              ],
-              "filters": []
-            },
-            {
-              "section_name": "Sample stock solution preparation",
-              "solution_name": "Sample stock solution",
-              "volume_per_batch_ml": 100.0,
-              "preparation_text": "Weigh and transfer whole blend sample (1X~3X) into a 100 mL volumetric flask. Add approximately 70 mL of extracting solvent and shake the flask until all the blend sample have disintegrated completely (usually for 30 minutes) by using a mechanical shaker. Make up to the mark with extracting solvent and mix well. Centrifuge 3000 rpm for 5 minutes.",
-              "ingredients": [],
-              "glassware": [
-                {
-                  "type": "volumetric flask",
-                  "size": "100 mL",
-                  "count_per_batch": 1
-                }
-              ],
-              "filters": [
-                {
-                  "size_um": null,
-                  "material": null,
-                  "manufacturer": null,
-                  "filter_type": "centrifuge",
-                  "count_per_batch": 1
-                }
-              ]
-            },
-            {
-              "section_name": "Alogliptin sample solution preparation",
-              "solution_name": "Alogliptin sample solution",
-              "volume_per_batch_ml": 20.0,
-              "preparation_text": "Pipette 4 mL of resulting supernatant of the sample stock solution after centrifuge into a 20 mL volumetric flask. Add exactly 5 mL of internal standard solution for alogliptin, and then make up to the mark with extracting solvent to volume and mix well. Filter the solution through 0.45 µm membrane filter having a porosity of 0.45 μm. Discard more than the first 5 mL or more of the filtrate.",
-              "ingredients": [],
-              "glassware": [
-                {
-                  "type": "volumetric flask",
-                  "size": "20 mL",
-                  "count_per_batch": 1
-                },
-                {
-                  "type": "pipette",
-                  "size": "4 mL",
-                  "count_per_batch": 1
-                }
-              ],
-              "filters": [
-                {
-                  "size_um": null,
-                  "material": null,
-                  "manufacturer": null,
-                  "filter_type": "centrifuge",
-                  "count_per_batch": 1
-                }
-              ]
-            },
-            {
-              "section_name": "Metformin hydrochloride sample solution preparation",
-              "solution_name": "Metformin hydrochloride sample solution",
-              "volume_per_batch_ml": null,
-              "preparation_text": "Calculation\nQSAM: Peak area ratio of Alogliptin or Metformin/Internal standard from Sample solution\nQSTD: Average peak area ratio of Alogliptin or Metformin/Internal standard from standard solution\nWSTD: Weight (mg) of Alogliptin benzoate or Metformin Hydrochloride standard taken for standard solution\nWSAM: Weight (mg) of Sample taken for sample solution\nTW: Theoretical weight of blend\nP: Content (%) for Alogliptin benzoate or Metformin Hydrochloride standard\nLC: Labeled amount of Alogliptin or Metformin hydrochloride\n0.735: Molecular weight of Alogliptin / Molecular weight of Alogliptin benzoate",
-              "ingredients": [],
-              "glassware": [],
-              "filters": []
+              "filters": [],
+              "is_reagent": true
             }
           ],
           "standards": [
@@ -1449,6 +3305,17 @@
             "run_time_min": 10.0,
             "column_spec": "YMC-Pack Pro C8 (5µm, 6.0 mm x 15 cm) or Equivalent.",
             "injections": []
+          },
+          "dissolution_conditions": {
+            "vessels_per_batch": 6,
+            "apparatus": "USP-II (Paddle)",
+            "speed_rpm": 50,
+            "sampling_time": "30 minutes",
+            "medium_name": "시험액 (pH 6.0)",
+            "volume_per_vessel_ml": 900.0,
+            "standard_medium_ml_by_strength": {
+              "12.5/500 mg": 300.0
+            }
           }
         },
         {
@@ -2151,7 +4018,7 @@
               "section_name": "Sample solution (Dilution factor 1:10) preparation",
               "solution_name": "Sample solution (Dilution factor 1:10)",
               "volume_per_batch_ml": null,
-              "preparation_text": "Put about 10 g of sample into 90 mL of SCPB and mix the sample to suspension.\nTotal Aerobic Microbial Count (TAMC) Test\nPlace 2 petri dishes and distribute 1 mL of prepared 1:10 sample solution to each petri dishes.\nPour 15-20 mL of TSA to each 2-petri dish with sample solution dispensed. Swirl the petri dishes slowly to mix sample solution with media.\nIncubate at 30 - 35 ˚C for 5 days.\nPerform Interim colony counting on days 2-4 and final colony counting on days 5 of incubation.\nNote: It can be possible to incubate additionally 2 days. (Total 7 days)\nAfter incubation, resulting value is calculated by averaging the values obtained by multiplying dilution rate 10 to colony number detected from each petri dish.\nTotal Combined Yeasts and Molds Count (TYMC) Test\nPlace 2 petri dishes and distribute 1 mL of prepared 1:10 sample solution to each petri dishes.\nPour 15-20 mL of SDA to each 2-petri dish with sample solution dispensed. Swirl the petri dishes slowly to mix sample solution with media.\nIncubate at 20 - 25 ˚C for 7 days.\nPerform Interim colony counting on days 3-5 and final colony counting on days 7 of incubation.\nAfter incubation, resulting value is calculated by averaging the values obtained by multiplying dilution rate 10 to colony number detected from each petri dish.\nNegative Control Test\nPerform the TAMC test and TYMC test using diluent without sample in the same manner.\nSpecified Microorganisms Test\nProcedure\nDiluent and Media\nSpecified Microorganisms Test: Escherichia coli (E. coli)\nTest Method\nTest method is selection culture method of E. coli using selective media (MCB) and confirmatory media (MCA).",
+              "preparation_text": "Put about 10 g of sample into 90 mL of SCPB and mix the sample to suspension.\nTotal Aerobic Microbial Count (TAMC) Test\nPlace 2 petri dishes and distribute 1 mL of prepared 1:10 sample solution to each petri dishes.\nPour 15-20 mL of TSA to each 2-petri dish with sample solution dispensed. Swirl the petri dishes slowly to mix sample solution with media.\nIncubate at 30 - 35 ˚C for 5 days.\nPerform Interim colony counting on days 2-4 and final colony counting on days 5 of incubation.\nNote: It can be possible to incubate additionally 2 days. (Total 7 days)\nAfter incubation, resulting value is calculated by averaging the values obtained by multiplying dilution rate 10 to colony number detected from each petri dish.\nTotal Combined Yeasts and Molds Count (TYMC) Test\nPlace 2 petri dishes and distribute 1 mL of prepared 1:10 sample solution to each petri dishes.\nPour 15-20 mL of SDA to each 2-petri dish with sample solution dispensed. Swirl the petri dishes slowly to mix sample solution with media.\nIncubate at 20 - 25 ˚C for 7 days.\nPerform Interim colony counting on days 3-5 and final colony counting on days 7 of incubation.\nAfter incubation, resulting value is calculated by averaging the values obtained by multiplying dilution rate 10 to colony number detected from each petri dish.\nNegative Control Test\nPerform the TAMC test and TYMC test using diluent without sample in the same manner.",
               "ingredients": [
                 {
                   "name": "Dilution factor 1:10",
@@ -2161,7 +4028,12 @@
               ],
               "glassware": [],
               "filters": []
-            },
+            }
+          ]
+        },
+        {
+          "name": "Specified Microorganisms Test",
+          "preparations": [
             {
               "section_name": "Sample Solution Preparation",
               "solution_name": "Sample Solution",
@@ -2299,7 +4171,10 @@
         "80/10 mg",
         "40/10 mg",
         "80/5 mg",
-        "40/5 mg"
+        "40/5 mg",
+        "80/10 mg & 80/5 mg",
+        "40/10 mg & 40/5 mg",
+        "80/10 mg 및 40/5 mg"
       ],
       "test_items": [
         {
@@ -2880,9 +4755,9 @@
             "vessels_per_batch": 6,
             "apparatus": "USP-I (Basket)",
             "speed_rpm": 100,
-            "medium_name": "0.01 N Hydrochloric acid",
+            "medium_name": "pH 7.8 phosphate buffer with 0.15 % Tween80",
             "volume_per_vessel_ml": 900.0,
-            "sampling_time": "15 min",
+            "sampling_time": "30 min",
             "standard_medium_ml_by_strength": {
               "80/10 mg & 80/5 mg": 50.0,
               "40/10 mg & 40/5 mg": 100.0
@@ -3684,7 +5559,8 @@
         "26 mg/5 mg",
         "26 mg/10 mg",
         "52 mg/5 mg",
-        "52 mg/10 mg"
+        "52 mg/10 mg",
+        "아질사르탄으로써 0.26 mg/mL"
       ],
       "test_items": [
         {
@@ -3715,6 +5591,11 @@
                   "amount": 0.9,
                   "unit": "g",
                   "tracking_no": "SS001"
+                },
+                {
+                  "name": "g을 적당한 용기에 넣고 물",
+                  "amount": 1000.0,
+                  "unit": "ml"
                 }
               ],
               "glassware": [],
@@ -3731,6 +5612,11 @@
                   "amount": 2.0,
                   "unit": "g",
                   "tracking_no": "SA008"
+                },
+                {
+                  "name": "g 달아 물",
+                  "amount": 1000.0,
+                  "unit": "ml"
                 }
               ],
               "glassware": [],
@@ -4053,6 +5939,11 @@
                   "type": "volumetric flask",
                   "size": "20 mL",
                   "count_per_batch": 2
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": [
@@ -4359,6 +6250,11 @@
                   "type": "volumetric flask",
                   "size": "20 mL",
                   "count_per_batch": 2
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 1
                 }
               ],
               "filters": [
@@ -4423,6 +6319,11 @@
                   "name": "Ammonium phosphate monobasic (Sigma-Aldrich)",
                   "amount": 2.3,
                   "unit": "g"
+                },
+                {
+                  "name": "g을 달아 물",
+                  "amount": 1000.0,
+                  "unit": "ml"
                 }
               ],
               "glassware": [],
@@ -4533,18 +6434,76 @@
               "section_name": "아질사르탄 표준액 조제",
               "solution_name": "아질사르탄 표준액",
               "volume_per_batch_ml": 50.0,
-              "preparation_text": "아질사르탄 표준원액 10 mL를 50 mL 용량플라스크에 넣고 희석액으로 표선하고 잘 섞는다.\n플라시보 용액-B 조제(암로디핀 + 플라시보)\n암로디핀 20 mg에 해당하는 가루(암로디핀 + 플라시보)의 무게를 달아 200 mL 용량플라스크에 넣는다.\n희석액 140 mL를 추가하고 중간에 흔들어주며 20 분 동안 초음파 처리하고 희석액으로 표선하고 잘 섞는다.\n이 용액을 5000 RPM에서 10분간 원심분리한다.\n검액 원액 조제 (암로디핀으로써 0.25 mg/mL)\n20개 이상의 정제의 무게를 측정하고, 유발에 넣고 갈아 가루로 한다.\n암로디핀 25 mg에 해당하는 정제 분말을 정확하게 달아 100 mL 용량플라스크에 넣는다.\n희석액 70 mL를 추가하고 중간에 흔들어주며 20 분 동안 초음파 처리한다. 플라스크를 실온으로 식히고 희석액으로 표선하고 잘 섞는다.\n검액 원액을 5000 RPM에서 10분간 원심분리한다.\n아질사르탄 검액 조제 (아질사르탄으로써 0.26 mg/mL)\n26 밀리그램/5 밀리그램 및 52 밀리그램/10 밀리그램\n검액 원액 10 mL를 50 mL 용량플라스크에 넣고 희석액으로 표선하고 잘 섞는다.\n26 밀리그램/10밀리그램\n검액 원액 20 mL를 50 mL 용량플라스크에 넣고 희석액으로 표선하고 잘 섞는다.\n52 밀리그램/5밀리그램\n검액 원액 5 mL를 50 mL 용량플라스크에 넣고 희석액으로 표선하고 잘 섞는다.\n크로마토그래픽 시스템\nNote: 분석 후 칼럼을 50 % 아세토니트릴로 2시간동안 세척한다.\n절차\n아래 설명된 대로 분석을 시작한다.\n안정화를 위해 2 회 이상 공시험액을 측정할 수 있다.\n시스템 적합성\n표준액 3회 반복 주입 시 아질사르탄 피크의 상대표준편차 (%RSD)는 10.0 % 이하이다.\n표준액 3회 반복 주입 및 브라켓팅(표준액)에서 얻은 아질사르탄 피크의 상대표준편차(%RSD)는 10.0 % 이하이다.\n표준액 3회 반복 주입 시 아질사르탄 피크의 대칭계수는 2.0 이하이다.\n계산\n아질사르탄\nNote: 공시험액 및 플라시보 용액-B 관련 피크는 무시한다.\nNote: 아질사르탄 표준품으로 아질사르탄 관련 유연물질을 계산한다.\nNote: 약 7분대에 검출되는 Benzenesulfonic acid(Besylate)피크는 무시한다\nASTD\t: 표준액 중 아질사르탄 평균 피크면적\nASAM\t: 검액 중 아질사르탄 유연물질 피크면적\nWSTD\t: 취한 아질사르탄 표준품의 양 (mg)\nWSAM\t: 취한 검체의 양 (mg)\nVSAM\t: 취한 검액 원액의 부피 (mL)\n(26 밀리그램/5 밀리그램 및 52 밀리그램/10 밀리그램: 10 mL,\n26 밀리그램/10 밀리그램: 20 mL,\n52 밀리그램/5 밀리그램: 5 mL)\nP\t        : 아질사르탄 표준품의 함량 (%)\nLC\t: 1 정 당 아질사르탄 표시량 (mg)\nAW\t: 정제의 평균 질량 (mg)\nRRF\t: 상대 반응 인자\n유연물질 정보\nHPLC 크로마토그램\n유연물질\n방법 Ⅱ (암로디핀)\nNote: 완충액, 이동상, 희석액, 용액 안정성은 방법 I과 동일하게 진행한다.\nNote: HPLC 등급의 용매 및 고무 바이알 마개를 사용한다.\nNote: 메탄올로 바늘 세척 절차를 수행하고 저농도 순서로 검액을 주입하는 것이 권고된다.\nNote: 분석 전, 바늘을 메탄올로 충분히 수동세척하고 이동상으로 1시간 이상 칼럼을 안정화한다.\nNote: 시험 수행 전 초자와 소니케이터를 정제수로 채우고 약 10분간 초음파 처리한다. 초음파 처리한 초자를 초자세척기로 세척한 후 시험에 사용한다.\nNote: 이동상을 멤브레인 필터로 여과하고 탈기한다.\n표준품",
+              "preparation_text": "아질사르탄 표준원액 10 mL를 50 mL 용량플라스크에 넣고 희석액으로 표선하고 잘 섞는다.",
               "ingredients": [
                 {
                   "name": "아질사르탄 표준원액",
                   "amount": 10.0,
                   "unit": "ml"
-                },
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 2
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "플라시보 용액-B 조제(암로디핀 + 플라시보)",
+              "solution_name": "플라시보 용액-B (암로디핀 + 플라시보)",
+              "volume_per_batch_ml": 200.0,
+              "preparation_text": "암로디핀 20 mg에 해당하는 가루(암로디핀 + 플라시보)의 무게를 달아 200 mL 용량플라스크에 넣는다.\n희석액 140 mL를 추가하고 중간에 흔들어주며 20 분 동안 초음파 처리하고 희석액으로 표선하고 잘 섞는다.\n이 용액을 5000 RPM에서 10분간 원심분리한다.",
+              "ingredients": [
                 {
                   "name": "희석액",
                   "amount": 140.0,
                   "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "200 mL",
+                  "count_per_batch": 2
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "검액 원액 조제 (암로디핀으로써 0.25 mg/mL)",
+              "solution_name": "검액 원액 (암로디핀으로써 0.25 mg/mL)",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "20개 이상의 정제의 무게를 측정하고, 유발에 넣고 갈아 가루로 한다.\n암로디핀 25 mg에 해당하는 정제 분말을 정확하게 달아 100 mL 용량플라스크에 넣는다.\n희석액 70 mL를 추가하고 중간에 흔들어주며 20 분 동안 초음파 처리한다. 플라스크를 실온으로 식히고 희석액으로 표선하고 잘 섞는다.\n검액 원액을 5000 RPM에서 10분간 원심분리한다.",
+              "ingredients": [
+                {
+                  "name": "희석액",
+                  "amount": 70.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 2
                 },
+                {
+                  "type": "mortar",
+                  "size": "-",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "아질사르탄 검액 조제 (아질사르탄으로써 0.26 mg/mL)",
+              "solution_name": "아질사르탄 검액 (아질사르탄으로써 0.26 mg/mL)",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "26 밀리그램/5 밀리그램 및 52 밀리그램/10 밀리그램\n검액 원액 10 mL를 50 mL 용량플라스크에 넣고 희석액으로 표선하고 잘 섞는다.\n26 밀리그램/10밀리그램\n검액 원액 20 mL를 50 mL 용량플라스크에 넣고 희석액으로 표선하고 잘 섞는다.\n52 밀리그램/5밀리그램\n검액 원액 5 mL를 50 mL 용량플라스크에 넣고 희석액으로 표선하고 잘 섞는다.\n크로마토그래픽 시스템\nNote: 분석 후 칼럼을 50 % 아세토니트릴로 2시간동안 세척한다.\n절차\n아래 설명된 대로 분석을 시작한다.\n안정화를 위해 2 회 이상 공시험액을 측정할 수 있다.\n시스템 적합성\n표준액 3회 반복 주입 시 아질사르탄 피크의 상대표준편차 (%RSD)는 10.0 % 이하이다.\n표준액 3회 반복 주입 및 브라켓팅(표준액)에서 얻은 아질사르탄 피크의 상대표준편차(%RSD)는 10.0 % 이하이다.\n표준액 3회 반복 주입 시 아질사르탄 피크의 대칭계수는 2.0 이하이다.\n계산\n아질사르탄\nNote: 공시험액 및 플라시보 용액-B 관련 피크는 무시한다.\nNote: 아질사르탄 표준품으로 아질사르탄 관련 유연물질을 계산한다.\nNote: 약 7분대에 검출되는 Benzenesulfonic acid(Besylate)피크는 무시한다\nASTD\t: 표준액 중 아질사르탄 평균 피크면적\nASAM\t: 검액 중 아질사르탄 유연물질 피크면적\nWSTD\t: 취한 아질사르탄 표준품의 양 (mg)\nWSAM\t: 취한 검체의 양 (mg)\nVSAM\t: 취한 검액 원액의 부피 (mL)\n(26 밀리그램/5 밀리그램 및 52 밀리그램/10 밀리그램: 10 mL,\n26 밀리그램/10 밀리그램: 20 mL,\n52 밀리그램/5 밀리그램: 5 mL)\nP\t        : 아질사르탄 표준품의 함량 (%)\nLC\t: 1 정 당 아질사르탄 표시량 (mg)\nAW\t: 정제의 평균 질량 (mg)\nRRF\t: 상대 반응 인자\n유연물질 정보\nHPLC 크로마토그램\n유연물질\n방법 Ⅱ (암로디핀)\nNote: 완충액, 이동상, 희석액, 용액 안정성은 방법 I과 동일하게 진행한다.\nNote: HPLC 등급의 용매 및 고무 바이알 마개를 사용한다.\nNote: 메탄올로 바늘 세척 절차를 수행하고 저농도 순서로 검액을 주입하는 것이 권고된다.\nNote: 분석 전, 바늘을 메탄올로 충분히 수동세척하고 이동상으로 1시간 이상 칼럼을 안정화한다.\nNote: 시험 수행 전 초자와 소니케이터를 정제수로 채우고 약 10분간 초음파 처리한다. 초음파 처리한 초자를 초자세척기로 세척한 후 시험에 사용한다.\nNote: 이동상을 멤브레인 필터로 여과하고 탈기한다.\n표준품",
+              "ingredients": [
                 {
                   "name": "밀리그램\n검액 원액",
                   "amount": 10.0,
@@ -4555,22 +6514,7 @@
                 {
                   "type": "volumetric flask",
                   "size": "50 mL",
-                  "count_per_batch": 8
-                },
-                {
-                  "type": "volumetric flask",
-                  "size": "200 mL",
-                  "count_per_batch": 2
-                },
-                {
-                  "type": "volumetric flask",
-                  "size": "100 mL",
-                  "count_per_batch": 2
-                },
-                {
-                  "type": "mortar",
-                  "size": "-",
-                  "count_per_batch": 1
+                  "count_per_batch": 6
                 }
               ],
               "filters": []
@@ -4605,13 +6549,29 @@
               "section_name": "암로디핀베실산염 표준액 조제",
               "solution_name": "암로디핀베실산염 표준액",
               "volume_per_batch_ml": 50.0,
-              "preparation_text": "암로디핀베실산염 표준원액 5 mL를 50 mL 용량플라스크에 넣고 희석액으로 표선하고 잘 섞는다.\n플라시보 용액-A 조제(아질사르탄 + 플라시보)\n아질사르탄 130 mg에 해당하는 가루(아질사르탄 + 플라시보)의 무게를 달아 50 mL 용량플라스크에 넣는다.\n희석액 35 mL를 추가하고 중간에 흔들어주며 20 분 동안 초음파 처리하고 희석액으로 표선하고 잘 섞는다.\n이 용액을 5000 RPM에서 10분간 원심분리한다.",
+              "preparation_text": "암로디핀베실산염 표준원액 5 mL를 50 mL 용량플라스크에 넣고 희석액으로 표선하고 잘 섞는다.",
               "ingredients": [
                 {
                   "name": "암로디핀베실산염 표준원액",
                   "amount": 5.0,
                   "unit": "ml"
-                },
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 2
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "플라시보 용액-A 조제(아질사르탄 + 플라시보)",
+              "solution_name": "플라시보 용액-A (아질사르탄 + 플라시보)",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "아질사르탄 130 mg에 해당하는 가루(아질사르탄 + 플라시보)의 무게를 달아 50 mL 용량플라스크에 넣는다.\n희석액 35 mL를 추가하고 중간에 흔들어주며 20 분 동안 초음파 처리하고 희석액으로 표선하고 잘 섞는다.\n이 용액을 5000 RPM에서 10분간 원심분리한다.",
+              "ingredients": [
                 {
                   "name": "희석액",
                   "amount": 35.0,
@@ -4622,7 +6582,7 @@
                 {
                   "type": "volumetric flask",
                   "size": "50 mL",
-                  "count_per_batch": 4
+                  "count_per_batch": 2
                 }
               ],
               "filters": []
@@ -4710,6 +6670,1260 @@
       ]
     },
     {
+      "id": "STM-CP027-T4.doc",
+      "doc_no": "STM-CP027-T4",
+      "stm_file": "STM-CP027-T4.doc.docx",
+      "product_name": "암로젯정",
+      "strengths": [
+        "10/20/10 mg",
+        "5/20/10 mg",
+        "10/10/10 mg",
+        "5/10/10 mg",
+        "10/5/10 mg",
+        "5/5/10 mg"
+      ],
+      "test_items": [
+        {
+          "name": "Description",
+          "preparations": []
+        },
+        {
+          "name": "Identification",
+          "preparations": []
+        },
+        {
+          "name": "Dissolution (방법 I: 에제티미브)",
+          "preparations": [
+            {
+              "section_name": "완충액 조제",
+              "solution_name": "완충액",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "1-헥산설폰산나트륨 1.69 g을 취하여 1 L 용량플라스크에 넣고, 인산 1.3 mL를 주의하여 첨가한다. 정제수를 넣어 녹이고 희석한 후, 잘 섞어준다.",
+              "ingredients": [
+                {
+                  "name": "헥산설폰산나트륨",
+                  "amount": 1.69,
+                  "unit": "g"
+                },
+                {
+                  "name": "1-헥산설폰산나트륨",
+                  "amount": 1.69,
+                  "unit": "g",
+                  "tracking_no": "SS129"
+                },
+                {
+                  "name": "인산",
+                  "amount": 1.3,
+                  "unit": "ml",
+                  "tracking_no": "LP066"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "1000 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "이동상 조제",
+              "solution_name": "이동상",
+              "volume_per_batch_ml": null,
+              "preparation_text": "완충액과 아세토니트릴을 60 : 40 (v/v)의 비율로 혼합한다.",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "0.05 mol/L 아세트산 용액 조제",
+              "solution_name": "0.05 mol/L 아세트산 용액",
+              "volume_per_batch_ml": null,
+              "preparation_text": "아세트산(100) 2.9 mL에 정제수를 넣어 1000 mL로 한다.",
+              "ingredients": [
+                {
+                  "name": "아세트산(100)",
+                  "amount": 2.9,
+                  "unit": "ml",
+                  "tracking_no": "LA071"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "0.05 mol/L 아세트산나트륨 용액 조제",
+              "solution_name": "0.05 mol/L 아세트산나트륨 용액",
+              "volume_per_batch_ml": null,
+              "preparation_text": "아세트산나트륨삼수화물 6.8 g을 정제수에 녹여 1000 mL용량플라스크에 넣어 표선한다.",
+              "ingredients": [
+                {
+                  "name": "아세트산나트륨삼수화물",
+                  "amount": 6.8,
+                  "unit": "g",
+                  "tracking_no": "SS133"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "1000 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "시험액 (pH 4.0 + 0.3 % Tween 80) 조제",
+              "solution_name": "시험액 (pH 4.0 + 0.3 % Tween 80)",
+              "volume_per_batch_ml": null,
+              "preparation_text": "0.05 mol/L 아세트산 용액과 0.05 mol/L 아세트산나트륨 혼합액 (82:18 v/v)을 만들어 pH 4.0으로 조절한다. 이 용액 1000 mL에 Tween 80 3.0 g을 넣어 충분히 혼합한다.",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "표준액 조제",
+              "solution_name": "표준액",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "에제티미브 표준품을 약 11.1 mg을 정밀하게 달아 100 mL차광 용량플라스크에 넣은 후 아세토니트릴 20 mL를 가하여 녹인 다음 시험액으로 표선을 맞추고 잘 혼화한다.\n이 액 10 mL를 정확하게 취하여 100 mL 차광용량플라스크에 넣고, 시험액을 넣어 정확히 표선을 맞추어 잘 혼화하여 에제티미브의 표준액으로 한다.",
+              "ingredients": [
+                {
+                  "name": "에제티미브 표준품",
+                  "amount": 11.1,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 2
+                },
+                {
+                  "type": "pipette",
+                  "size": "10 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "검액 조제",
+              "solution_name": "검액",
+              "volume_per_batch_ml": null,
+              "preparation_text": "이 약 1 정을 취하여 시험액으로 시험 후, 용출 개시 45분 후에 시험액을 취하여 0.45 µm PTFE 멤브레인 필터로 여과하여 검액으로 한다.\n용출 조건\n크로마토그래픽 시스템\nNote: 새 칼럼은 충분히 이동상으로 활성화 후 사용하며, 분석 후 칼럼은 이동상으로 채워 보관한다.\n절차\n아래 설명된 대로 분석을 시작한다.\n안정화를 위해 1 회 이상 공시험액을 측정할 수 있다.\n시스템 적합성\n표준액을 반복 주입하였을 때 에제티미브 피크 면적 값의 상대표준편차 (% RSD)는 2.0 % 이하이어야 한다.\n표준액 반복 주입 및 브라켓팅 (표준액)을 주입하였을 때 에제티미브 피크 면적 값의 상대표준편차 (% RSD)는 2.0 % 이하이어야 한다.\n계산\nASTD\t: 표준액 중 에제티미브 평균 피크면적\nASAM\t: 검액 중 에제티미브 피크면적\nWSTD\t: 취한 에제티미브 표준품의 양 (mg)\nP\t: 에제티미브 표준품의 함량 (%)\nLC\t: 1 정 당 에제티미브 표시량 (mg)\nNote: S1이나 S2에서 결과가 형성되지 않는다면 3단계를 통해 계속해서 시험한다.\n*Q: Quantity, 각 모노그래프에 지시된 주성분의 용출량이며 표시량에 대해 %로 표현된다.\nHPLC 크로마토그램",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            }
+          ],
+          "dissolution_conditions": {
+            "vessels_per_batch": 6,
+            "apparatus": "대한민국약전 일반시험법의 용출시험법 제2법 (패들법)",
+            "medium_name": "pH 4.0 + 0.3 % Tween 80",
+            "speed_rpm": 75,
+            "volume_per_vessel_ml": 900.0,
+            "sampling_time": "45 분",
+            "standard_medium_ml_by_strength": {
+              "10/20/10 mg": 100.0,
+              "5/20/10 mg": 100.0,
+              "10/10/10 mg": 100.0,
+              "5/10/10 mg": 100.0,
+              "10/5/10 mg": 100.0,
+              "5/5/10 mg": 100.0
+            }
+          },
+          "standards": [
+            {
+              "std_name": "에제티미브",
+              "grade": "1차 또는 2차 표준품"
+            }
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 1.5,
+            "run_time_min": 20.0,
+            "column_spec": "Inertsil ODS-3 (150 x 4.6 mm, 3 µm)",
+            "injections": [
+              {
+                "solution": "공시험액(시험액)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "표준액",
+                "count": 5,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "검액",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "표준액(브라켓팅)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
+        },
+        {
+          "name": "Dissolution (방법 II: 로수바스타틴)",
+          "preparations": [
+            {
+              "section_name": "완충액 조제",
+              "solution_name": "완충액",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "1-헥산설폰산나트륨 1.69 g을 취하여 1 L 용량플라스크에 넣고, 인산 1.3 mL를 주의하여 첨가한다. 정제수를 넣어 녹이고 희석한 후, 잘 섞어준다.",
+              "ingredients": [
+                {
+                  "name": "헥산설폰산나트륨",
+                  "amount": 1.69,
+                  "unit": "g"
+                },
+                {
+                  "name": "1-헥산설폰산나트륨",
+                  "amount": 1.69,
+                  "unit": "g",
+                  "tracking_no": "SS129"
+                },
+                {
+                  "name": "인산",
+                  "amount": 1.3,
+                  "unit": "ml",
+                  "tracking_no": "LP066"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "1000 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "이동상 조제",
+              "solution_name": "이동상",
+              "volume_per_batch_ml": null,
+              "preparation_text": "완충액과 아세토니트릴을 60 : 40 (v/v)의 비율로 혼합한다.",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "0.2 mol/L 인산이수소칼륨 용액 조제",
+              "solution_name": "0.2 mol/L 인산이수소칼륨 용액",
+              "volume_per_batch_ml": null,
+              "preparation_text": "인산이수소칼륨 약 27.22 g을 취하여 물에 녹여 1000 mL로 한다.",
+              "ingredients": [
+                {
+                  "name": "인산이수소칼륨",
+                  "amount": 27.22,
+                  "unit": "g",
+                  "tracking_no": "SP110"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "0.2 mol/L 수산화나트륨 용액 조제",
+              "solution_name": "0.2 mol/L 수산화나트륨 용액",
+              "volume_per_batch_ml": null,
+              "preparation_text": "수산화나트륨 8.0 g을 취하여 물에 녹여 1000 mL로 한다.",
+              "ingredients": [
+                {
+                  "name": "수산화나트륨",
+                  "amount": 8.0,
+                  "unit": "g",
+                  "tracking_no": "SS001"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "시험액 (붕해시험법 제2액, pH 6.8) 조제",
+              "solution_name": "시험액 (붕해시험법 제2액, pH 6.8)",
+              "volume_per_batch_ml": null,
+              "preparation_text": "0.2 mol/L 인산이수소칼륨용액 250 mL와 0.2 mol/L 수산화나트륨용액 118 mL에 물을 넣어 1000 mL로 한다. 조제된 시험액의 pH를 측정하여 확인한다.",
+              "ingredients": [
+                {
+                  "name": "L 수산화나트륨용액",
+                  "amount": 118.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "희석액 조제",
+              "solution_name": "희석액",
+              "volume_per_batch_ml": null,
+              "preparation_text": "아세토니트릴:정제수: Glacial acetic acid= 5000:5000:1 (v/v/v)",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "표준액 조제",
+              "solution_name": "표준액",
+              "volume_per_batch_ml": 200.0,
+              "preparation_text": "로수바스타틴칼슘 표준품을 약 23.1 mg을 정밀하게 달아 200 mL차광 용량 플라스크에 넣은 후 희석액 20 mL를 가하여 녹인 다음 시험액으로 표선을 맞추고 잘 혼화한다.\n이 액 20 mL를 정확하게 취하여 100 mL 차광 용량 플라스크에 넣고, 시험액을 넣어 정확히 표선을 맞추어 잘 혼화하여 로수바스타틴의 표준액으로 한다.",
+              "ingredients": [
+                {
+                  "name": "로수바스타틴칼슘 표준품",
+                  "amount": 23.1,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "200 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "20 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "검액 조제 (10/20/10 mg)",
+              "solution_name": "검액 (10/20/10 mg)",
+              "volume_per_batch_ml": null,
+              "preparation_text": "이 약 1 정을 취하여 시험액으로 시험 후, 용출 개시 30분 후에 시험액을 취하여 0.45 μm PTFE 필터로 여과하여 검액으로 한다.",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "검액 조제 (5/20/10, 10/10/10, 5/10/10, 10/5/10, 5/5/10 mg)",
+              "solution_name": "검액 (5/20/10, 10/10/10, 5/10/10, 10/5/10, 5/5/10 mg)",
+              "volume_per_batch_ml": null,
+              "preparation_text": "이 약 1정을 취하여 시험액으로 시험 후, 용출 개시 30분 후에 시험액을 취하여 0.45 μm PTFE 멤브레인 필터 (Whatman) 또는 10 μm disposable cannula 필터 (QLA)로 여과하여 검액으로 한다.\n용출 조건\n크로마토그래픽 시스템\nNote: 새 칼럼은 충분히 이동상으로 활성화 후 사용하며, 분석 후 칼럼은 이동상으로 채워 보관한다.\n절차\n아래 설명된 대로 분석을 시작한다.\n안정화를 위해 1 회 이상 공시험액을 측정할 수 있다.\n시스템 적합성\n표준액을 반복 주입하였을 때 로수바스타틴 피크 면적 값의 상대표준편차 (% RSD)는 2.0 % 이하이어야 한다.\n표준액 반복 주입 및 브라켓팅 (표준액)을 주입하였을 때 로수바스타틴 피크 면적 값의 상대표준편차 (% RSD)는 2.0 % 이하이어야 한다.\n계산\nASTD\t: 표준액 중 로수바스타틴 평균 피크면적\nASAM\t: 검액 중 로수바스타틴 피크면적\nWSTD\t: 취한 로수바스타틴칼슘 표준품의 양 (mg)\nP\t: 로수바스타틴칼슘 표준품의 함량 (%)\nLC\t: 1 정 당 로수바스타틴 표시량 (mg)\n1001.14\t: 로수바스타틴칼슘 분자량\n963.08\t: 로수바스타틴 분자량\nNote: S1이나 S2에서 결과가 형성되지 않는다면 3단계를 통해 계속해서 시험한다.\n*Q: Quantity, 각 모노그래프에 지시된 주성분의 용출량이며 표시량에 대해 %로 표현된다.\nHPLC 크로마토그램",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            }
+          ],
+          "dissolution_conditions": {
+            "vessels_per_batch": 6,
+            "apparatus": "대한민국약전 일반시험법의 용출시험법 2 (패들법)",
+            "medium_name": "대한민국 약전 붕해시험법 제2액, pH 6.8",
+            "speed_rpm": 75,
+            "volume_per_vessel_ml": 900.0,
+            "sampling_time": "30 분",
+            "standard_medium_ml_by_strength": {
+              "10/20/10 mg": 200.0,
+              "5/20/10 mg": 200.0,
+              "10/10/10 mg": 200.0,
+              "5/10/10 mg": 200.0,
+              "10/5/10 mg": 200.0,
+              "5/5/10 mg": 200.0
+            }
+          },
+          "standards": [
+            {
+              "std_name": "로수바스타틴칼슘",
+              "grade": "1차 또는 2차 표준품"
+            }
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 1.5,
+            "run_time_min": 20.0,
+            "column_spec": "Inertsil ODS-3 (150 x 4.6 mm, 3 µm)",
+            "injections": [
+              {
+                "solution": "공시험액(시험액)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "표준액",
+                "count": 5,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "검액",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "표준액(브라켓팅)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
+        },
+        {
+          "name": "Dissolution (방법 III: 암로디핀)",
+          "preparations": [
+            {
+              "section_name": "완충액 조제",
+              "solution_name": "완충액",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "1-헥산설폰산나트륨 1.69 g을 취하여 1 L 용량플라스크에 넣고, 인산 1.3 mL를 주의하여 첨가한다. 정제수를 넣어 녹이고 희석한 후, 잘 섞어준다.",
+              "ingredients": [
+                {
+                  "name": "헥산설폰산나트륨",
+                  "amount": 1.69,
+                  "unit": "g"
+                },
+                {
+                  "name": "1-헥산설폰산나트륨",
+                  "amount": 1.69,
+                  "unit": "g",
+                  "tracking_no": "SS129"
+                },
+                {
+                  "name": "인산",
+                  "amount": 1.3,
+                  "unit": "ml",
+                  "tracking_no": "LP066"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "1000 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "이동상 조제",
+              "solution_name": "이동상",
+              "volume_per_batch_ml": null,
+              "preparation_text": "완충액과 아세토니트릴을 60 : 40 (v/v)의 비율로 혼합한다.",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "희석액 조제",
+              "solution_name": "희석액",
+              "volume_per_batch_ml": null,
+              "preparation_text": "아세토니트릴:정제수: Glacial acetic acid= 5000:5000:1 (v/v/v)",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "시험액 조제 (0.01 N HCl)",
+              "solution_name": "시험액 (0.01 N HCl)",
+              "volume_per_batch_ml": null,
+              "preparation_text": "염산 8.5 mL에 물을 넣어 10000 mL로 한다.",
+              "ingredients": [
+                {
+                  "name": "염산",
+                  "amount": 8.5,
+                  "unit": "ml",
+                  "tracking_no": "LH041"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "공시험액 조제",
+              "solution_name": "공시험액",
+              "volume_per_batch_ml": null,
+              "preparation_text": "시험액: 아세토니트릴 (9:1)",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "표준원액 조제",
+              "solution_name": "표준원액",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "암로디핀베실산염 표준품 약 15.4 mg을 정밀하게 달아 100 mL 차광 용량 플라스크에 넣은 후 희석액 20 mL로 녹인 다음, 시험액으로 표선까지 맞추고 잘 섞어 준다.",
+              "ingredients": [
+                {
+                  "name": "암로디핀베실산염 표준품",
+                  "amount": 15.4,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "표준액 조제",
+              "solution_name": "표준액",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "표준원액 10 mL를 정확하게 취하여 100 mL 차광 용량 플라스크에 넣고, 시험액을 넣어 정확히 표선을 맞춘다. 이 액을 아세토니트릴과 9:1로 잘 혼화하여 암로디핀의 표준액으로 한다.",
+              "ingredients": [
+                {
+                  "name": "표준원액",
+                  "amount": 10.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "10 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "검액 조제 (10/20/10 mg)",
+              "solution_name": "검액 (10/20/10 mg)",
+              "volume_per_batch_ml": null,
+              "preparation_text": "이 약 1 정을 취하여 시험액으로 시험 후, 용출 개시 15분 후에 용출액을 취하여 0.45 μm PTFE 멤브레인 필터로 여과 후, 이 액을 아세토니트릴과 9:1로 잘 혼화하여 검액으로 한다.",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "검액 조제 (5/20/10, 10/10/10, 5/10/10, 10/5/10, 5/5/10 mg)",
+              "solution_name": "검액 (5/20/10, 10/10/10, 5/10/10, 10/5/10, 5/5/10 mg)",
+              "volume_per_batch_ml": null,
+              "preparation_text": "이 약 1 정을 취하여 시험액으로 시험 후, 용출 개시 15분 후에 용출액을 취하여 0.45 μm PTFE 멤브레인 필터 (Whatman) 또는 10 μm disposable cannula 필터 (QLA) 여과 후, 이 액을 아세토니트릴과 9:1로 잘 혼화하여 검액으로 한다.\n용출 조건\n크로마토그래픽 시스템\nNote: 새 칼럼은 충분히 이동상으로 활성화 후 사용하며, 분석 후 칼럼은 이동상으로 채워 보관한다.\n절차\n아래 설명된 대로 분석을 시작한다.\n안정화를 위해 1 회 이상 공시험액을 측정할 수 있다.\n암로디핀 분석 시 동일 바이알을 반복 주입하지 않도록 주의한다.\n시스템 적합성\n표준액을 반복 주입하였을 때 암로디핀 피크 면적 값의 상대표준편차 (% RSD)는 2.0 % 이하이어야 한다.\n표준액 반복 주입 및 브라켓팅 (표준액)을 주입하였을 때 암로디핀 피크 면적 값의 상대표준편차 (% RSD)는 2.0 % 이하이어야 한다.\n계산\nASTD\t: 표준액 중 암로디핀 평균 피크면적\nASAM\t: 검액 중 암로디핀 피크면적\nWSTD\t: 취한 암로디핀베실산염 표준품의 양 (mg)\nP\t: 암로디핀베실산염 표준품의 함량 (%)\nLC\t: 1 정 당 암로디핀 표시량 (mg)\n408.88\t: 암로디핀 분자량\n567.05\t: 암로디핀베실산염 분자량\nNote: 검체 6개의 용출결과가 규정한 값을 벗어나는 검체가 1개 또는 2개일 때 새로운 검체 6개를 가지고 시험을 반복한다. 12개 중 10개 이상의 검체 개개의 용출률이 규정한 값일 때 적합하다.\nHPLC 크로마토그램",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            }
+          ],
+          "dissolution_conditions": {
+            "vessels_per_batch": 6,
+            "apparatus": "대한민국약전 일반시험법의 용출시험법 1 (회전검체통법)",
+            "medium_name": "0.01 N HCl",
+            "speed_rpm": 100,
+            "volume_per_vessel_ml": 900.0,
+            "sampling_time": "15 분",
+            "standard_medium_ml_by_strength": {
+              "10/20/10 mg": 200.0,
+              "5/20/10 mg": 200.0,
+              "10/10/10 mg": 200.0,
+              "5/10/10 mg": 200.0,
+              "10/5/10 mg": 200.0,
+              "5/5/10 mg": 200.0
+            }
+          },
+          "standards": [
+            {
+              "std_name": "암로디핀베실산염",
+              "grade": "1차 또는 2차 표준품"
+            }
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 1.5,
+            "run_time_min": 20.0,
+            "column_spec": "Inertsil ODS-3 (150 x 4.6 mm, 3 µm)",
+            "injections": [
+              {
+                "solution": "공시험액",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "표준액-1 2)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "표준액-2 2)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "표준액-3 2)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "표준액-4 2)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "표준액-5 2)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "검액",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "표준액(브라켓팅) 2)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
+        },
+        {
+          "name": "Uniformity of dosage units (Content Uniformity)",
+          "preparations": [
+            {
+              "section_name": "검액 조제",
+              "solution_name": "검액",
+              "volume_per_batch_ml": 200.0,
+              "preparation_text": "이 약 1정을 200 mL 차광 용량 플라스크에 넣고 희석액 150 mL를 가한 후 마그네틱 바를 넣고 30분간 교반하여 녹인다.\n정제가 완전히 붕해되면 마그네틱바를 꺼내고 30분간 초음파 추출한 후 실온에서 방냉한다. (초음파 추출 시 검액을 흔들어준다.) 희석액을 넣어 정확히 표선을 맞추고 잘 섞어준다.\n이 액을 0.45 µm PTFE 멤브레인 필터(Whatman)로 여과하여 검액으로 한다\n계산\n암로디핀\nASTD\t: 표준액 중 암로디핀 평균 피크면적\nASAM\t: 검액 중 암로디핀 피크면적\nWSTD\t: 취한 암로디핀베실산염 표준품의 양 (mg)\nP\t: 암로디핀베실산염 표준품의 함량 (%)\nLC\t: 1 정 당 암로디핀 표시량 (mg)\n408.88\t: 암로디핀 분자량\n567.05\t: 암로디핀베실산염 분자량\n로수바스타틴\nASTD\t: 표준액 중 로수바스타틴 평균 피크면적\nASAM\t: 검액 중 로수바스타틴 피크면적\nWSTD\t: 취한 로수바스타틴칼슘 표준품의 양 (mg)\nP\t: 로수바스타틴칼슘 표준품의 함량 (%)\nLC\t: 1 정 당 로수바스타틴 표시량 (mg)\n1001.14\t: 로수바스타틴칼슘 분자량\n963.08\t: 로수바스타틴 분자량\n에제티미브\nASTD\t: 표준액 중 에제티미브 평균 피크면적\nASAM\t: 검액 중 에제티미브 피크면적\nWSTD\t: 취한 에제티미브 표준품의 양 (mg)\nP\t: 에제티미브 표준품의 함량 (%)\nLC\t: 1 정 당 에제티미브 표시량 (mg)\n판정값 (AV)\n다음 식에 따라 판정값을 계산한다.\n판정값 (AV) = | M –  | + ks\n처음 10 개 검체의 판정값이 판정값의 최대 허용한도L1 % 와 같거나 미만일 경우, 제제균일성 조건을 충족한다.\n만약 판정값이 L1을 넘을 경우, 추가 검체 20개를 가지고 같은 방법으로 시험하여 판정값을 계산한다. 30개 검체의 최종 판정값이 L1 이하인 경우, 개개 제제의 함량이 함량 균일성 또는 질량편차의 판정값 계산 항에 표시된 [1-(0.01)(L2)]M 이상이며 또한 [1+(0.01)(L2)]M을 초과하는 것이 없을 때 조건을 충족한다. 따로 규정이 없는 한, L1은 15.0, L2는 25.0 이다.",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "200 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            }
+          ]
+        },
+        {
+          "name": "Assay",
+          "preparations": [
+            {
+              "section_name": "완충액 조제",
+              "solution_name": "완충액",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "1-헥산설폰산나트륨 1.69 g을 취하여 1 L 용량플라스크에 넣고, 인산 1.3 mL를 주의하여 첨가한다. 정제수를 넣어 녹이고 희석한 후, 잘 섞어준다.",
+              "ingredients": [
+                {
+                  "name": "헥산설폰산나트륨",
+                  "amount": 1.69,
+                  "unit": "g"
+                },
+                {
+                  "name": "1-헥산설폰산나트륨",
+                  "amount": 1.69,
+                  "unit": "g",
+                  "tracking_no": "SS129"
+                },
+                {
+                  "name": "인산",
+                  "amount": 1.3,
+                  "unit": "ml",
+                  "tracking_no": "LP066"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "1000 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "이동상 조제",
+              "solution_name": "이동상",
+              "volume_per_batch_ml": null,
+              "preparation_text": "완충액과 아세토니트릴을 60 : 40 (v/v)의 비율로 혼합한다.",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "희석액 조제",
+              "solution_name": "희석액",
+              "volume_per_batch_ml": null,
+              "preparation_text": "아세토니트릴:정제수: Glacial acetic acid = 5000:5000:1 (v/v/v)",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "에제티미브 표준원액 조제",
+              "solution_name": "에제티미브 표준원액",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "에제티미브 표준품 약 25 mg을 정밀하게 달아 50 mL 차광용량플라스크에 넣고, 희석액을 가하여 녹인 후 희석액으로 표선을 맞춘다.",
+              "ingredients": [
+                {
+                  "name": "에제티미브 표준품",
+                  "amount": 25.0,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "로수바스타틴 표준원액 조제",
+              "solution_name": "로수바스타틴 표준원액",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "로수바스타틴칼슘 표준품 약 26 mg을 정밀하게 달아 50 mL 차광용량플라스크에 넣고, 희석액을 가하여 녹인 후 희석액으로 표선을 맞춘다.",
+              "ingredients": [
+                {
+                  "name": "로수바스타틴칼슘 표준품",
+                  "amount": 26.0,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "암로디핀 표준원액 조제",
+              "solution_name": "암로디핀 표준원액",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "암로디핀베실산염 표준품 약 34.7 mg을 정밀하게 달아 50 mL 차광용량플라스크에 넣고, 희석액을 가하여 녹인 후 희석액으로 표선을 맞춘다.",
+              "ingredients": [
+                {
+                  "name": "암로디핀베실산염 표준품",
+                  "amount": 34.7,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "표준액 조제",
+              "solution_name": "표준액",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "에제티미브 표준원액, 로수바스타틴 표준원액 및 암로디핀 표준원액을 각각 10 mL, 20 mL 및 10 mL를 정확하게 취하여 100 mL 차광 용량 플라스크에 넣고 희석액으로 표선을 맞추어 표준액으로 한다.",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "pipette",
+                  "size": "10 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "검액 조제",
+              "solution_name": "검액",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "이 약 20정을 1000 mL 차광 용량 플라스크에 넣고 희석액 약 700 mL를 가한 후 마그네틱바를 넣고 30분간 교반하여 녹인다.\n정제가 완전히 붕해되면 마그네틱바를 꺼내고 30분간 초음파 추출한 후 실온에서 방냉한다. (초음파 추출 시 검액을 흔들어준다.) 희석액을 넣어 정확히 표선을 맞추고, 잘 섞어준 다음 4000 rpm으로 20분간 원심분리 한다.\n상등액 5 mL를 정확히 취하여 20 mL 차광용량플라스크에 넣고 희석액을 넣어 잘 혼화하여 표선을 맞춘다. 이 액을 0.45 µm PTFE 멤브레인 필터 (Whatman)로 여과하여 검액으로 한다.\n크로마토그래픽 시스템\nNote: 새 칼럼은 충분히 이동상으로 활성화 후 사용하며, 분석 후 칼럼은 이동상으로 채워 보관한다.\n절차\n아래 설명된 대로 분석을 시작한다.\n안정화를 위해 1 회 이상 공시험액을 측정할 수 있다.\n암로디핀 분석 시 동일 바이알을 반복 주입하지 않도록 주의한다.\n시스템 적합성\n표준액 주입 시 암로디핀, 로수바스타틴 및 에제티미브 피크 사이의 분리도는 2.0 이상이어야 한다.\n표준액을 반복 주입하였을 때 암로디핀, 로수바스타틴 및 에제티미브 피크 면적 값의 상대표준편차 (% RSD)는 2.0 % 이하이어야 한다.\n표준액 반복 주입 및 브라켓팅 (표준액)을 주입하였을 때 암로디핀, 로수바스타틴 및 에제티미브 피크 면적 값의 상대표준편차 (% RSD)는 2.0 % 이하이어야 한다.\n계산\n암로디핀\nASTD\t: 표준액 중 암로디핀 평균 피크면적\nASAM\t: 검액 중 암로디핀 피크면적\nWSTD\t: 취한 암로디핀베실산염 표준품의 양 (mg)\nP\t: 암로디핀베실산염 표준품의 함량 (%)\nLC\t: 1 정 당 암로디핀 표시량 (mg)\n408.88\t: 암로디핀 분자량\n567.05\t: 암로디핀베실산염 분자량\nN\t: 취한 검체의 수\n로수바스타틴\nASTD\t: 표준액 중 로수바스타틴 평균 피크면적\nASAM\t: 검액 중 로수바스타틴 피크면적\nWSTD\t: 취한 로수바스타틴칼슘 표준품의 양 (mg)\nP\t: 로수바스타틴칼슘 표준품의 함량 (%)\nLC\t: 1 정 당 로수바스타틴 표시량 (mg)\n1001.14\t: 로수바스타틴칼슘 분자량\n963.08\t: 로수바스타틴 분자량\nN\t: 취한 검체의 수\n에제티미브\nASTD\t: 표준액 중 에제티미브 평균 피크면적\nASAM\t: 검액 중 에제티미브 피크면적\nWSTD\t: 취한 에제티미브 표준품의 양 (mg)\nP\t: 에제티미브 표준품의 함량 (%)\nLC\t: 1 정 당 에제티미브 표시량 (mg)\nN\t: 취한 검체의 수\nHPLC 크로마토그램",
+              "ingredients": [
+                {
+                  "name": "상등액",
+                  "amount": 5.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "1000 mL",
+                  "count_per_batch": 1
+                },
+                {
+                  "type": "volumetric flask",
+                  "size": "20 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            }
+          ],
+          "standards": [
+            {
+              "std_name": "에제티미브",
+              "grade": "1차 또는 2차 표준품"
+            },
+            {
+              "std_name": "로수바스타틴칼슘",
+              "grade": "1차 또는 2차 표준품"
+            },
+            {
+              "std_name": "암로디핀베실산염",
+              "grade": "1차 또는 2차 표준품"
+            }
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 1.5,
+            "run_time_min": 20.0,
+            "column_spec": "Inertsil ODS-3 (150 x 4.6 mm, 3 µm)",
+            "injections": [
+              {
+                "solution": "공시험액(희석액)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "표준액-1 2)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "표준액-2 2)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "표준액-3 2)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "표준액-4 2)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "표준액-5 2)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "검액",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "표준액(브라켓팅) 2)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
+        },
+        {
+          "name": "Related substances",
+          "preparations": [
+            {
+              "section_name": "완충액 조제",
+              "solution_name": "완충액",
+              "volume_per_batch_ml": 1000.0,
+              "preparation_text": "1-헥산설폰산나트륨 0.62 g을 취하여 1 L 용량플라스크에 넣고, 인산 0.25 mL를 주의하여 첨가한다. 정제수를 넣어 녹이고 희석한 후, 잘 섞어준다.",
+              "ingredients": [
+                {
+                  "name": "헥산설폰산나트륨",
+                  "amount": 0.62,
+                  "unit": "g"
+                },
+                {
+                  "name": "1-헥산설폰산나트륨",
+                  "amount": 0.62,
+                  "unit": "g",
+                  "tracking_no": "SS129"
+                },
+                {
+                  "name": "인산",
+                  "amount": 0.25,
+                  "unit": "ml",
+                  "tracking_no": "LP066"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "1000 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "이동상 A 조제",
+              "solution_name": "이동상 A",
+              "volume_per_batch_ml": null,
+              "preparation_text": "완충액과 아세토니트릴을 74 : 26 (v/v)의 비율로 혼합한다.",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "이동상 B 조제",
+              "solution_name": "이동상 B",
+              "volume_per_batch_ml": null,
+              "preparation_text": "완충액과 아세토니트릴을 10 : 90 (v/v)의 비율로 혼합한다.",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "희석액-1 조제",
+              "solution_name": "희석액-1",
+              "volume_per_batch_ml": null,
+              "preparation_text": "메탄올:아세토니트릴:glacial acetic acid=5000:5000:1 (v/v/v)",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "희석액-2 조제",
+              "solution_name": "희석액-2",
+              "volume_per_batch_ml": null,
+              "preparation_text": "정제수: glacial acetic acid= 10000:1 (v/v)",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "희석액-3 조제",
+              "solution_name": "희석액-3",
+              "volume_per_batch_ml": null,
+              "preparation_text": "메탄올:아세토니트릴:정제수: glacial acetic acid=2500:2500:5000:1 (v/v/v/v)",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Rosuvastatin diastereomer 용액 조제",
+              "solution_name": "Rosuvastatin diastereomer 용액",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "Rosuvastatin diastereomer 표준품 약 2.0 mg을 정밀하게 달아 50 mL 차광 용량 플라스크에 넣고 희석액-1 20 mL를 넣어 녹인 후, 희석액-2 20 mL를 넣어 잘 혼합한 후 희석액-3으로 표선을 맞춘다.",
+              "ingredients": [
+                {
+                  "name": "Rosuvastatin diastereomer 표준품",
+                  "amount": 2.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "희석액-2",
+                  "amount": 20.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "시스템 적합성 용액 조제",
+              "solution_name": "시스템 적합성 용액",
+              "volume_per_batch_ml": 50.0,
+              "preparation_text": "암로디핀베실산염 표준품 약 27.8 mg, 로수바스타틴칼슘 표준품 약 41.6 mg을 50 mL 차광 용량 플라스크에 넣고 희석액-1 15 m를 넣어 녹이고 희석액-2 15 mL를 넣고 잘 혼합한다.\n위 용액에 Rosuvastatin diastereomer 용액 약 5 mL를 정확히 취하여 넣은 다음 희석액-3을 넣어 표선을 맞춘다. 이 액을 시스템적합성 용액으로 한다.",
+              "ingredients": [
+                {
+                  "name": "로수바스타틴칼슘 표준품",
+                  "amount": 41.6,
+                  "unit": "mg"
+                },
+                {
+                  "name": "위 용액에 Rosuvastatin diastereomer 용액 약",
+                  "amount": 5.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "에제티미브 표준원액 조제",
+              "solution_name": "에제티미브 표준원액",
+              "volume_per_batch_ml": 250.0,
+              "preparation_text": "에제티미브 표준품 약 12.5 mg을 정밀하게 달아 250 mL 차광 용량 플라스크에 넣고 희석액-1 100 mL를 넣어 녹이고, 희석액-2 100 mL를 넣어 잘 혼합한 후 희석액-3으로 표선을 맞춘다. 이 액을 에제티미브 표준원액으로 한다.",
+              "ingredients": [
+                {
+                  "name": "에제티미브 표준품",
+                  "amount": 12.5,
+                  "unit": "mg"
+                },
+                {
+                  "name": "희석액-2",
+                  "amount": 100.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "250 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "로수바스타틴 표준원액 조제",
+              "solution_name": "로수바스타틴 표준원액",
+              "volume_per_batch_ml": 250.0,
+              "preparation_text": "로수바스타틴칼슘 표준품 약 13 mg을 정밀하게 달아 250 mL 차광 용량 플라스크에 넣고 희석액-1 100 mL를 넣어 녹이고, 희석액-2 100 mL를 넣어 잘 혼합한 후 희석액-3으로 표선을 맞춘다. 이 액을 로수바스타틴 표준원액으로 한다.",
+              "ingredients": [
+                {
+                  "name": "로수바스타틴칼슘 표준품",
+                  "amount": 13.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "희석액-2",
+                  "amount": 100.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "250 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "암로디핀 표준원액 조제",
+              "solution_name": "암로디핀 표준원액",
+              "volume_per_batch_ml": 250.0,
+              "preparation_text": "암로디핀베신산염 표준품 약 17.3 mg을 정밀하게 달아 250 mL 차광 용량 플라스크에 넣고 희석액-1 100 mL를 넣어 녹이고, 희석액-2 100 mL를 넣어 잘 혼합한 후 희석액-3으로 표선을 맞춘다. 이 액을 암로디핀 표준원액으로 한다.",
+              "ingredients": [
+                {
+                  "name": "암로디핀베신산염 표준품",
+                  "amount": 17.3,
+                  "unit": "mg"
+                },
+                {
+                  "name": "희석액-2",
+                  "amount": 100.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "250 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "표준액 조제",
+              "solution_name": "표준액",
+              "volume_per_batch_ml": 250.0,
+              "preparation_text": "에제티미브 표준원액 4 mL, 로수바스타틴 표준원액 8 mL, 암로디핀 표준원액 4 mL를 정확히 취하여 250 mL 차광 용량 플라스크에 넣고 희석액-3을 넣어 잘 혼합하여 표선을 맞춘 액을 표준액으로 한다.\n검액 조제6\n이 약 10 정을 250 mL 차광 용량 플라스크에 넣고 희석액-1 100 mL를 가한 후 마그네틱바를 넣고 30분간 교반한다.\n희석액-2 100 mL를 가한 후 30 분간 교반한다. 마그네틱바를 꺼내고 희석액-3으로 표선을 맞춘다. 잘 섞어준 다음 4000 rpm으로 5분간 원심분리 한다.\n상등액을 아래 필터로 여과하여 검액으로 한다.\n크로마토그래픽 시스템 (UPLC)\nNote: 새 칼럼은 충분히 이동상으로 활성화 후 사용하며, 분석 후 칼럼은 이동상으로 채워 보관한다.\n절차\n아래 설명된 대로 분석을 시작한다.\n1) 안정화를 위해 1 회 이상 공시험액을 측정할 수 있다.\n2) 암로디핀 분석 시 동일 바이알을 반복 주입하지 않도록 주의한다.\n시스템 적합성\n시스템 적합성 용액 주입 시 암로디핀, 로수바스타틴 및 Rosuvastatin diastereomer 피크 사이의 분리도는 1.5 이상이어야 한다.\n표준액을 반복 주입하였을 때 암로디핀, 로수바스타틴 및 에제티미브 피크 면적 값의 상대표준편차 (% RSD)는 10.0 % 이하이어야 한다.\n표준액을 반복 주입 및 브라켓팅 (표준액)을 주입하였을 때 암로디핀, 로수바스타틴 및 에제티미브 피크 면적 값의 상대표준편차 (% RSD)는 10.0 % 이하이어야 한다.\nRRT, RRF Information\n1) Rosuvastatin Diastereomer의 경우 Process impurity이므로 계산에 포함하지 않는다.\nLOD and LOQ Information\n계산\nNote: 베실산염 (RRT 0.14 와 RRT 0.18)은 유연물질 계산에서 제외한다.\n암로디핀 유래 기지 유연물질\nASTD\t: 표준액 중 암로디핀 평균 피크면적\nASAM\t: 검액 중 암로디핀 유래 기지 유연물질 피크면적\nWSTD\t: 취한 암로디핀베실산염 표준품의 양 (mg)\nP\t: 암로디핀베실산염 표준품의 함량 (%)\nLC\t: 1 정 당 암로디핀 표시량 (mg)\n408.88\t: 암로디핀 분자량\n567.05\t: 암로디핀베실산염 분자량\nN\t: 취한 검체의 수\n로수바스타틴 유래 기지 유연물질\nASTD\t: 표준액 중 로수바스타틴 평균 피크면적\nASAM\t: 검액 중 로수바스타틴 유래 기지 유연물질 피크면적\nWSTD\t: 취한 로수바스타틴칼슘 표준품의 양 (mg)\nP\t: 로수바스타틴칼슘 표준품의 함량 (%)\nLC\t: 1 정 당 로수바스타틴 표시량 (mg)\n1001.14\t: 로수바스타틴칼슘 분자량\n963.08\t: 로수바스타틴 분자량\nN\t: 취한 검체의 수\nRRF\t: 상대 반응 인자\nRRF\t: 상대 반응 인자\n에제티미브 유래 기지 유연물질\nASTD\t: 표준액 중 에제티미브 평균 피크면적\nASAM\t: 검액 중 에제티미브 유래 기지 유연물질 피크면적\nWSTD\t: 취한 에제티미브 표준품의 양 (mg)\nP\t: 에제티미브 표준품의 함량 (%)\nLC\t: 1 정 당 에제티미브 표시량 (mg)\nN\t: 취한 검체의 수\nRRF\t: 상대 반응 인자\n기타 개개 미지 유연물질\nASTD\t: 표준액 중 암로디핀 평균 피크면적\nASAM\t: 검액 중 개개 미지 유연물질 피크면적\nWSTD\t: 취한 암로디핀베실산염 표준품의 양 (mg)\nP\t: 암로디핀베실산염 표준품의 함량 (%)\nLC\t: 1 정 당 암로디핀 표시량 (mg)\n408.88\t: 암로디핀 분자량\n567.05\t: 암로디핀베실산염 분자량\nN\t: 취한 검체의 수\nHPLC 크로마토그램\n잔류용매\n시험 정보\n표준품\n시약\nNote: 위의 표에 있는 제조처의 시약을 사용하거나 이와 동등한 grade를 사용한다.",
+              "ingredients": [
+                {
+                  "name": "암로디핀 표준원액",
+                  "amount": 4.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "희석액-2",
+                  "amount": 100.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "250 mL",
+                  "count_per_batch": 2
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "희석액 조제",
+              "solution_name": "희석액",
+              "volume_per_batch_ml": null,
+              "preparation_text": "N-N-디메틸포름아미드를 사용한다.",
+              "ingredients": [],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "표준원액 조제",
+              "solution_name": "표준원액",
+              "volume_per_batch_ml": 100.0,
+              "preparation_text": "에탄올 표준품 약 500 mg을 정밀하게 달아 100 mL 용량플라스크에 넣고 희석액으로 표선을 맞춘다.",
+              "ingredients": [
+                {
+                  "name": "에탄올 표준품",
+                  "amount": 500.0,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 2
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "표준액 조제",
+              "solution_name": "표준액",
+              "volume_per_batch_ml": null,
+              "preparation_text": "표준원액 5 mL을 정확하게 취하여 50 mL용량플라스크에 넣고 희석액으로 표선을 맞춘 액을 표준액으로 한다. 이 액 5 mL을 정확하게 취하여 20 mL 헤드스페이스 용 바이알에 넣고 알루미늄 뚜껑으로 완전하게 밀봉한다.",
+              "ingredients": [
+                {
+                  "name": "표준원액",
+                  "amount": 5.0,
+                  "unit": "ml"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "검액 조제",
+              "solution_name": "검액",
+              "volume_per_batch_ml": null,
+              "preparation_text": "이 약 20정을 조심스럽게 갈고 약 500 mg을 정밀하게 달아 20 mL 헤드스페이스 용 바이알에 넣고 희석액 5 mL를 넣어 알루미늄 뚜껑으로 완전하게 밀봉하여 검액으로 한다.\n크로마토그래픽 시스템\n헤드스페이스 조건\n1) For LEQ-GC001\n절차\n아래 설명된 대로 용액을 주입한다.\n1) 공시험액은 안정화를 위해 2회 이상 주입될 수 있다.\n시스템 적합성\n표준액 반복 주입하였을 때 에탄올 피크 면적 값의 상대표준편차 (% RSD)는 10.0 % 이하이어야 한다.\n표준액 반복 주입 및 브라켓팅 (표준액)을 주입하였을 때 에탄올 피크 면적 값의 상대표준편차 (% RSD)는 10.0 % 이하이어야 한다.\n계산\nASTD\t: 표준액 중 에탄올 평균 피크면적\nASAM\t: 검액 중 에탄올 피크면적\nWSTD\t: 취한 에탄올 표준품의 양 (mg)\nWSA\t: 취한 검체의 양 (mg)\nP\t: 에탄올 표준품의 함량 (%)\nGC 크로마토그램",
+              "ingredients": [
+                {
+                  "name": "이 약 20정을 조심스럽게 갈고",
+                  "amount": 500.0,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            }
+          ],
+          "standards": [
+            {
+              "std_name": "에제티미브",
+              "grade": "1차 또는 2차 표준품"
+            },
+            {
+              "std_name": "로수바스타틴칼슘",
+              "grade": "1차 또는 2차 표준품"
+            },
+            {
+              "std_name": "암로디핀베실산염",
+              "grade": "1차 또는 2차 표준품"
+            },
+            {
+              "std_name": "Rosuvastatin diastereomer",
+              "grade": "1차 또는 2차 표준품"
+            }
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 0.3,
+            "run_time_min": 50.0,
+            "column_spec": "Waters ACQUITY UPLC® HSS T3 (150 x 2.1 mm, 1.8 µm)",
+            "injections": [
+              {
+                "solution": "공시험액(희석액-3)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "시스템 적합성 용액",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "공시험액(희석액-3, 10 µL)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "표준액-1 2)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "표준액-2 2)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "표준액-3 2)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "표준액-4 2)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "표준액-5 2)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "표준액-6 2)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "검액",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "공시험액(희석액-3, 10 µL)",
+                "count": 2,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "표준액(브라켓팅) 2)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
       "id": "STM-CP029-T0.doc",
       "doc_no": "STM-CP029-T0",
       "stm_file": "STM-CP029-T0.doc.docx",
@@ -4749,11 +7963,6 @@
                   "amount": 7.0,
                   "unit": "ml",
                   "tracking_no": "LH001"
-                },
-                {
-                  "name": "sodium chloride and 7.0 mL of hydrochloric acid",
-                  "amount": 2.0,
-                  "unit": "g"
                 }
               ],
               "glassware": [],

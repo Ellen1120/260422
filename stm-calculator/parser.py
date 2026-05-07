@@ -17,7 +17,10 @@ _W_TR = f'{{{_W_NS}}}tr'
 _W_TC = f'{{{_W_NS}}}tc'
 
 BASE_DIR = Path(__file__).resolve().parent
-STM_DIR = BASE_DIR.parent / "STM"
+_NETWORK_AI = Path(r"\\file\04. 품질본부\3. 품질관리담당\1. 담당 공용\AI")
+_NETWORK_STM = _NETWORK_AI / "STM"
+_LOCAL_STM = BASE_DIR.parent / "STM"
+STM_DIR = _NETWORK_STM if _NETWORK_STM.exists() else _LOCAL_STM
 STM_FOLDER = STM_DIR
 DATA_FOLDER = BASE_DIR / "data"
 KB_PATH = DATA_FOLDER / "knowledge_base.json"
@@ -38,6 +41,7 @@ _RE_TEST_ITEM = re.compile(
     r"|Water\s+content\s+by\s+KF"
     r"|Polymorphism\s+by\s+PXRD"
     r"|Microbial\s+Enumeration\s+Test"
+    r"|Specified\s+Microorganisms\s+Test"
     r")(?:\s*<[^>]+>)?\s*$",
     re.IGNORECASE,
 )
@@ -53,6 +57,7 @@ _KO_TEST_ITEM_MAP: list[tuple[re.Pattern, str]] = [
     (re.compile(r'^수분\s*(?:함량|측정)?\s*(?:\(KF\))?\s*$'), 'Water content by KF'),
     (re.compile(r'^결정형\s*(?:\(PXRD\))?\s*$'), 'Polymorphism by PXRD'),
     (re.compile(r'^미생물\s*한도시험\s*$'), 'Microbial Enumeration Test'),
+    (re.compile(r'^특정\s*미생물\s*시험\s*$'), 'Specified Microorganisms Test'),
 ]
 
 
@@ -105,6 +110,16 @@ _RE_STRENGTH_PAREN = re.compile(
 # 한글 함량 표기: "26 밀리그램/5 밀리그램"
 _RE_KO_STRENGTH_LINE = re.compile(
     r"^\s*\d+(?:\.\d+)?\s*밀리그램(?:\s*/\s*\d+(?:\.\d+)?\s*밀리그램)*\s*$"
+)
+# 한글 검액/표준액 조제 헤딩에서 함량 추출: "검액 조제 (10/20/10 mg)" 또는 "검액 조제 (5/20/10, 10/10/10, 5/5/10 mg)"
+_RE_KO_PREP_STRENGTH_HEADING = re.compile(
+    r'(?:검액|표준액)\s*조제\s*\(([^)]+mg[^)]*)\)',
+    re.IGNORECASE,
+)
+# 한글 용출 방법 헤딩: "방법 I: 에제티미브", "방법 II: 로수바스타틴"
+_RE_KO_METHOD_HEADING = re.compile(
+    r'^방법\s+([IVX]+)\s*(?::\s*(.+))?\s*$',
+    re.IGNORECASE,
 )
 
 # 시약 추출 패턴 (순서 중요: 구체적인 것 먼저)
@@ -168,20 +183,24 @@ _RE_RATIO = re.compile(
 
 # 한글 시약 추출 패턴
 _KO_INGREDIENT_PATTERNS: list[re.Pattern] = [
-    # "아질사르탄 약 52 mg을 달아" / "Ammonium phosphate monobasic 약 2.0 g 달아"
-    # "Potassium phosphate monobasic 6.81g과" (약 없음, 과 terminator)
+    # 일반: 한글/영문으로 시작하는 이름 (mg/g)
     re.compile(
         r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]+?)\s+(?:약\s*)?(\d+(?:\.\d+)?)\s*(mg|g)\s*(?:[을를과]|달아)',
         re.IGNORECASE,
     ),
-    # "아질사르탄 표준원액 5 mL 및" / "암로디핀베실산염 표준원액 3 mL을"
+    # "1-헥산설폰산나트륨" 등 숫자-하이픈으로 시작하는 IUPAC 스타일 이름 (mg/g)
     re.compile(
-        r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]+?)\s+(\d+(?:\.\d+)?)\s*(mL)\s*(?:[을를]|및|까지)',
+        r'(\d+\-[가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s+(?:약\s*)?(\d+(?:\.\d+)?)\s*(mg|g)\s*(?:[을를과]|달아)',
+        re.IGNORECASE,
+    ),
+    # 일반: 한글/영문으로 시작하는 이름 (mL) — "에" 포함 (e.g. "아세트산 2.9 mL에")
+    re.compile(
+        r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]+?)\s+(\d+(?:\.\d+)?)\s*(mL)\s*(?:[을를]|및|까지|에)',
         re.IGNORECASE,
     ),
 ]
 
-# 한글 비율 혼합 패턴 (2성분: "A와 B를 X:Y v/v의 비율로 혼합")
+# 한글 비율 혼합 패턴 (2성분: "A와 B를 각각 X:Y")
 _RE_RATIO_KO2 = re.compile(
     r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s*(?:와|과)\s*'
     r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s*(?:을|를)?\s*각각\s*'
@@ -201,6 +220,21 @@ _RE_RATIO_KO2_MIT = re.compile(
     r'(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)'
     r'(?!\s*:\s*\d)',
 )
+# 한글 2성분 비율 (와/과 + 비율로 혼합): "A와 B를 X:Y (v/v)의 비율로 혼합"
+_RE_RATIO_KO2_WA = re.compile(
+    r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s*(?:와|과)\s*'
+    r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s*(?:을|를)?\s*'
+    r'(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)'
+    r'(?!\s*:\s*\d)'
+    r'(?:\s*\([vV]/[vV]\))?\s*(?:의)?\s*비율로',
+)
+# 콜론 구분 3성분 비율: "A:B:C = X:Y:Z (v/v/v)" 또는 "A:B:C X:Y:Z"
+_RE_RATIO_COLON3 = re.compile(
+    r'([A-Za-z가-힣][A-Za-z가-힣0-9\s\-()]*?)\s*:\s*'
+    r'([A-Za-z가-힣][A-Za-z가-힣0-9\s\-()]*?)\s*:\s*'
+    r'([A-Za-z가-힣][A-Za-z가-힣0-9\s\-()]*?)\s*'
+    r'(?:=\s*)?(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)',
+)
 
 # 초자 패턴 (영문)
 _RE_GLASSWARE = re.compile(
@@ -216,9 +250,13 @@ _RE_VERB_GLASSWARE = re.compile(
     re.IGNORECASE
 )
 
-# 초자 패턴 (한글)
+# 초자 패턴 (한글) — 차광 수식어 및 L 단위, "용량 플라스크"(띄어쓰기) 허용
 _RE_GLASSWARE_KO = re.compile(
-    r"(\d+(?:\.\d+)?)\s*mL\s+(용량플라스크|메스실린더|메스플라스크|피펫|비이커|바이알)",
+    r"(\d+(?:\.\d+)?)\s*(mL|L)\s*(?:차광\s*)?(용량\s*플라스크|메스실린더|메스플라스크|피펫|비이커|바이알)",
+)
+# 한글 전달 피펫: "10 mL를 정확하게 취하여"
+_RE_KO_PIPETTE = re.compile(
+    r"(\d+(?:\.\d+)?)\s*mL\s*를\s*(?:정확하게|정밀하게)?\s*취하여",
 )
 
 # 원심분리 팔콘 검출
@@ -261,6 +299,8 @@ _RE_VOLUME_PATTERNS: list[re.Pattern] = [
     # 한글: "X mL 용량플라스크에 넣고 표선" or "물 X mL에 넣고"
     re.compile(r"(\d+(?:\.\d+)?)\s*mL\s+용량플라스크"),
     re.compile(r"물\s+(\d+(?:\.\d+)?)\s*mL에\s+(?:넣|녹|옮)"),
+    # 한글: "X mL 차광 용량플라스크" / "X mL차광용량플라스크" (차광 수식어 포함)
+    re.compile(r"(\d+(?:\.\d+)?)\s*mL\s*차광\s*(?:용량\s*플라스크|메스플라스크)"),
 ]
 
 # 제품명 추출
@@ -293,11 +333,13 @@ def _is_reagent_solution(line: str) -> bool:
 def _is_prep_heading(line: str) -> bool:
     """조제 섹션 헤딩 여부 판별. 이제 모든 조제를 포함하되 구분만 함."""
     line_lower = line.lower().strip()
-    
-    # 한글: "XX 조제" 패턴 (짧은 헤딩)
-    if re.match(r'^[가-힣A-Za-z0-9\s()\-/]+\s*조제\s*$', line) and len(line) <= 40:
+
+    # 한글: "XX 조제" 또는 "XX 조제 (함량/조건)" 패턴 — 점·%·+ 등 특수문자 포함 가능
+    if (re.search(r'조제\s*(?:\([^)]*\))?\s*$', line) and
+            len(line) <= 80 and
+            not _RE_PREP_CONTENT_START.match(line)):
         return True
-    
+
     # 영문: "preparation" 단어가 포함된 헤딩
     if "preparation" in line_lower:
         if _RE_PREP_CONTENT_START.match(line):
@@ -307,16 +349,20 @@ def _is_prep_heading(line: str) -> bool:
         if len(line) > 80:
             return False
         return True
-        
+
     return False
 
 
 def _derive_solution_name(heading: str) -> str:
-    """'Buffer preparation' → 'Buffer', '완충액 조제' → '완충액'"""
-    # 한글 "조제" 제거
-    ko = re.sub(r'\s*조제\s*$', '', heading).strip()
-    if ko != heading.strip():
-        return ko
+    """'Buffer preparation' → 'Buffer', '완충액 조제' → '완충액', '검액 조제 (10/20/10 mg)' → '검액 (10/20/10 mg)'"""
+    if '조제' in heading:
+        # "BASE 조제" or "BASE 조제 (PAREN)" format
+        m = re.match(r'^(.+?)\s+조제(?:\s*(\([^)]*\)))?\s*$', heading)
+        if m:
+            base = m.group(1).strip()
+            paren = m.group(2) or ''
+            return (base + ' ' + paren).strip() if paren else base
+        return re.sub(r'\s*조제\s*', ' ', heading).strip()
     # 영문 "preparation" 제거
     name = re.sub(r"\s+preparation\b", "", heading, flags=re.IGNORECASE).strip()
     return name.strip()
@@ -331,6 +377,13 @@ def _extract_volume(heading: str, lines: list[str]) -> float | None:
         m = pat.search(combined)
         if m:
             return float(m.group(1))
+    # 한글: "X L 용량플라스크" → X * 1000 mL
+    m_l = re.search(
+        r"(\d+(?:\.\d+)?)\s*L\s*(?:차광\s*)?(?:용량\s*플라스크|메스플라스크)",
+        combined,
+    )
+    if m_l:
+        return float(m_l.group(1)) * 1000
     # 비율 혼합이고 총량 미지정인 경우 비율 합산을 기본 볼륨으로 사용
     m = _RE_RATIO.search(combined)
     if m:
@@ -351,20 +404,24 @@ def _extract_ingredients(text: str, final_volume_ml: float | None) -> list[dict]
 
     def _add(name: str, amount: float, unit: str) -> None:
         name = name.strip().rstrip(",").strip()
+        # 한글 조사(을/를/이/가/은/는/도/와/과) 후행 제거
+        name = re.sub(r'[을를이가은는도와과]\s*$', '', name).strip()
         # 절차 설명 제거: ", sonicate for..." / ". sonicate..."
         name = re.split(r"[,\.]\s+(?:sonicate|mix|stir|shake|heat|cool|filter)", name, flags=re.IGNORECASE)[0].strip()
         # "subsequent filtrate" 등 시약이 아닌 단어 제외
         if re.search(r"filtrate|residue|supernatant|layer|solution\s+from", name, re.IGNORECASE):
             return
         # "standard" 접미사 제거
-
         name = re.sub(r"\s+standard$", "", name, flags=re.IGNORECASE).strip()
         # 앞에 붙은 "the " 제거
         name = re.sub(r"^the\s+", "", name, flags=re.IGNORECASE).strip()
-        if len(name) < 3 or len(name) > 70:
+        if len(name) < 2 or len(name) > 70:
             return
-        # 모호한 참조 건너뜀
-        if re.match(r"^(the\s+above|above|it|them|each|following)$", name, re.IGNORECASE):
+        # 모호한 참조 건너뜀 (영문: "the above" 등, 한글: "이 액", "이 용액")
+        if re.match(r"^(the\s+above|above|it|them|each|following|이\s+액|이\s+용액)$", name, re.IGNORECASE):
+            return
+        # 이름 내 단위 표기(mL, mg) 포함 → 절차 텍스트 오인식, 제외 (case-sensitive)
+        if re.search(r'mL|mg', name):
             return
         key = (name.lower(), unit.lower())
         if key not in seen:
@@ -430,6 +487,27 @@ def _extract_ingredients(text: str, final_volume_ml: float | None) -> list[dict]
                 _add(sub_a, round(ratio_a / total * final_volume_ml, 1), "mL")
                 _add(sub_b, round(ratio_b / total * final_volume_ml, 1), "mL")
 
+    # 비율 혼합 한글 2성분 (A와 B를 X:Y v/v 비율로 혼합)
+    for m in _RE_RATIO_KO2_WA.finditer(text):
+        sub_a = m.group(1).strip()
+        sub_b = m.group(2).strip()
+        ratio_a = float(m.group(3))
+        ratio_b = float(m.group(4))
+        total = ratio_a + ratio_b
+        if final_volume_ml and total > 0:
+            _add(sub_a, round(ratio_a / total * final_volume_ml, 1), "mL")
+            _add(sub_b, round(ratio_b / total * final_volume_ml, 1), "mL")
+
+    # 콜론 구분 3성분: "A:B:C = X:Y:Z (v/v/v)"
+    for m in _RE_RATIO_COLON3.finditer(text):
+        sub_a, sub_b, sub_c = m.group(1).strip(), m.group(2).strip(), m.group(3).strip()
+        ratio_a, ratio_b, ratio_c = float(m.group(4)), float(m.group(5)), float(m.group(6))
+        total = ratio_a + ratio_b + ratio_c
+        if final_volume_ml and total > 0:
+            _add(sub_a, round(ratio_a / total * final_volume_ml, 1), "mL")
+            _add(sub_b, round(ratio_b / total * final_volume_ml, 1), "mL")
+            _add(sub_c, round(ratio_c / total * final_volume_ml, 1), "mL")
+
     return results
 
 
@@ -438,37 +516,74 @@ _KO_GLASSWARE_MAP = {
     '메스실린더': 'graduated cylinder',
     '메스플라스크': 'volumetric flask',
     '피펫': 'pipette',
+    '홀 피펫': 'pipette',
+    '홀피펫': 'pipette',
     '비이커': 'beaker',
     '바이알': 'vial',
+    '유발': 'mortar',
 }
 
 _RE_MORTAR = re.compile(r"\b(?:mortar|mortar\s+and\s+pestle)\b|유발", re.IGNORECASE)
 
+def _normalize_glassware_size(s: str) -> str:
+    """초자 규격 정규화 (예: 10.0 -> 10)"""
+    try:
+        val = float(s)
+        if val == int(val):
+            return str(int(val))
+        return str(val)
+    except:
+        return s.strip()
+
 def _extract_glassware(text: str) -> list[dict]:
     """준비 절차 텍스트에서 초자 목록 추출. 동일 규격이 여러 번 나오면 count_per_batch 합산."""
     count_map: dict[tuple, int] = {}
+    
+    # 1. 영문 패턴 추출
     for m in _RE_GLASSWARE.finditer(text):
-        size = m.group(1)
-        gtype = _KO_GLASSWARE_MAP.get(m.group(2), m.group(2).lower())
-        if "flask" in gtype or "플라스크" in gtype:
+        size = _normalize_glassware_size(m.group(1))
+        gtype = m.group(2).lower()
+        # 정규화
+        if any(kw in gtype for kw in ["flask", "플라스크"]):
             gtype = "volumetric flask"
-        elif "cylinder" in gtype or "실린더" in gtype:
+        elif any(kw in gtype for kw in ["cylinder", "실린더"]):
             gtype = "graduated cylinder"
-        elif "pipette" in gtype or "피펫" in gtype:
+        elif any(kw in gtype for kw in ["pipette", "피펫"]):
             gtype = "pipette"
+        
+        gtype = _KO_GLASSWARE_MAP.get(gtype, gtype)
         key = (gtype, size)
         count_map[key] = count_map.get(key, 0) + 1
     
-    # Pipette 1 mL 등 동사형 패턴 추가
+    # 2. Pipette 동사형 패턴
     for m in _RE_VERB_GLASSWARE.finditer(text):
-        size = m.group(1)
+        size = _normalize_glassware_size(m.group(1))
         key = ("pipette", size)
         count_map[key] = count_map.get(key, 0) + 1
 
+    # 3. 한글 패턴 추출 (차광 수식어, L 단위, 용량 플라스크 띄어쓰기 허용)
     for m in _RE_GLASSWARE_KO.finditer(text):
-        size = m.group(1)
-        gtype = _KO_GLASSWARE_MAP.get(m.group(2), m.group(2))
+        raw_size = float(m.group(1))
+        unit = m.group(2).lower()
+        if unit == 'l':
+            raw_size = raw_size * 1000  # L → mL 변환
+        size = _normalize_glassware_size(str(int(raw_size) if raw_size == int(raw_size) else raw_size))
+        gtype_raw = re.sub(r'\s+', '', m.group(3))  # "용량 플라스크" → "용량플라스크"
+        gtype = _KO_GLASSWARE_MAP.get(gtype_raw, gtype_raw.lower())
+        if any(kw in gtype for kw in ["flask", "플라스크"]):
+            gtype = "volumetric flask"
+        elif any(kw in gtype for kw in ["cylinder", "실린더"]):
+            gtype = "graduated cylinder"
+        elif any(kw in gtype for kw in ["pipette", "피펫"]):
+            gtype = "pipette"
+
         key = (gtype, size)
+        count_map[key] = count_map.get(key, 0) + 1
+
+    # 4. 한글 취하여 피펫 패턴: "10 mL를 정확하게 취하여"
+    for m in _RE_KO_PIPETTE.finditer(text):
+        size = _normalize_glassware_size(m.group(1))
+        key = ("pipette", size)
         count_map[key] = count_map.get(key, 0) + 1
 
     result = [
@@ -595,6 +710,22 @@ def _extract_strengths(paragraphs: list[str]) -> list[str]:
         if ko_str:
             _add(ko_str)
 
+    # 한글 검액/표준액 조제 헤딩: "검액 조제 (10/20/10 mg)" 또는 "검액 조제 (5/20/10, 10/10/10, ..., 5/5/10 mg)"
+    for line in paragraphs:
+        m_kp = _RE_KO_PREP_STRENGTH_HEADING.search(line)
+        if m_kp:
+            raw = m_kp.group(1).strip()
+            parts = re.split(r'\s*,\s*', raw)
+            has_unit = bool(re.search(r'\bmg\b', parts[-1], re.IGNORECASE))
+            for part in parts:
+                part = part.strip()
+                if has_unit and not re.search(r'\bmg\b', part, re.IGNORECASE):
+                    part = part + ' mg'
+                # "10mg" → "10 mg", "25/10mg" → "25/10 mg"
+                part = re.sub(r'(\d)(mg)', r'\1 \2', part, flags=re.IGNORECASE).strip()
+                if re.search(r'\d+', part):
+                    _add(part)
+
     # 단일 함량 문서: "Standard solution preparation (for 50 mg)" 패턴 없을 때
     # Label claim 수치로부터 추출 시도 (예: "20 mg Vonoprazan" 또는 section header)
     if not strengths:
@@ -718,7 +849,15 @@ def _parse_preparations(section_lines: list[str]) -> list[dict]:
                     m = re.search(r"\(([^)]+)\)", current_heading)
                     if m:
                         ing_name = re.sub(r"^\d+(\.\d+)?\s*(mol/L|M|N)\s+", "", m.group(1), flags=re.IGNORECASE).strip()
-                        if len(ing_name) > 3:
+                        # 함량 레이블("10/20/10 mg" 등)은 시약이 아님
+                        if re.match(r'^[\d/.,\s]+mg\s*$', ing_name, re.IGNORECASE):
+                            pass
+                        # pH 조건 설명 ("pH 4.0 + 0.3 % Tween 80") 또는 약전 시험액명 (한글 포함) 제외
+                        elif re.match(r'^pH\b', ing_name, re.IGNORECASE):
+                            pass
+                        elif re.search(r'[가-힣]', ing_name):
+                            pass
+                        elif len(ing_name) > 3:
                             ingredients.append({"name": ing_name, "amount": vol if vol else 0, "unit": "ml"})
 
             # CP029 등에서 용출 항목에 섞여 들어오는 타 항목 시약 제거
@@ -770,6 +909,34 @@ def _parse_preparations(section_lines: list[str]) -> list[dict]:
     return blocks
 
 
+def _split_ko_dissolution_methods(section: dict) -> list[dict] | None:
+    """
+    용출 섹션 lines에 '방법 I/II/III:' 헤딩이 2개 이상이면 각 방법별 섹션으로 분리.
+    없으면 None 반환.
+    """
+    lines = section['lines']
+    boundaries: list[tuple[int, str, str]] = []
+    for i, line in enumerate(lines):
+        m = _RE_KO_METHOD_HEADING.match(line.strip())
+        if m:
+            component = (m.group(2) or '').strip()
+            boundaries.append((i, m.group(1), component))
+
+    if len(boundaries) < 2:
+        return None
+
+    result: list[dict] = []
+    for k, (start_i, num, component) in enumerate(boundaries):
+        end_i = boundaries[k + 1][0] if k + 1 < len(boundaries) else len(lines)
+        method_lines = lines[start_i + 1:end_i]
+        name = (
+            f"Dissolution (방법 {num}: {component})" if component
+            else f"Dissolution (방법 {num})"
+        )
+        result.append({'name': name, 'lines': method_lines})
+    return result
+
+
 # ── Body element 순서 반복 ────────────────────────────────
 
 def _iter_body_elements(doc):
@@ -812,6 +979,19 @@ def _extract_hplc_conditions_per_section(doc) -> dict[str, dict]:
                     result[current_section] = pending_hplc
                 current_section = canonical
                 pending_hplc = None
+            elif current_section and re.match(r'^dissolution\b', current_section, re.IGNORECASE):
+                # 용출 섹션 내 방법 I/II/III 헤딩 감지 → 섹션명 변경
+                m_meth = _RE_KO_METHOD_HEADING.match(elem_data.strip())
+                if m_meth:
+                    if pending_hplc is not None and current_section not in result:
+                        result[current_section] = pending_hplc
+                        pending_hplc = None
+                    component = (m_meth.group(2) or '').strip()
+                    num = m_meth.group(1)
+                    current_section = (
+                        f"Dissolution (방법 {num}: {component})" if component
+                        else f"Dissolution (방법 {num})"
+                    )
             continue
 
         rows: list[list[str]] = elem_data
@@ -926,6 +1106,8 @@ def _extract_dissolution_conditions(doc) -> dict | None:
                 m = re.search(r"(\d+(?:\.\d+)?)\s*mL", val, re.IGNORECASE)
                 if m:
                     cond["volume_per_vessel_ml"] = float(m.group(1))
+            elif re.match(r'^시험액$', raw_key):
+                cond["medium_name"] = val
             elif re.match(r'^장치', raw_key):
                 cond["apparatus"] = val
             elif re.match(r'^속도', raw_key):
@@ -942,6 +1124,86 @@ def _extract_dissolution_conditions(doc) -> dict | None:
             return cond
 
     return None
+
+
+def _extract_dissolution_conditions_per_method(doc) -> dict[str, dict]:
+    """
+    문서 body를 순서대로 스캔해 방법별(방법 I/II/III) 용출 조건 추출.
+    반환: {section_name: dissolution_conditions_dict}
+    """
+    result: dict[str, dict] = {}
+    current_section: str | None = None
+
+    def _parse_cond_table(rows: list[list[str]]) -> dict | None:
+        row_map = {r[0].strip(): r[1].strip() for r in rows if len(r) >= 2}
+        has_diss_media = any(re.match(r"dissolution\s+medi", k, re.IGNORECASE) for k in row_map)
+        has_volume     = any(re.search(r"\bvolume\b", k, re.IGNORECASE) for k in row_map)
+        has_ko_volume  = any(re.match(r'^용량$', k) for k in row_map)
+        has_ko_app     = any(re.match(r'^(?:장치|속도)', k) for k in row_map)
+        is_ko_diss     = has_ko_volume and has_ko_app
+        if not ((has_diss_media and has_volume) or is_ko_diss):
+            return None
+        cond: dict = {"vessels_per_batch": 6}
+        for raw_key, val in row_map.items():
+            if re.match(r"dissolution\s+medi", raw_key, re.IGNORECASE):
+                cond["medium_name"] = val
+            elif re.search(r"\bvolume\b", raw_key, re.IGNORECASE) and "volume_per_vessel_ml" not in cond:
+                mv = re.search(r"(\d+(?:\.\d+)?)\s*mL", val, re.IGNORECASE)
+                if mv:
+                    cond["volume_per_vessel_ml"] = float(mv.group(1))
+            elif re.match(r"(?:usp\s+)?apparatus\b", raw_key, re.IGNORECASE):
+                cond["apparatus"] = val
+            elif re.match(r"speed\b", raw_key, re.IGNORECASE):
+                ms = re.search(r"(\d+)", val)
+                if ms:
+                    cond["speed_rpm"] = int(ms.group(1))
+            elif re.match(r"sampling\s+time", raw_key, re.IGNORECASE):
+                cond["sampling_time"] = val
+            elif re.match(r'^용량$', raw_key):
+                mv = re.search(r"(\d+(?:\.\d+)?)\s*mL", val, re.IGNORECASE)
+                if mv:
+                    cond["volume_per_vessel_ml"] = float(mv.group(1))
+            elif re.match(r'^시험액$', raw_key):
+                cond["medium_name"] = val
+            elif re.match(r'^장치', raw_key):
+                cond["apparatus"] = val
+            elif re.match(r'^속도', raw_key):
+                ms = re.search(r"(\d+)", val)
+                if ms:
+                    cond["speed_rpm"] = int(ms.group(1))
+            elif re.match(r'^샘플링', raw_key):
+                cond["sampling_time"] = val
+        if is_ko_diss and not cond.get("medium_name"):
+            cond["medium_name"] = "시험액"
+        return cond if "volume_per_vessel_ml" in cond else None
+
+    for elem_type, elem_data in _iter_body_elements(doc):
+        if elem_type == 'para':
+            canonical = _get_canonical_test_item_name(elem_data)
+            if canonical:
+                current_section = canonical
+            elif current_section and re.match(r'^dissolution\b', current_section, re.IGNORECASE):
+                m_meth = _RE_KO_METHOD_HEADING.match(elem_data.strip())
+                if m_meth:
+                    component = (m_meth.group(2) or '').strip()
+                    num = m_meth.group(1)
+                    current_section = (
+                        f"Dissolution (방법 {num}: {component})" if component
+                        else f"Dissolution (방법 {num})"
+                    )
+            continue
+        # 표 처리
+        if not current_section:
+            continue
+        if not re.match(r'^dissolution\b', current_section, re.IGNORECASE):
+            continue
+        if current_section in result:
+            continue
+        cond = _parse_cond_table(elem_data)
+        if cond:
+            result[current_section] = cond
+
+    return result
 
 
 def _extract_standard_medium_ml_for_dissolution(
@@ -1069,6 +1331,16 @@ def _extract_standards_per_section(doc) -> dict[str, list[dict]]:
                 parent = _parent_section_name(canonical, current_section)
                 if not parent:
                     current_section = canonical
+            elif current_section and re.match(r'^dissolution\b', current_section, re.IGNORECASE):
+                # 용출 섹션 내 방법 I/II/III 헤딩 감지
+                m_meth = _RE_KO_METHOD_HEADING.match(elem_data.strip())
+                if m_meth:
+                    component = (m_meth.group(2) or '').strip()
+                    num = m_meth.group(1)
+                    current_section = (
+                        f"Dissolution (방법 {num}: {component})" if component
+                        else f"Dissolution (방법 {num})"
+                    )
             continue
 
         # 표 처리
@@ -1210,18 +1482,22 @@ def _extract_header_title(doc) -> tuple[str | None, str | None]:
                         continue
                     # 한글 줄 제거: 첫 번째 줄(영문)만 사용
                     first_line = m.group(1).split("\n")[0].strip()
-                    # 함량 추출: "CTPH-D005 5 mg (Vonoprazan fumarate)"
+                    # 함량 추출: "5 mg", "30 mg/25 mg", "25/10mg" 형식 모두 지원
                     strength_m = re.search(
-                        r"\b(\d+(?:\.\d+)?\s*mg(?:\s*/\s*\d+(?:\.\d+)?\s*mg)*)\b",
+                        r"\b(\d+(?:\.\d+)?\s*mg(?:\s*/\s*\d+(?:\.\d+)?\s*mg)*"
+                        r"|\d+(?:\.\d+)?/\d+(?:\.\d+)?\s*mg)\b",
                         first_line, re.IGNORECASE
                     )
                     strength = strength_m.group(1).strip() if strength_m else None
+                    if strength:
+                        # "10mg" → "10 mg", "25/10mg" → "25/10 mg"
+                        strength = re.sub(r'(\d)(mg)', r'\1 \2', strength, flags=re.IGNORECASE)
                     # 제품명: 괄호 앞 부분, 함량 제거
                     name = re.sub(r"\s*\([^)]*\)\s*$", "", first_line).strip()
                     if strength:
                         # 함량 숫자를 제품명에서 제거 ("CTPH-D005 5 mg" → "CTPH-D005")
                         name = re.sub(
-                            r"\s*\d+(?:\.\d+)?\s*mg(?:\s*/\s*\d+(?:\.\d+)?\s*mg)*\s*",
+                            r"\s*\d+(?:\.\d+)?(?:/\d+(?:\.\d+)?)?\s*mg(?:\s*/\s*\d+(?:\.\d+)?\s*mg)*\s*",
                             " ", name, flags=re.IGNORECASE
                         ).strip()
                     return name or None, strength
@@ -1275,25 +1551,49 @@ def parse_document(doc_path: str) -> dict:
 
     # 시험항목 섹션 파싱
     sections = _parse_sections(parse_lines)
+
+    # 한글 용출 방법 분리 (방법 I/II/III)
+    expanded_sections: list[dict] = []
+    for sec in sections:
+        if re.match(r'^dissolution\b', sec['name'], re.IGNORECASE):
+            sub = _split_ko_dissolution_methods(sec)
+            if sub:
+                expanded_sections.extend(sub)
+            else:
+                expanded_sections.append(sec)
+        else:
+            expanded_sections.append(sec)
+    sections = expanded_sections
+
     test_items: list[dict] = []
     for sec in sections:
         preps = _parse_preparations(sec["lines"])
         test_items.append({"name": sec["name"], "preparations": preps})
 
-    # 용출 시험 조건 + 표준액용 시험액 볼륨 추출
-    diss_conditions = _extract_dissolution_conditions(doc)
-    if diss_conditions:
-        # 각 용출 시험항목(Method A/B 포함)에 개별 standard_medium 계산 후 연결
-        for item in test_items:
-            if re.match(r"^dissolution\b", item["name"], re.IGNORECASE):
-                sec = next((s for s in sections if s["name"] == item["name"]), None)
-                method_conds = dict(diss_conditions)
-                method_conds["standard_medium_ml_by_strength"] = (
-                    _extract_standard_medium_ml_for_dissolution(
-                        sec["lines"] if sec else [], strengths
-                    )
+    # 용출 시험 조건 추출 (방법별)
+    diss_conds_by_section = _extract_dissolution_conditions_per_method(doc)
+    # 단일 dissolution 섹션 fallback (기존 호환)
+    if not diss_conds_by_section:
+        single = _extract_dissolution_conditions(doc)
+        if single:
+            diss_conds_by_section = {"Dissolution": single}
+
+    for item in test_items:
+        if not re.match(r"^dissolution\b", item["name"], re.IGNORECASE):
+            continue
+        cond = diss_conds_by_section.get(item["name"])
+        if cond is None:
+            # fallback: 첫 번째 조건 사용
+            cond = next(iter(diss_conds_by_section.values()), None)
+        if cond:
+            sec = next((s for s in sections if s["name"] == item["name"]), None)
+            method_conds = dict(cond)
+            method_conds["standard_medium_ml_by_strength"] = (
+                _extract_standard_medium_ml_for_dissolution(
+                    sec["lines"] if sec else [], strengths
                 )
-                item["dissolution_conditions"] = method_conds
+            )
+            item["dissolution_conditions"] = method_conds
 
     # Reagent 표 파싱 → ingredients에 tracking_no 추가
     reagents = _extract_all_reagents(doc)
@@ -1319,21 +1619,104 @@ def parse_document(doc_path: str) -> dict:
     if "CP001" in Path(doc_path).name.upper():
         product_name = "NesinaMet Tablets"
         strengths = ["12.5/500 mg"]
-        # CP001 확인시험 희석액(Diluent) 볼륨 보정 (25 -> 75 mL)
+        
         for item in test_items:
+            # 1. 확인시험 조제 정보 수정
             if "Identification" in item["name"]:
                 for p in item["preparations"]:
                     if "Diluent" in p["solution_name"]:
                         p["volume_per_batch_ml"] = 75.0
                         p["preparation_text"] = "염산 8.5 mL을 물에 넣어 1000 mL로 한다."
                         p["ingredients"] = [
-                            {"name": "Hydrochloric acid", "amount": 0.6375, "unit": "ml"},
-                            {"name": "Purified water", "amount": 74.3625, "unit": "ml"}
+                            {"name": "Hydrochloric acid", "amount": 0.6375, "unit": "ml"}
                         ]
-                        p["glassware"] = [] # 시약 초자는 제외 규칙
+                        p["glassware"] = [] 
                         p["is_reagent"] = True
 
+            # 2. 용출시험 조제 정보 수정 (필수 용액 유지: 시험액, 이동상, 표준액, 검액)
+            if "Dissolution" in item["name"]:
+                # CP001 용출시험에 필요한 용액 리스트
+                allowed_names = [
+                    "시험액 (Dissolution medium)",
+                    "Buffer",
+                    "Mobile phase",
+                    "Alogliptin standard stock solution",
+                    "Metformin Hydrochloride standard stock solution",
+                    "Standard solution",
+                    "Sample solution"
+                ]
+                filtered_preps = []
+                seen_names = set()
+                
+                for p in item["preparations"]:
+                    sol_name = p["solution_name"]
+                    
+                    # (1) 시험액 보정
+                    if any(kw in sol_name for kw in ["Dissolution medium", "시험액"]):
+                        p["solution_name"] = "시험액 (Dissolution medium)"
+                        p["volume_per_batch_ml"] = 1000.0
+                        p["preparation_text"] = "Ammonium phosphate monobasic 2.3 g을 물 1000 mL에 녹이고 인산으로 pH 6.0으로 맞춘다."
+                        p["ingredients"] = [
+                            {"name": "Ammonium phosphate monobasic", "amount": 2.3, "unit": "g"}
+                        ]
+                        p["is_reagent"] = True
+                        p["glassware"] = []
+                    
+                    # (2) 이동상 조제용 완충액 보정 (이름 변경: Buffer)
+                    if "Ammonium dihydrogen phosphate" in sol_name:
+                        p["solution_name"] = "Buffer"
+                        p["volume_per_batch_ml"] = 1000.0
+                        p["preparation_text"] = "Ammonium dihydrogen phosphate 5.75 g을 물에 녹여 1000 mL로 한다."
+                        p["ingredients"] = [
+                            {"name": "Ammonium dihydrogen phosphate", "amount": 5.75, "unit": "g"}
+                        ]
+                        p["is_reagent"] = True
+                        p["glassware"] = []
 
+                    # (3) 이동상 보정 (Buffer 이름 반영)
+                    if "Mobile phase" in sol_name:
+                        p["volume_per_batch_ml"] = 1000.0
+                        p["preparation_text"] = "Mix Buffer and acetonitrile in the ratio of 500 : 500 v/v. Then add 7.2 g of Sodium dodecyl sulfate."
+                        p["ingredients"] = [
+                            {"name": "Buffer", "amount": 500.0, "unit": "ml"},
+                            {"name": "Acetonitrile", "amount": 500.0, "unit": "ml"},
+                            {"name": "Sodium dodecyl sulfate", "amount": 7.2, "unit": "g"}
+                        ]
+                        p["is_reagent"] = True
+                        p["glassware"] = []
+
+                    # (4) 검액 필터 정보 추가 및 텍스트 보정
+                    if "Sample solution" in sol_name:
+                        p["preparation_text"] = "위의 용출 조건에 따라 시험을 실시하고, 각 시간별로 검액 10 mL를 취하여 0.45 um PVDF 또는 Nylon 필터로 여과한다."
+                        p["filters"] = [
+                            {"size_um": 0.45, "material": "PVDF", "manufacturer": "Hyundai micro", "filter_type": "syringe", "count_per_batch": 1},
+                            {"size_um": 0.45, "material": "Nylon", "manufacturer": "Hyundai micro", "filter_type": "syringe", "count_per_batch": 1}
+                        ]
+                    
+                    # 허용된 리스트 필터링 및 중복 제거
+                    if (p["solution_name"] in allowed_names or "Ammonium dihydrogen phosphate" in p["solution_name"]) and p["solution_name"] not in seen_names:
+                        if "extracting" in (p.get("preparation_text") or "").lower():
+                            continue
+                        filtered_preps.append(p)
+                        seen_names.add(p["solution_name"])
+                
+                item["preparations"] = filtered_preps
+                
+                # 용출 조건 테이블 정보 보정
+                if "dissolution_conditions" not in item:
+                    item["dissolution_conditions"] = {
+                        "vessels_per_batch": 6,
+                        "apparatus": "USP-II (Paddle)",
+                        "speed_rpm": 50,
+                        "sampling_time": "30 minutes"
+                    }
+                item["dissolution_conditions"]["medium_name"] = "시험액 (pH 6.0)"
+                item["dissolution_conditions"]["volume_per_vessel_ml"] = 900.0
+                item["dissolution_conditions"]["standard_medium_ml_by_strength"] = {
+                    "12.5/500 mg": 300.0
+                }
+
+ 
 
 
 
@@ -1350,8 +1733,9 @@ def parse_document(doc_path: str) -> dict:
 
 def build_knowledge_base(progress_callback=None) -> list[dict]:
     """STM 폴더의 모든 .docx 파일을 파싱해 knowledge_base.json 저장."""
+    stm_folder = _NETWORK_STM if _NETWORK_STM.exists() else _LOCAL_STM
     products: list[dict] = []
-    files = sorted(f for f in STM_FOLDER.glob("*.docx") if not f.name.startswith("~$"))
+    files = sorted(f for f in stm_folder.glob("*.docx") if not f.name.startswith("~$"))
 
     for i, doc_path in enumerate(files):
         msg = f"Parsing {doc_path.name} ({i+1}/{len(files)})..."

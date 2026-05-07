@@ -17,8 +17,8 @@ from pydantic import BaseModel, Field
 
 from parser import build_knowledge_base, load_knowledge_base, save_knowledge_base
 from calculator import calculate_resources, scale_ingredients, merge_all_results
-from standards_db import lookup as lookup_standards
-from column_db import lookup as lookup_columns
+from standards_db import lookup as lookup_standards, reload as reload_standards
+from column_db import lookup as lookup_columns, reload as reload_columns
 
 CONFIG_PATH = Path(__file__).parent / "data" / "config.json"
 
@@ -54,7 +54,22 @@ def _get_api_key() -> str | None:
             pass
     return None
 
-app = FastAPI(title="STM 시험 자원 계산기")
+_EXCLUDED_TEST_ITEMS = re.compile(
+    r"^description$"
+    r"|^identification"
+    r"|^microbial\s+enumeration"
+    r"|^specified\s+microorganisms"
+    r"|^polymorphism\s+by\s+pxrd"
+    r"|^water\s+content\s+by\s+kf",
+    re.IGNORECASE,
+)
+
+
+def _is_excluded_test_item(t: dict) -> bool:
+    return bool(_EXCLUDED_TEST_ITEMS.match(t.get("name", "")))
+
+
+app = FastAPI(title="QC 시험 준비 자동화 시스템")
 
 app.add_middleware(
     CORSMiddleware,
@@ -75,11 +90,12 @@ _state_lock = threading.Lock()
 
 def _needs_reparse() -> bool:
     """STM 폴더에 knowledge_base.json보다 새로운 .docx 파일이 있으면 True."""
-    from parser import STM_FOLDER, KB_PATH
+    from parser import _NETWORK_STM, _LOCAL_STM, KB_PATH
+    stm_folder = _NETWORK_STM if _NETWORK_STM.exists() else _LOCAL_STM
     if not KB_PATH.exists():
         return True
     kb_mtime = KB_PATH.stat().st_mtime
-    for f in STM_FOLDER.glob("*.docx"):
+    for f in stm_folder.glob("*.docx"):
         if not f.name.startswith("~$") and f.stat().st_mtime > kb_mtime:
             return True
     return False
@@ -131,8 +147,7 @@ def get_products():
             "strengths": p.get("strengths", ["N/A"]),
             "test_items": [
                 t["name"] for t in p.get("test_items", [])
-                if t["name"] != "Description"
-                and not (t["name"].startswith("Identification") and not t.get("preparations"))
+                if not _is_excluded_test_item(t)
             ],
         }
         for p in _state["products"]
@@ -259,7 +274,28 @@ def trigger_parse(background_tasks: BackgroundTasks):
     return {"message": "파싱을 시작했습니다"}
 
 
-# ── API 키 설정 ──────────────────────────────────────────
+# ── 표준품 DB 재로드 ───────────────────────────────────────
+@app.post("/api/standards/reload")
+def standards_reload():
+    """캐시를 초기화하고 바로가기(.lnk)로부터 엑셀을 다시 로드합니다."""
+    try:
+        reload_standards()
+        return {"message": "표준품 DB가 성공적으로 재로드되었습니다."}
+    except Exception as e:
+        return {"message": f"재로드 실패: {e}"}
+
+
+# ── 컬럼 DB 재로드 ────────────────────────────────────────
+@app.post("/api/columns/reload")
+def columns_reload():
+    """컬럼 캐시를 초기화하고 바로가기(.lnk)로부터 엑셀을 다시 로드합니다."""
+    try:
+        reload_columns()
+        return {"message": "컬럼 DB가 성공적으로 재로드되었습니다."}
+    except Exception as e:
+        return {"message": f"재로드 실패: {e}"}
+
+
 @app.get("/api/config")
 def get_config():
     key = _get_api_key()
@@ -299,4 +335,4 @@ app.mount("/", StaticFiles(directory=static_dir, html=True), name="static")
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=False)
+    uvicorn.run("main:app", host="0.0.0.0", port=8502, reload=False)

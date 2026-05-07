@@ -20,6 +20,14 @@ _RE_FOR_STRENGTH = re.compile(r'\(\s*for\s+(.+?)\s*\)', re.IGNORECASE)
 # 피펫 집계 대상: 검액 및 표준액만 포함 (용액 조제 시약류 제외 규칙 반영)
 _RE_PIPETTE_SOURCE  = re.compile(r'sample|standard|표준원액|표준액', re.IGNORECASE)
 
+# Rule 3: 용액 조제 목록에서 제외할 시험 용액 (표준액, 표준원액, 검액)
+_RE_TEST_SOLUTION = re.compile(
+    r'\bstandard\b.*\bsolution\b|\bsample\b|표준원액|표준액|검액',
+    re.IGNORECASE,
+)
+# Rule 1: 초자 목록에 포함할 소스 준비 (standard/sample 준비에서 나온 초자만 유지)
+_RE_GW_KEEP_SOURCE = re.compile(r'standard|sample|표준|검액', re.IGNORECASE)
+
 _RE_SAMPLE_OR_STD   = re.compile(r'sample|standard', re.IGNORECASE)
 _RE_RATIO = re.compile(
     r'Mix\s+(.+?)\s+and\s+(.+?)\s+in\s+the\s+ratio\s+of\s+'
@@ -45,6 +53,14 @@ _RE_RATIO_KO2_MIT = re.compile(
     r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s*(?:을|를)?\s*'
     r'(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)'
     r'(?!\s*:\s*\d)',
+)
+# 한글 2성분 비율 (와/과 + 비율로 혼합): "A와 B를 X:Y (v/v)의 비율로 혼합"
+_RE_RATIO_KO2_WA = re.compile(
+    r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s*(?:와|과)\s*'
+    r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s*(?:을|를)?\s*'
+    r'(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)'
+    r'(?!\s*:\s*\d)'
+    r'(?:\s*\([vV]/[vV]\))?\s*(?:의)?\s*비율로',
 )
 
 
@@ -102,6 +118,7 @@ _KO_EN_STD: dict[str, str] = {
     "암로디핀말레산염": "Amlodipine maleate",
     "암로디핀": "Amlodipine",
     "에소메프라졸마그네슘": "Esomeprazole magnesium",
+    "에제티미브": "Ezetimibe",
     "에제티미브": "Ezetimibe",
     "엔탈라프릴말레산염": "Enalapril maleate",
     "엠파글리플로진": "Empagliflozin",
@@ -324,6 +341,8 @@ def calculate_resources(
 
         total_buffer_needed = 0.0
         for sol in mp_sols:
+            # 기존 조제 부피 (스케일링 전) 백업
+            old_vol = sol.get("volume_per_batch_ml") or 1000.0
             sol["volume_per_batch_ml"]   = mp_vol
             sol["theoretical_volume_ml"] = mp_vol
             prep_text = sol.get("preparation_text", "")
@@ -333,11 +352,19 @@ def calculate_resources(
                 r_a, r_b, r_c = float(m3.group(4)), float(m3.group(5)), float(m3.group(6))
                 t = r_a + r_b + r_c
                 if t > 0:
-                    sol["ingredients"] = [
+                    new_ings = [
                         {"name": sub_a, "amount": round(r_a / t * mp_vol, 1), "unit": "mL"},
                         {"name": sub_b, "amount": round(r_b / t * mp_vol, 1), "unit": "mL"},
                         {"name": sub_c, "amount": round(r_c / t * mp_vol, 1), "unit": "mL"},
                     ]
+                    # 기존 고체 성분(g, mg) 보존 및 스케일링
+                    scale = mp_vol / old_vol
+                    for old_ing in sol.get("ingredients", []):
+                        if old_ing.get("unit", "").lower() in ["g", "mg"]:
+                            scaled_ing = dict(old_ing)
+                            scaled_ing["amount"] = round(float(old_ing["amount"]) * scale, 2)
+                            new_ings.append(scaled_ing)
+                    sol["ingredients"] = new_ings
                     for sub, r in [(sub_a, r_a), (sub_b, r_b), (sub_c, r_c)]:
                         if "buffer" in sub.lower() or "완충액" in sub:
                             total_buffer_needed += mp_vol * (r / t)
@@ -351,10 +378,19 @@ def calculate_resources(
                     r_a, r_b = float(m.group(3)), float(m.group(4))
                     t = r_a + r_b
                     if t > 0:
-                        sol["ingredients"] = [
+                        new_ings = [
                             {"name": sub_a, "amount": round(r_a / t * mp_vol, 1), "unit": "mL"},
                             {"name": sub_b, "amount": round(r_b / t * mp_vol, 1), "unit": "mL"},
                         ]
+                        # 기존 고체 성분(g, mg) 보존 및 스케일링
+                        scale = mp_vol / old_vol
+                        for old_ing in sol.get("ingredients", []):
+                            if old_ing.get("unit", "").lower() in ["g", "mg"]:
+                                scaled_ing = dict(old_ing)
+                                scaled_ing["amount"] = round(float(old_ing["amount"]) * scale, 2)
+                                new_ings.append(scaled_ing)
+                        sol["ingredients"] = new_ings
+                        
                         if "buffer" in sub_a.lower() or "완충액" in sub_a:
                             total_buffer_needed += mp_vol * (r_a / t)
                         elif "buffer" in sub_b.lower() or "완충액" in sub_b:
@@ -429,7 +465,7 @@ def calculate_resources(
         product, strength, test_item_names, batch_count
     )
 
-    # 피펫/메스 실린더: mL 재료 규격 추출 → 초자 목록(glassware_agg)에 통합
+    # pipette: mL 재료 규격 추출 → 초자 목록(glassware_agg)에 통합
     _RE_BTV = re.compile(
         r'(?:dilute to volume|bring to volume|make up to volume|make to volume)\s+with\s+([^.,\n]+)',
         re.IGNORECASE,
@@ -439,7 +475,7 @@ def calculate_resources(
             continue
 
         prep_text = sol.get("preparation_text", "")
-        # 비율 혼합 용액(Mix A:B)은 홀 피펫 자동 생성 제외
+        # 비율 혼합 용액(Mix A:B)은 pipette 자동 생성 제외
         if (_RE_RATIO.search(prep_text) or _RE_RATIO_KO.search(prep_text) or
                 _RE_RATIO_KO3.search(prep_text) or _RE_RATIO_KO2_MIT.search(prep_text)):
             continue
@@ -449,23 +485,33 @@ def calculate_resources(
         for ing in sol.get("ingredients", []):
             if ing.get("unit", "").strip().lower() != "ml":
                 continue
-            vol = round(float(ing.get("amount", 0)), 1)
-            if vol <= 0 or vol > 25:
-                continue  # 메스 실린더(>25 mL)는 성분 분석으로 자동 추가하지 않음
+            f_vol = float(ing.get("amount", 0))
+            if f_vol <= 0 or f_vol > 25:
+                continue
+            
+            # 규격 정규화 (10.0 -> 10)
+            if f_vol == int(f_vol):
+                size = f"{int(f_vol)} mL"
+            else:
+                size = f"{f_vol} mL"
+                
             ing_name = ing.get("name", "").strip().lower()
             # 표선 용매와 동일한 성분이면 피펫 불필요
             if btv_solvent and (ing_name in btv_solvent or btv_solvent.startswith(ing_name)):
                 continue
             sol_name = sol.get("solution_name", "")
-            size = f"{vol} mL"
-            key  = ("홀 피펫", size, sol_name, "", "")
+            sol_item = sol.get("test_item", "")
+            is_ss = bool(_RE_SAMPLE_OR_STD.search(sol_name))
+            pip_strength  = (strength or "") if is_ss else ""
+            pip_test_item = sol_item if is_ss else ""
+            key  = ("pipette", size, sol_name, pip_strength, pip_test_item)
             if key not in glassware_agg:
                 glassware_agg[key] = {
-                    "type": "홀 피펫",
+                    "type": "pipette",
                     "size": size,
                     "source_prep": sol_name,
-                    "strength": "",
-                    "test_item": "",
+                    "strength": pip_strength,
+                    "test_item": pip_test_item,
                     "count_per_batch": 1,
                     "total_count": 1,
                 }
@@ -474,6 +520,12 @@ def calculate_resources(
     solutions = [
         s for s in solutions
         if s.get("preparation_text") or s.get("ingredients")
+    ]
+
+    # Rule 3: 표준액, 표준원액, 검액은 용액 조제 목록에서 제외
+    solutions = [
+        s for s in solutions
+        if not _RE_TEST_SOLUTION.search(s.get("solution_name", ""))
     ]
 
     # 동일 용액 내 중복 성분 제거: 추적번호 있는 영문명 우선, 동일 양/단위의 한글명 제거
@@ -499,6 +551,18 @@ def calculate_resources(
             cleaned.append(ing)
         sol["ingredients"] = cleaned
 
+    # Rule 1: 용액 조제(시약)에서 나온 초자는 초자 목록에서 제외 — standard/sample 준비 초자만 유지
+    glassware_list = [
+        g for g in glassware_agg.values()
+        if _RE_GW_KEEP_SOURCE.search(g.get("source_prep", ""))
+    ]
+
+    # Rule 7: 용출 시험 시 900mL 피펫은 불필요 (용출 배지를 피펫으로 옮기지 않음)
+    glassware_list = [
+        g for g in glassware_list
+        if not (g.get("type") == "pipette" and "900" in str(g.get("size", "")))
+    ]
+
     return {
         "product_name": product.get("product_name", ""),
         "doc_no": product.get("doc_no"),
@@ -507,7 +571,7 @@ def calculate_resources(
         "test_items": test_item_names,
         "batch_count": batch_count,
         "solutions": solutions,
-        "glassware": list(glassware_agg.values()),
+        "glassware": glassware_list,
         "filters": list(filter_agg.values()),
         "pipettes": [],
         "dissolution_medium": dissolution_medium,
@@ -592,7 +656,7 @@ def merge_all_results(
         for gw in r["glassware"]:
             src = gw.get("source_prep", "")
             is_std    = bool(_RE_STD_PREP.search(src))
-            is_pipette = gw.get("type", "") in ("홀 피펫", "메스 실린더")
+            is_pipette = gw.get("type", "") in ("pipette", "graduated cylinder")
             str_key = "" if is_std else gw.get("strength", "")
             key = (gw["type"], gw["size"], src, str_key, gw.get("test_item", ""))
             if key not in gw_map:

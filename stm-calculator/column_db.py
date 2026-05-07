@@ -1,12 +1,33 @@
 """컬럼 조회 모듈
 LC01004-A1(4.0) Column List.xlsx LC 시트에서 STM 스펙 매칭 후 활성 컬럼 반환.
+
+엑셀 파일 탐색 순서:
+  1. 네트워크 경로 (\\\\file\\04. 품질본부\\3. 품질관리담당\\1. 담당 공용\\AI)
+  2. 접근 불가 시 → column_db.py 옆 폴더의 .xlsx (fallback)
 """
 from __future__ import annotations
 import re
 from pathlib import Path
 
-_EXCEL_PATH = Path(__file__).parent.parent / "LC01004-A1(4.0) Column List.xlsx"
+_NETWORK_AI = Path(r"\\file\04. 품질본부\3. 품질관리담당\1. 담당 공용\AI")
+_NETWORK_XLSX = _NETWORK_AI / "LC01004-A1(4.0) Column List.xlsx"
+_FALLBACK_XLSX = Path(__file__).parent.parent / "LC01004-A1(4.0) Column List.xlsx"
+
 _ENTRIES: list[dict] = []
+
+
+def _find_excel_path() -> Path | None:
+    """사용할 엑셀 파일 경로를 반환. 우선순위: 네트워크 → 로컬 fallback"""
+    if _NETWORK_XLSX.exists():
+        print(f"[column_db] 네트워크 경로 사용: {_NETWORK_XLSX}")
+        return _NETWORK_XLSX
+
+    print(f"[column_db] 네트워크 접근 불가, fallback 시도: {_FALLBACK_XLSX}")
+    if _FALLBACK_XLSX.exists():
+        return _FALLBACK_XLSX
+
+    print("[column_db] 컬럼 엑셀 파일을 찾을 수 없습니다.")
+    return None
 
 
 def _parse_excel_spec(spec: str) -> dict:
@@ -59,7 +80,12 @@ def _name_matches(excel_name_lower: str, stm_keywords: set[str]) -> bool:
 
 def _load() -> list[dict]:
     import openpyxl
-    wb = openpyxl.load_workbook(_EXCEL_PATH, data_only=True, read_only=True)
+
+    excel_path = _find_excel_path()
+    if excel_path is None:
+        raise FileNotFoundError("컬럼 엑셀 파일을 찾을 수 없습니다.")
+
+    wb = openpyxl.load_workbook(excel_path, data_only=True, read_only=True)
     ws = wb['LC']
     header = [str(c.value).strip().replace('\n', ' ') if c.value else '' for c in ws[1]]
     no_i    = header.index('Column No.')
@@ -130,3 +156,14 @@ def lookup(stm_col_specs: list[str]) -> list[dict]:
                 })
 
     return results
+
+
+def reload() -> None:
+    """캐시를 초기화하고 엑셀을 다시 로드합니다 (서버 재시작 없이 갱신 가능)."""
+    global _ENTRIES
+    _ENTRIES = []
+    try:
+        _ENTRIES = _load()
+        print(f"[column_db] 재로드 완료: {len(_ENTRIES)}개 컬럼")
+    except Exception as e:
+        print(f"[column_db] 재로드 실패: {e}")
