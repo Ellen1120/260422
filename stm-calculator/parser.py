@@ -439,6 +439,9 @@ def _extract_ingredients(text: str, final_volume_ml: float | None) -> list[dict]
             name_raw = m.group(1).strip().rstrip(',').strip()
             _add(name_raw, float(m.group(2)), m.group(3))
 
+    # 볼륨 미지정 시 비율 계산을 위한 기본값 (이동상 등 총량 미정 용액)
+    eff_vol = final_volume_ml if final_volume_ml else 1000.0
+
     # 비율 혼합 영문 (Mix A and B in ratio X:Y)
     for m in _RE_RATIO.finditer(text):
         sub_a = m.group(1).strip()
@@ -446,9 +449,9 @@ def _extract_ingredients(text: str, final_volume_ml: float | None) -> list[dict]
         ratio_a = float(m.group(3))
         ratio_b = float(m.group(4))
         total = ratio_a + ratio_b
-        if final_volume_ml and total > 0:
-            _add(sub_a, round(ratio_a / total * final_volume_ml, 1), "mL")
-            _add(sub_b, round(ratio_b / total * final_volume_ml, 1), "mL")
+        if total > 0:
+            _add(sub_a, round(ratio_a / total * eff_vol, 1), "mL")
+            _add(sub_b, round(ratio_b / total * eff_vol, 1), "mL")
 
     # 비율 혼합 한글 2성분 (A와 B를 각각 X:Y)
     for m in _RE_RATIO_KO2.finditer(text):
@@ -457,9 +460,9 @@ def _extract_ingredients(text: str, final_volume_ml: float | None) -> list[dict]
         ratio_a = float(m.group(3))
         ratio_b = float(m.group(4))
         total = ratio_a + ratio_b
-        if final_volume_ml and total > 0:
-            _add(sub_a, round(ratio_a / total * final_volume_ml, 1), "mL")
-            _add(sub_b, round(ratio_b / total * final_volume_ml, 1), "mL")
+        if total > 0:
+            _add(sub_a, round(ratio_a / total * eff_vol, 1), "mL")
+            _add(sub_b, round(ratio_b / total * eff_vol, 1), "mL")
 
     # 비율 혼합 한글 3성분 (A, B 및 C를 X:Y:Z v/v/v)
     for m in _RE_RATIO_KO3.finditer(text):
@@ -470,10 +473,10 @@ def _extract_ingredients(text: str, final_volume_ml: float | None) -> list[dict]
         ratio_b = float(m.group(5))
         ratio_c = float(m.group(6))
         total = ratio_a + ratio_b + ratio_c
-        if final_volume_ml and total > 0:
-            _add(sub_a, round(ratio_a / total * final_volume_ml, 1), "mL")
-            _add(sub_b, round(ratio_b / total * final_volume_ml, 1), "mL")
-            _add(sub_c, round(ratio_c / total * final_volume_ml, 1), "mL")
+        if total > 0:
+            _add(sub_a, round(ratio_a / total * eff_vol, 1), "mL")
+            _add(sub_b, round(ratio_b / total * eff_vol, 1), "mL")
+            _add(sub_c, round(ratio_c / total * eff_vol, 1), "mL")
 
     # 비율 혼합 한글 2성분 (A 및 B를 X:Y, 각각 없음) - 3성분 텍스트 제외
     if not _RE_RATIO_KO3.search(text):
@@ -483,9 +486,9 @@ def _extract_ingredients(text: str, final_volume_ml: float | None) -> list[dict]
             ratio_a = float(m.group(3))
             ratio_b = float(m.group(4))
             total = ratio_a + ratio_b
-            if final_volume_ml and total > 0:
-                _add(sub_a, round(ratio_a / total * final_volume_ml, 1), "mL")
-                _add(sub_b, round(ratio_b / total * final_volume_ml, 1), "mL")
+            if total > 0:
+                _add(sub_a, round(ratio_a / total * eff_vol, 1), "mL")
+                _add(sub_b, round(ratio_b / total * eff_vol, 1), "mL")
 
     # 비율 혼합 한글 2성분 (A와 B를 X:Y v/v 비율로 혼합)
     for m in _RE_RATIO_KO2_WA.finditer(text):
@@ -494,19 +497,19 @@ def _extract_ingredients(text: str, final_volume_ml: float | None) -> list[dict]
         ratio_a = float(m.group(3))
         ratio_b = float(m.group(4))
         total = ratio_a + ratio_b
-        if final_volume_ml and total > 0:
-            _add(sub_a, round(ratio_a / total * final_volume_ml, 1), "mL")
-            _add(sub_b, round(ratio_b / total * final_volume_ml, 1), "mL")
+        if total > 0:
+            _add(sub_a, round(ratio_a / total * eff_vol, 1), "mL")
+            _add(sub_b, round(ratio_b / total * eff_vol, 1), "mL")
 
     # 콜론 구분 3성분: "A:B:C = X:Y:Z (v/v/v)"
     for m in _RE_RATIO_COLON3.finditer(text):
         sub_a, sub_b, sub_c = m.group(1).strip(), m.group(2).strip(), m.group(3).strip()
         ratio_a, ratio_b, ratio_c = float(m.group(4)), float(m.group(5)), float(m.group(6))
         total = ratio_a + ratio_b + ratio_c
-        if final_volume_ml and total > 0:
-            _add(sub_a, round(ratio_a / total * final_volume_ml, 1), "mL")
-            _add(sub_b, round(ratio_b / total * final_volume_ml, 1), "mL")
-            _add(sub_c, round(ratio_c / total * final_volume_ml, 1), "mL")
+        if total > 0:
+            _add(sub_a, round(ratio_a / total * eff_vol, 1), "mL")
+            _add(sub_b, round(ratio_b / total * eff_vol, 1), "mL")
+            _add(sub_c, round(ratio_c / total * eff_vol, 1), "mL")
 
     return results
 

@@ -372,7 +372,7 @@ def calculate_resources(
             else:
                 m = _RE_RATIO.search(prep_text) or _RE_RATIO_KO.search(prep_text)
                 if not m:
-                    m = _RE_RATIO_KO2_MIT.search(prep_text)
+                    m = _RE_RATIO_KO2_MIT.search(prep_text) or _RE_RATIO_KO2_WA.search(prep_text)
                 if m:
                     sub_a, sub_b = m.group(1).strip(), m.group(2).strip()
                     r_a, r_b = float(m.group(3)), float(m.group(4))
@@ -423,7 +423,7 @@ def calculate_resources(
             sol["theoretical_volume_ml"] = round(total_used, 1)
             sol["volume_per_batch_ml"]   = total_used
             m3 = _RE_RATIO_KO3.search(prep_text)
-            m = None if m3 else (_RE_RATIO.search(prep_text) or _RE_RATIO_KO.search(prep_text) or _RE_RATIO_KO2_MIT.search(prep_text))
+            m = None if m3 else (_RE_RATIO.search(prep_text) or _RE_RATIO_KO.search(prep_text) or _RE_RATIO_KO2_MIT.search(prep_text) or _RE_RATIO_KO2_WA.search(prep_text))
             if m3:
                 sub_a, sub_b, sub_c = m3.group(1).strip(), m3.group(2).strip(), m3.group(3).strip()
                 r_a, r_b, r_c = float(m3.group(4)), float(m3.group(5)), float(m3.group(6))
@@ -477,7 +477,8 @@ def calculate_resources(
         prep_text = sol.get("preparation_text", "")
         # 비율 혼합 용액(Mix A:B)은 pipette 자동 생성 제외
         if (_RE_RATIO.search(prep_text) or _RE_RATIO_KO.search(prep_text) or
-                _RE_RATIO_KO3.search(prep_text) or _RE_RATIO_KO2_MIT.search(prep_text)):
+                _RE_RATIO_KO3.search(prep_text) or _RE_RATIO_KO2_MIT.search(prep_text) or
+                _RE_RATIO_KO2_WA.search(prep_text)):
             continue
         btv_m = _RE_BTV.search(prep_text)
         btv_solvent = btv_m.group(1).strip().lower() if btv_m else ""

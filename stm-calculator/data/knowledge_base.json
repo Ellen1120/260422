@@ -3694,7 +3694,23 @@
               "solution_name": "Mobile phase A",
               "volume_per_batch_ml": null,
               "preparation_text": "Water: Acetonitrile: Trifluoroacetic acid (1900:100:1).",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "Water",
+                  "amount": 949.5,
+                  "unit": "ml"
+                },
+                {
+                  "name": "Acetonitrile",
+                  "amount": 50.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "Trifluoroacetic acid (",
+                  "amount": 0.5,
+                  "unit": "ml"
+                }
+              ],
               "glassware": [],
               "filters": []
             },
@@ -3703,7 +3719,23 @@
               "solution_name": "Mobile phase B",
               "volume_per_batch_ml": null,
               "preparation_text": "Acetonitrile: Water: Trifluoroacetic acid (1900:100:1).",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "Acetonitrile",
+                  "amount": 949.5,
+                  "unit": "ml"
+                },
+                {
+                  "name": "Water",
+                  "amount": 50.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "Trifluoroacetic acid (",
+                  "amount": 0.5,
+                  "unit": "ml"
+                }
+              ],
               "glassware": [],
               "filters": []
             },
@@ -6732,7 +6764,19 @@
               "solution_name": "이동상",
               "volume_per_batch_ml": null,
               "preparation_text": "완충액과 아세토니트릴을 60 : 40 (v/v)의 비율로 혼합한다.",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "완충액",
+                  "amount": 600.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "아세토니트릴",
+                  "amount": 400.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                }
+              ],
               "glassware": [],
               "filters": []
             },
@@ -6910,7 +6954,19 @@
               "solution_name": "이동상",
               "volume_per_batch_ml": null,
               "preparation_text": "완충액과 아세토니트릴을 60 : 40 (v/v)의 비율로 혼합한다.",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "완충액",
+                  "amount": 600.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "아세토니트릴",
+                  "amount": 400.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                }
+              ],
               "glassware": [],
               "filters": []
             },
@@ -6966,7 +7022,25 @@
               "solution_name": "희석액",
               "volume_per_batch_ml": null,
               "preparation_text": "아세토니트릴:정제수: Glacial acetic acid= 5000:5000:1 (v/v/v)",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "아세토니트릴",
+                  "amount": 500.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                },
+                {
+                  "name": "정제수",
+                  "amount": 500.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "Glacial acetic acid",
+                  "amount": 0.1,
+                  "unit": "ml",
+                  "tracking_no": "LA004"
+                }
+              ],
               "glassware": [],
               "filters": []
             },
@@ -7111,7 +7185,19 @@
               "solution_name": "이동상",
               "volume_per_batch_ml": null,
               "preparation_text": "완충액과 아세토니트릴을 60 : 40 (v/v)의 비율로 혼합한다.",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "완충액",
+                  "amount": 600.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "아세토니트릴",
+                  "amount": 400.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                }
+              ],
               "glassware": [],
               "filters": []
             },
@@ -7120,7 +7206,25 @@
               "solution_name": "희석액",
               "volume_per_batch_ml": null,
               "preparation_text": "아세토니트릴:정제수: Glacial acetic acid= 5000:5000:1 (v/v/v)",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "아세토니트릴",
+                  "amount": 500.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                },
+                {
+                  "name": "정제수",
+                  "amount": 500.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "Glacial acetic acid",
+                  "amount": 0.1,
+                  "unit": "ml",
+                  "tracking_no": "LA004"
+                }
+              ],
               "glassware": [],
               "filters": []
             },
@@ -7346,7 +7450,19 @@
               "solution_name": "이동상",
               "volume_per_batch_ml": null,
               "preparation_text": "완충액과 아세토니트릴을 60 : 40 (v/v)의 비율로 혼합한다.",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "완충액",
+                  "amount": 600.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "아세토니트릴",
+                  "amount": 400.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                }
+              ],
               "glassware": [],
               "filters": []
             },
@@ -7355,7 +7471,25 @@
               "solution_name": "희석액",
               "volume_per_batch_ml": null,
               "preparation_text": "아세토니트릴:정제수: Glacial acetic acid = 5000:5000:1 (v/v/v)",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "아세토니트릴",
+                  "amount": 500.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                },
+                {
+                  "name": "정제수",
+                  "amount": 500.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "Glacial acetic acid",
+                  "amount": 0.1,
+                  "unit": "ml",
+                  "tracking_no": "LA004"
+                }
+              ],
               "glassware": [],
               "filters": []
             },
@@ -7572,7 +7706,19 @@
               "solution_name": "이동상 A",
               "volume_per_batch_ml": null,
               "preparation_text": "완충액과 아세토니트릴을 74 : 26 (v/v)의 비율로 혼합한다.",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "완충액",
+                  "amount": 740.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "아세토니트릴",
+                  "amount": 260.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                }
+              ],
               "glassware": [],
               "filters": []
             },
@@ -7581,7 +7727,19 @@
               "solution_name": "이동상 B",
               "volume_per_batch_ml": null,
               "preparation_text": "완충액과 아세토니트릴을 10 : 90 (v/v)의 비율로 혼합한다.",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "완충액",
+                  "amount": 100.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "아세토니트릴",
+                  "amount": 900.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                }
+              ],
               "glassware": [],
               "filters": []
             },
@@ -7590,7 +7748,26 @@
               "solution_name": "희석액-1",
               "volume_per_batch_ml": null,
               "preparation_text": "메탄올:아세토니트릴:glacial acetic acid=5000:5000:1 (v/v/v)",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "메탄올",
+                  "amount": 500.0,
+                  "unit": "ml",
+                  "tracking_no": "LM035"
+                },
+                {
+                  "name": "아세토니트릴",
+                  "amount": 500.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                },
+                {
+                  "name": "glacial acetic acid",
+                  "amount": 0.1,
+                  "unit": "ml",
+                  "tracking_no": "LA004"
+                }
+              ],
               "glassware": [],
               "filters": []
             },
@@ -7608,7 +7785,25 @@
               "solution_name": "희석액-3",
               "volume_per_batch_ml": null,
               "preparation_text": "메탄올:아세토니트릴:정제수: glacial acetic acid=2500:2500:5000:1 (v/v/v/v)",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "아세토니트릴",
+                  "amount": 250.0,
+                  "unit": "ml",
+                  "tracking_no": "LA037"
+                },
+                {
+                  "name": "정제수",
+                  "amount": 250.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "glacial acetic acid",
+                  "amount": 500.0,
+                  "unit": "ml",
+                  "tracking_no": "LA004"
+                }
+              ],
               "glassware": [],
               "filters": []
             },
