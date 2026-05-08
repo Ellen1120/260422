@@ -336,7 +336,7 @@ function renderSolutionTable(solutions, dm) {
     const theorId   = `theor-cell-${idx}`;
 
     tr.innerHTML = `
-      <td>${esc(s.solution_name)}</td>
+      <td>${esc(s.solution_name)}${s.note ? `<div class="sol-note">${esc(s.note)}</div>` : ''}</td>
       <td class="num bold" id="${theorId}">
         ${theoretical}
         ${breakdownHtml}
@@ -474,17 +474,19 @@ function renderGlasswareTable(glassware, strengthConfigs) {
     return;
   }
 
-  // ── 요약 집계: (type, size) 기준 합산 ──
+  // ── 요약 집계: (type, size, amber) 기준 합산 ──
   const sumMap = new Map();
   for (const g of glassware) {
-    const key = `${g.type}||${g.size}`;
-    if (!sumMap.has(key)) sumMap.set(key, { type: g.type, size: g.size, total: 0 });
+    const key = `${g.type}||${g.size}||${g.amber ? '1' : '0'}`;
+    if (!sumMap.has(key)) sumMap.set(key, { type: g.type, size: g.size, amber: !!g.amber, total: 0 });
     sumMap.get(key).total += g.total_count;
   }
   const sumSorted = [...sumMap.values()].sort((a, b) => {
     const t = (a.type || '').localeCompare(b.type || '');
     return t !== 0 ? t : (a.size || '').localeCompare(b.size || '');
   });
+
+  const _amberBadge = amber => amber ? ' <span class="amber-badge">차광</span>' : '';
 
   // 요약 테이블 렌더링
   const sumTbl = document.createElement('table');
@@ -494,7 +496,7 @@ function renderGlasswareTable(glassware, strengthConfigs) {
     <tbody>
       ${sumSorted.map(s => `
         <tr>
-          <td>${esc(s.type)}</td>
+          <td>${esc(s.type)}${_amberBadge(s.amber)}</td>
           <td>${esc(s.size)}</td>
           <td class="num bold">${s.total}개</td>
         </tr>
@@ -555,7 +557,7 @@ function renderGlasswareTable(glassware, strengthConfigs) {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td class="sources-cell">${esc(g.source_prep || '')}${hintHtml}</td>
-      <td>${esc(g.type)}</td>
+      <td>${esc(g.type)}${_amberBadge(g.amber)}</td>
       <td>${esc(g.size)}</td>
       <td class="num bold">${g.total_count}개</td>
     `;

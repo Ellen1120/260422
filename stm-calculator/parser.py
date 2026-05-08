@@ -49,10 +49,15 @@ _RE_TEST_ITEM = re.compile(
 # 한글 시험항목 이름 → 영문 정규 이름 매핑
 _KO_TEST_ITEM_MAP: list[tuple[re.Pattern, str]] = [
     (re.compile(r'^성상\s*$'), 'Description'),
-    (re.compile(r'^확인시험\s*(?:\(HPLC\))?\s*$'), 'Identification'),
-    (re.compile(r'^용출\s*$'), 'Dissolution'),
-    (re.compile(r'^함량\s*$'), 'Assay'),
-    (re.compile(r'^제제\s*균일성\s*(?:\([^)]+\))?\s*$'), 'Uniformity of dosage units (Content Uniformity)'),
+    # 확인시험 변형: (UV), (HPLC), 숫자 접미사, "에 의한" 전치사
+    (re.compile(r'^(?:(?:HPLC|UV|IR|적외선)\s*(?:에\s*의한)?\s*)?확인\s*시험\s*\d*\s*(?:\([^)]*\))?\s*$'), 'Identification'),
+    # 용출 변형: 용출, 용출 시험, 용출시험
+    (re.compile(r'^용출\s*(?:시험)?\s*$'), 'Dissolution'),
+    # 함량 변형: 함량, 함량 시험, 함량시험
+    (re.compile(r'^함량\s*(?:시험)?\s*$'), 'Assay'),
+    # 균일성 변형: 제제균일성, 혼합균일성, 시험 포함 여부, 괄호 내 설명
+    (re.compile(r'^(?:제제\s*균일성|혼합\s*균일성)\s*(?:시험)?\s*(?:\([^)]+\))?\s*$'), 'Uniformity of dosage units (Content Uniformity)'),
+    # 유연물질 변형: 방법 I/II/III 괄호 포함
     (re.compile(r'^유연물질\s*(?:\(방법\s*[IVXivx가-힣]+\))?\s*$'), 'Related substances'),
     (re.compile(r'^수분\s*(?:함량|측정)?\s*(?:\(KF\))?\s*$'), 'Water content by KF'),
     (re.compile(r'^결정형\s*(?:\(PXRD\))?\s*$'), 'Polymorphism by PXRD'),
@@ -254,13 +259,25 @@ _RE_VERB_GLASSWARE = re.compile(
 _RE_GLASSWARE_KO = re.compile(
     r"(\d+(?:\.\d+)?)\s*(mL|L)\s*(?:차광\s*)?(용량\s*플라스크|메스실린더|메스플라스크|피펫|비이커|바이알)",
 )
+# 차광/갈색 초자 직접 표기 패턴 (amber 탐지용)
+_RE_AMBER_KO_DIRECT = re.compile(
+    r"(\d+(?:\.\d+)?)\s*(mL|L)\s*차광\s*(용량\s*플라스크|메스실린더|메스플라스크|피펫|비이커|바이알)"
+    r"|갈색\s*(?:용량\s*플라스크|메스플라스크|플라스크|바이알)",
+)
+# 섹션 전체 차광 주석 (모든 초자가 차광인 경우)
+_RE_AMBER_SECTION_NOTE = re.compile(
+    r"갈색\s+(?:플라스크|바이알)[을를]?\s*사용"
+    r"|차광\s+(?:플라스크|초자|용량플라스크)[을를]?\s*사용"
+    r"|모든\s+용액[은이]?\s+차광",
+    re.IGNORECASE,
+)
 # 한글 전달 피펫: "10 mL를 정확하게 취하여"
 _RE_KO_PIPETTE = re.compile(
     r"(\d+(?:\.\d+)?)\s*mL\s*를\s*(?:정확하게|정밀하게)?\s*취하여",
 )
 
-# 원심분리 팔콘 검출
-_RE_CENTRIFUGE = re.compile(r"\bcentrifuge\b", re.IGNORECASE)
+# 원심분리 팔콘 검출 (falcon tube 포함)
+_RE_CENTRIFUGE = re.compile(r"\bcentrifuge\b|\bfalcon\b", re.IGNORECASE)
 
 # 시린지 필터: 재질 명시형 (0.45 µm PVDF (Millipore))
 _RE_FILTER_MENTION = re.compile(
@@ -538,26 +555,44 @@ def _normalize_glassware_size(s: str) -> str:
     except:
         return s.strip()
 
-def _extract_glassware(text: str) -> list[dict]:
+def _extract_glassware(text: str, section_amber: bool = False) -> list[dict]:
     """준비 절차 텍스트에서 초자 목록 추출. 동일 규격이 여러 번 나오면 count_per_batch 합산."""
     count_map: dict[tuple, int] = {}
-    
+    amber_keys: set[tuple] = set()  # (gtype, size) — 차광 직접 표기된 초자
+
+    # 섹션 전체 차광 주석 내부 탐지 (텍스트에 주석 포함 시)
+    if not section_amber and _RE_AMBER_SECTION_NOTE.search(text):
+        section_amber = True
+
+    # 차광 직접 표기: "(N mL)차광 용량플라스크" 또는 "갈색 플라스크"
+    for m in _RE_AMBER_KO_DIRECT.finditer(text):
+        if m.group(1):  # 크기 기반 패턴
+            raw_size = float(m.group(1))
+            unit = m.group(2).lower()
+            if unit == 'l':
+                raw_size *= 1000
+            size = _normalize_glassware_size(str(int(raw_size) if raw_size == int(raw_size) else raw_size))
+            gtype_raw = re.sub(r'\s+', '', m.group(3))
+            gtype = _KO_GLASSWARE_MAP.get(gtype_raw, gtype_raw.lower())
+            if any(kw in gtype for kw in ["flask", "플라스크"]):
+                gtype = "volumetric flask"
+            amber_keys.add((gtype, size))
+        # else: 갈색 플라스크 크기 없음 → section_amber로 처리
+
     # 1. 영문 패턴 추출
     for m in _RE_GLASSWARE.finditer(text):
         size = _normalize_glassware_size(m.group(1))
         gtype = m.group(2).lower()
-        # 정규화
         if any(kw in gtype for kw in ["flask", "플라스크"]):
             gtype = "volumetric flask"
         elif any(kw in gtype for kw in ["cylinder", "실린더"]):
             gtype = "graduated cylinder"
         elif any(kw in gtype for kw in ["pipette", "피펫"]):
             gtype = "pipette"
-        
         gtype = _KO_GLASSWARE_MAP.get(gtype, gtype)
         key = (gtype, size)
         count_map[key] = count_map.get(key, 0) + 1
-    
+
     # 2. Pipette 동사형 패턴
     for m in _RE_VERB_GLASSWARE.finditer(text):
         size = _normalize_glassware_size(m.group(1))
@@ -569,9 +604,9 @@ def _extract_glassware(text: str) -> list[dict]:
         raw_size = float(m.group(1))
         unit = m.group(2).lower()
         if unit == 'l':
-            raw_size = raw_size * 1000  # L → mL 변환
+            raw_size = raw_size * 1000
         size = _normalize_glassware_size(str(int(raw_size) if raw_size == int(raw_size) else raw_size))
-        gtype_raw = re.sub(r'\s+', '', m.group(3))  # "용량 플라스크" → "용량플라스크"
+        gtype_raw = re.sub(r'\s+', '', m.group(3))
         gtype = _KO_GLASSWARE_MAP.get(gtype_raw, gtype_raw.lower())
         if any(kw in gtype for kw in ["flask", "플라스크"]):
             gtype = "volumetric flask"
@@ -579,7 +614,6 @@ def _extract_glassware(text: str) -> list[dict]:
             gtype = "graduated cylinder"
         elif any(kw in gtype for kw in ["pipette", "피펫"]):
             gtype = "pipette"
-
         key = (gtype, size)
         count_map[key] = count_map.get(key, 0) + 1
 
@@ -590,11 +624,16 @@ def _extract_glassware(text: str) -> list[dict]:
         count_map[key] = count_map.get(key, 0) + 1
 
     result = [
-        {"type": gtype, "size": f"{size} mL", "count_per_batch": cnt}
+        {
+            "type": gtype,
+            "size": f"{size} mL",
+            "count_per_batch": cnt,
+            "amber": section_amber or (gtype, size) in amber_keys,
+        }
         for (gtype, size), cnt in count_map.items()
     ]
     if _RE_MORTAR.search(text):
-        result.append({"type": "mortar", "size": "-", "count_per_batch": 1})
+        result.append({"type": "mortar", "size": "-", "count_per_batch": 1, "amber": False})
     return result
 
 
@@ -675,6 +714,16 @@ def _extract_product_names(paragraphs: list[str]) -> list[str]:
     return names
 
 
+def _is_valid_strength_part(s: str) -> bool:
+    """함량 문자열 유효성 검사: mg/mL 농도·한글 접두어 포함 문자열 제외."""
+    s = s.strip()
+    if re.search(r'mL', s, re.IGNORECASE):
+        return False
+    if re.match(r'^[가-힣]', s):
+        return False
+    return bool(re.match(r'^\d+(?:\.\d+)?(?:\s*/\s*\d+(?:\.\d+)?)*\s*mg\s*$', s, re.IGNORECASE))
+
+
 def _extract_strengths(paragraphs: list[str]) -> list[str]:
     """문서에서 함량/규격 추출."""
     strengths: list[str] = []
@@ -718,7 +767,8 @@ def _extract_strengths(paragraphs: list[str]) -> list[str]:
         m_kp = _RE_KO_PREP_STRENGTH_HEADING.search(line)
         if m_kp:
             raw = m_kp.group(1).strip()
-            parts = re.split(r'\s*,\s*', raw)
+            # , / & / 및 / and 기준으로 분리 (복합 함량 "80/10 mg & 80/5 mg" 등 처리)
+            parts = re.split(r'\s*,\s*|\s+&\s+|\s+및\s+|\s+and\s+', raw, flags=re.IGNORECASE)
             has_unit = bool(re.search(r'\bmg\b', parts[-1], re.IGNORECASE))
             for part in parts:
                 part = part.strip()
@@ -726,7 +776,8 @@ def _extract_strengths(paragraphs: list[str]) -> list[str]:
                     part = part + ' mg'
                 # "10mg" → "10 mg", "25/10mg" → "25/10 mg"
                 part = re.sub(r'(\d)(mg)', r'\1 \2', part, flags=re.IGNORECASE).strip()
-                if re.search(r'\d+', part):
+                # mg/mL(농도) 및 한글 접두어 함량은 제외
+                if _is_valid_strength_part(part):
                     _add(part)
 
     # 단일 함량 문서: "Standard solution preparation (for 50 mg)" 패턴 없을 때
@@ -811,6 +862,9 @@ def _parse_preparations(section_lines: list[str]) -> list[dict]:
 
 
 
+    # 섹션 전체에 차광 주석이 있으면 모든 조제의 초자를 차광으로 표시
+    _section_amber = any(_RE_AMBER_SECTION_NOTE.search(line) for line in section_lines)
+
     def _flush() -> None:
         nonlocal current_heading, current_lines
         if not current_heading:
@@ -868,7 +922,7 @@ def _parse_preparations(section_lines: list[str]) -> list[dict]:
             if "dissolution" in current_heading.lower():
                 ingredients = [ing for ing in ingredients if not any(kw.lower() in ing["name"].lower() for kw in EXCLUDE_KEYWORDS)]
 
-            glassware = _extract_glassware(prep_text)
+            glassware = _extract_glassware(prep_text, section_amber=_section_amber)
             filters_list = _extract_filters_from_text(prep_text)
             if _RE_CENTRIFUGE.search(prep_text):
                 filters_list.append({
@@ -1470,10 +1524,8 @@ def _enrich_ingredients_tracking(
 def _extract_header_title(doc) -> tuple[str | None, str | None]:
     """
     Word 섹션 헤더 표의 'Title: ...' 셀에서 (제품명, 함량)을 추출.
-    예) 'Title: CTPH-D005 5 mg (Vonoprazan fumarate)'
-         → ('CTPH-D005', '5 mg')
-    예) 'Title: Pioglitazone Hydrochloride/Empagliflozin tablets'
-         → ('Pioglitazone Hydrochloride/Empagliflozin tablets', None)
+    예) 'Title: CTPH-D005 5 mg (Vonoprazan fumarate)' → ('CTPH-D005', '5 mg')
+    예) 'Title: 토바스틴정10밀리그램(아토르바스타틴칼슘)' → ('토바스틴정', '10 mg')
     """
     for section in doc.sections:
         for tbl in section.header.tables:
@@ -1483,26 +1535,36 @@ def _extract_header_title(doc) -> tuple[str | None, str | None]:
                     m = re.match(r"Title:\s*(.+)", text, re.IGNORECASE)
                     if not m:
                         continue
-                    # 한글 줄 제거: 첫 번째 줄(영문)만 사용
                     first_line = m.group(1).split("\n")[0].strip()
-                    # 함량 추출: "5 mg", "30 mg/25 mg", "25/10mg" 형식 모두 지원
+                    # "Title: Title: ..." 이중 접두어 처리
+                    first_line = re.sub(r'^Title\s*:\s*', '', first_line, flags=re.IGNORECASE).strip()
+
+                    # 영문 "mg" 함량 추출 (우선)
                     strength_m = re.search(
                         r"\b(\d+(?:\.\d+)?\s*mg(?:\s*/\s*\d+(?:\.\d+)?\s*mg)*"
                         r"|\d+(?:\.\d+)?/\d+(?:\.\d+)?\s*mg)\b",
                         first_line, re.IGNORECASE
                     )
-                    strength = strength_m.group(1).strip() if strength_m else None
-                    if strength:
-                        # "10mg" → "10 mg", "25/10mg" → "25/10 mg"
-                        strength = re.sub(r'(\d)(mg)', r'\1 \2', strength, flags=re.IGNORECASE)
-                    # 제품명: 괄호 앞 부분, 함량 제거
+                    if strength_m:
+                        strength = re.sub(r'(\d)(mg)', r'\1 \2', strength_m.group(1).strip(), flags=re.IGNORECASE)
+                    else:
+                        # 한글 "밀리그램" 함량 추출 (예: 10밀리그램, 26밀리그램/5밀리그램)
+                        ko_nums = re.findall(r'(\d+(?:\.\d+)?)\s*밀리그램', first_line)
+                        if ko_nums:
+                            strength = '/'.join(ko_nums) + ' mg'
+                        else:
+                            strength = None
+
+                    # 제품명: 괄호 제거, 함량 숫자 제거
                     name = re.sub(r"\s*\([^)]*\)\s*$", "", first_line).strip()
                     if strength:
-                        # 함량 숫자를 제품명에서 제거 ("CTPH-D005 5 mg" → "CTPH-D005")
+                        # 영문 mg 제거
                         name = re.sub(
                             r"\s*\d+(?:\.\d+)?(?:/\d+(?:\.\d+)?)?\s*mg(?:\s*/\s*\d+(?:\.\d+)?\s*mg)*\s*",
                             " ", name, flags=re.IGNORECASE
                         ).strip()
+                        # 한글 밀리그램 제거
+                        name = re.sub(r'\d+(?:\.\d+)?(?:/\d+(?:\.\d+)?)?\s*밀리그램', '', name).strip()
                     return name or None, strength
     return None, None
 
@@ -1719,10 +1781,26 @@ def parse_document(doc_path: str) -> dict:
                     "12.5/500 mg": 300.0
                 }
 
- 
-
-
-
+    # ── CP025 전용 보정 로직 ───────────────────────────────
+    if "CP025" in Path(doc_path).name.upper():
+        for item in test_items:
+            if item["name"] == "Dissolution (Method B)":
+                for p in item.get("preparations", []):
+                    sol = p.get("solution_name", "")
+                    if re.match(r"1N-?sodium\s+hydroxide", sol, re.IGNORECASE):
+                        p["volume_per_batch_ml"] = 100.0
+                        p["fixed_quantity"] = True  # 배치 수 무관 1회 조제
+                        p["note"] = "(Dissolution medium pH 조절용)"
+                        # Milli-Q water 성분이 없으면 추가
+                        has_water = any(
+                            "water" in (i.get("name") or "").lower() or
+                            "milli" in (i.get("name") or "").lower()
+                            for i in p.get("ingredients", [])
+                        )
+                        if not has_water:
+                            p.setdefault("ingredients", []).append(
+                                {"name": "Milli-Q water", "amount": 100.0, "unit": "mL"}
+                            )
 
     return {
         "id": Path(doc_path).stem,
@@ -1732,6 +1810,42 @@ def parse_document(doc_path: str) -> dict:
         "strengths": strengths,
         "test_items": test_items,
     }
+
+
+def _merge_t_versions(products: list[dict]) -> list[dict]:
+    """같은 제품 코드의 복수 T-버전(예: STM-CP010-T0 + STM-CP010-T10)을 하나로 병합.
+    T0을 기준으로, 상위 T버전 시험항목에 (Txx) 접미어를 붙여 추가한다.
+    """
+    from collections import OrderedDict
+    groups: "OrderedDict[str, list[tuple[int, dict]]]" = OrderedDict()
+
+    for p in products:
+        stm_file = p.get("stm_file", "")
+        m = re.match(r"^(STM-(?:CP\d+|\d+))-T(\d+)", stm_file, re.IGNORECASE)
+        if m:
+            base, t_ver = m.group(1), int(m.group(2))
+        else:
+            base, t_ver = stm_file, 0
+        if base not in groups:
+            groups[base] = []
+        groups[base].append((t_ver, p))
+
+    result: list[dict] = []
+    for versions in groups.values():
+        versions.sort(key=lambda x: x[0])
+        if len(versions) == 1:
+            result.append(versions[0][1])
+            continue
+        base_p = dict(versions[0][1])
+        base_p["test_items"] = list(versions[0][1].get("test_items", []))
+        for t_ver, p in versions[1:]:
+            for item in p.get("test_items", []):
+                new_item = dict(item)
+                new_item["name"] = f"{item['name']} (T{t_ver})"
+                base_p["test_items"].append(new_item)
+        result.append(base_p)
+
+    return result
 
 
 def build_knowledge_base(progress_callback=None) -> list[dict]:
@@ -1747,6 +1861,9 @@ def build_knowledge_base(progress_callback=None) -> list[dict]:
             progress_callback(msg)
         product = parse_document(str(doc_path))
         products.append(product)
+
+    # 같은 제품 코드의 복수 T-버전을 하나로 병합 (예: CP010-T0 + CP010-T10)
+    products = _merge_t_versions(products)
 
     DATA_FOLDER.mkdir(exist_ok=True)
     KB_PATH.write_text(

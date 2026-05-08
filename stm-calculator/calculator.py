@@ -187,18 +187,25 @@ def _process_preparations(
         sol_name = prep.get("solution_name", prep.get("section_name", ""))
 
         # "(for 50 mg)" 처럼 함량 지정된 조제는 현재 함량만 포함
+        # "for 80/10 mg, 40/10 mg" 처럼 복수 함량 쉼표/&/및 분리 대응
         if strength:
             m_str = _RE_FOR_STRENGTH.search(sol_name)
-            if m_str and m_str.group(1).strip().lower() != strength.strip().lower():
-                continue
+            if m_str:
+                str_labels = [s.strip().lower() for s in re.split(r'\s*,\s*|\s+&\s+|\s+및\s+|\s+and\s+', m_str.group(1), flags=re.IGNORECASE)]
+                if strength.strip().lower() not in str_labels:
+                    continue
+
+        # Blank 조제는 초자/필터 집계 대상에서도 완전히 제외
+        if re.match(r'^blank\b', sol_name, re.IGNORECASE):
+            continue
 
         is_sample_prep = bool(_RE_SAMPLE_SOL.search(sol_name))
         if skip_sample and is_sample_prep:
             continue
 
-        # 표준액·표준원액은 배치 수에 무관하게 1회만 조제
+        # 표준액·표준원액, fixed_quantity 표시 조제는 배치 수에 무관하게 1회
         is_std_prep      = bool(_RE_STD_PREP.search(sol_name))
-        effective_batches = 1 if is_std_prep else batch_count
+        effective_batches = 1 if (is_std_prep or prep.get("fixed_quantity")) else batch_count
 
         vol = prep.get("volume_per_batch_ml")
         theoretical = round(vol * effective_batches, 1) if vol else None
@@ -211,6 +218,7 @@ def _process_preparations(
             "theoretical_volume_ml": theoretical,
             "preparation_text": prep.get("preparation_text", ""),
             "ingredients": list(prep.get("ingredients", [])),
+            "note": prep.get("note", ""),
         })
 
         per_sample = sample_count if is_sample_prep else 1
@@ -223,7 +231,9 @@ def _process_preparations(
             key = (gw.get("type", ""), gw.get("size", ""), sol_name, gw_strength, gw_test_item)
             # mortar는 공유 장비이므로 배치 수·검액 수 무관하게 1개
             is_shared = gw.get("type", "") == "mortar"
-            per_batch = 1 if is_shared else gw.get("count_per_batch", 1) * per_sample
+            # Rule 18: 피펫은 배치 내 재사용 가능 → 검액 수 무관하게 1개
+            is_pipette = gw.get("type", "") == "pipette"
+            per_batch = 1 if (is_shared or is_pipette) else gw.get("count_per_batch", 1) * per_sample
             if key not in glassware_agg:
                 glassware_agg[key] = {
                     "type": gw.get("type", ""),
@@ -529,6 +539,12 @@ def calculate_resources(
         if not _RE_TEST_SOLUTION.search(s.get("solution_name", ""))
     ]
 
+    # Blank 용액은 조제 목록에서 제외
+    solutions = [
+        s for s in solutions
+        if not re.match(r'^blank\b', s.get("solution_name", ""), re.IGNORECASE)
+    ]
+
     # 동일 용액 내 중복 성분 제거: 추적번호 있는 영문명 우선, 동일 양/단위의 한글명 제거
     for sol in solutions:
         ings = sol.get("ingredients")
@@ -563,6 +579,12 @@ def calculate_resources(
         g for g in glassware_list
         if not (g.get("type") == "pipette" and "900" in str(g.get("size", "")))
     ]
+
+    # Rule 14: 용액 조제 목록에서 이동상이 완충액보다 먼저 오도록 재정렬
+    _mp  = [s for s in solutions if _RE_MP.match(s.get("solution_name", ""))]
+    _buf = [s for s in solutions if _RE_BUF.match(s.get("solution_name", ""))]
+    _other = [s for s in solutions if not _RE_MP.match(s.get("solution_name", "")) and not _RE_BUF.match(s.get("solution_name", ""))]
+    solutions = _other + _mp + _buf
 
     return {
         "product_name": product.get("product_name", ""),
@@ -602,7 +624,20 @@ def _calc_dissolution_medium(
 
         vessels  = conds.get("vessels_per_batch", 6)
         std_by_str = conds.get("standard_medium_ml_by_strength", {})
-        std_once = float(std_by_str.get(strength, 0)) if std_by_str else 0.0
+        # Rule 15: 정확 매칭 후 실패 시 쉼표/& 구분 복합 키에서 부분 매칭
+        # Rule 17: 같은 표준액 조제가 복수 함량에 공유될 때 중복 집계 방지를 위해 키 반환
+        std_once = 0.0
+        matched_std_key = ""
+        if std_by_str:
+            if strength in std_by_str:
+                std_once = float(std_by_str[strength])
+                matched_std_key = strength
+            else:
+                for key, val in std_by_str.items():
+                    if strength in [s.strip() for s in re.split(r',|&|및', key)]:
+                        std_once = float(val)
+                        matched_std_key = key
+                        break
 
         sample_ml = batch_count * vessels * vol_per_vessel
         total_ml  = sample_ml + std_once
@@ -618,6 +653,7 @@ def _calc_dissolution_medium(
             "sample_medium_ml": round(sample_ml, 1),
             "standard_medium_ml_once": round(std_once, 1),
             "total_medium_ml": round(total_ml, 1),
+            "_std_medium_key": matched_std_key,
         }
     return None
 
@@ -688,13 +724,23 @@ def merge_all_results(
             if vol not in pip_map:
                 pip_map[vol] = dict(pip)
 
-    # Dissolution medium: Method A/B는 동일 vessel 사용 → sample은 max, standard는 합산
+    # Dissolution medium: Method A/B는 동일 vessel 사용 → sample은 max
+    # Rule 17: 표준액 용출량은 동일 std_medium_key 공유 시 1회만 집계
     dm_list = [r["dissolution_medium"] for r in results if r.get("dissolution_medium")]
     merged_dm = None
     if dm_list:
         merged_dm = dict(dm_list[0])
         merged_dm["sample_medium_ml"] = max(d["sample_medium_ml"] for d in dm_list)
-        merged_dm["standard_medium_ml_once"] = round(sum(d["standard_medium_ml_once"] for d in dm_list), 1)
+        seen_std_keys: set[str] = set()
+        std_total = 0.0
+        for d in dm_list:
+            k = d.get("_std_medium_key", "")
+            if k and k in seen_std_keys:
+                continue  # 같은 표준액 조제 키 → 중복 제외
+            if k:
+                seen_std_keys.add(k)
+            std_total += d["standard_medium_ml_once"]
+        merged_dm["standard_medium_ml_once"] = round(std_total, 1)
         merged_dm["total_medium_ml"] = round(
             merged_dm["sample_medium_ml"] + merged_dm["standard_medium_ml_once"], 1
         )
