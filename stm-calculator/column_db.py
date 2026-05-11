@@ -78,6 +78,23 @@ def _name_matches(excel_name_lower: str, stm_keywords: set[str]) -> bool:
     return all(k in excel_name_lower for k in stm_keywords)
 
 
+def _product_name_tokens(product_name: str) -> set[str]:
+    """제품명에서 검색 토큰 추출: 제형 접미사·규격 제거."""
+    s = re.sub(r'(?:정제?|캡슐?|연질캡슐|주사?|주|액제?|산제?|과립제?)\s*$', '', product_name.strip()).strip()
+    s = re.sub(r'\s*[\d./]+\s*(?:mg|g|%|mL)?\s*$', '', s).strip()
+    return {s.lower()} if len(s) >= 2 else set()
+
+
+def _build_fallback_tokens(product_name: str, standard_names: list[str]) -> set[str]:
+    """Rule 21: 제품명 + 표준품명 첫 단어로 test_item 검색 토큰 구성."""
+    tokens = _product_name_tokens(product_name)
+    for std in standard_names:
+        first = std.split()[0]
+        if len(first) >= 3:
+            tokens.add(first.lower())
+    return tokens
+
+
 def _load() -> list[dict]:
     import openpyxl
 
@@ -109,21 +126,29 @@ def _load() -> list[dict]:
         test_item = str(row[test_i] or '').strip()
         initiated = bool(row[init_i])
         entries.append({
-            "column_no":    no,
-            "name":         name,
-            "spec":         spec,
-            "location":     loc,
-            "test_item":    test_item,
-            "remark":       "" if initiated else "미개봉",
-            "_name_lower":  name.lower(),
-            "_spec_parsed": _parse_excel_spec(spec),
+            "column_no":        no,
+            "name":             name,
+            "spec":             spec,
+            "location":         loc,
+            "test_item":        test_item,
+            "remark":           "" if initiated else "미개봉",
+            "_name_lower":      name.lower(),
+            "_test_item_lower": test_item.lower(),
+            "_spec_parsed":     _parse_excel_spec(spec),
         })
     wb.close()
     return entries
 
 
-def lookup(stm_col_specs: list[str]) -> list[dict]:
-    """STM 컬럼 스펙 문자열 목록으로 매칭되는 활성 컬럼 목록 반환."""
+def lookup(
+    stm_col_specs: list[str],
+    product_name: str = "",
+    standard_names: list[str] | None = None,
+) -> list[dict]:
+    """STM 컬럼 스펙 문자열 목록으로 매칭되는 활성 컬럼 목록 반환.
+
+    Rule 21: 브랜드명 없는 스펙(USP L1 등)은 test_item 필드 + 스펙으로 폴백.
+    """
     global _ENTRIES
     if not _ENTRIES:
         try:
@@ -135,10 +160,21 @@ def lookup(stm_col_specs: list[str]) -> list[dict]:
     results: list[dict] = []
     seen: set[str] = set()
 
+    def _append(entry: dict) -> None:
+        results.append({
+            "column_no": entry["column_no"],
+            "name":      entry["name"],
+            "spec":      entry["spec"],
+            "location":  entry["location"],
+            "test_item": entry["test_item"],
+            "remark":    entry["remark"],
+        })
+
     for stm_spec in stm_col_specs:
         if not stm_spec:
             continue
         stm_parsed, stm_keywords = _parse_stm_col(stm_spec)
+        found = False
         for entry in _ENTRIES:
             no = entry["column_no"]
             if no in seen:
@@ -146,14 +182,55 @@ def lookup(stm_col_specs: list[str]) -> list[dict]:
             if (_name_matches(entry["_name_lower"], stm_keywords) and
                     _spec_matches(entry["_spec_parsed"], stm_parsed)):
                 seen.add(no)
-                results.append({
-                    "column_no": no,
-                    "name":      entry["name"],
-                    "spec":      entry["spec"],
-                    "location":  entry["location"],
-                    "test_item": entry["test_item"],
-                    "remark":    entry["remark"],
-                })
+                _append(entry)
+                found = True
+
+        # Rule 21: 키워드 매칭 실패 시 → 함량(assay) test_item으로 기준 컬럼 탐색 → 동일 브랜드+스펙 전체 반환
+        if not found and (product_name or standard_names):
+            fb_tokens = _build_fallback_tokens(product_name, standard_names or [])
+            if fb_tokens:
+                _ASSAY_KW = {'ay', '함량', 'assay', 'content'}
+                _BRAND_STOPWORDS = {'mm', 'um', 'ml', 'x', 'uv', 'nm', 'min', 'and', 'the', 'of', 'in', 'm', 'c18', 'c8', 'c4', 'c1'}
+                # Step 1: 제품명+함량시험 test_item이 일치하고 스펙도 맞는 기준 컬럼 탐색
+                ref_entry = None
+                for entry in _ENTRIES:
+                    ti = entry["_test_item_lower"]
+                    if not ti:
+                        continue
+                    has_product = any((t in ti or ti in t) and len(t) >= 2 for t in fb_tokens)
+                    has_assay = any(a in ti for a in _ASSAY_KW)
+                    if has_product and has_assay and _spec_matches(entry["_spec_parsed"], stm_parsed):
+                        ref_entry = entry
+                        break
+                if ref_entry:
+                    # Step 2: 기준 컬럼 브랜드 키워드 추출 → 동일 브랜드+스펙 전체 반환
+                    ref_tokens = {
+                        t for t in re.sub(r'[^a-z0-9]', ' ', ref_entry["_name_lower"]).split()
+                        if len(t) >= 2 and re.search(r'[a-z]', t) and t not in _BRAND_STOPWORDS
+                    }
+                    for entry in _ENTRIES:
+                        no = entry["column_no"]
+                        if no in seen:
+                            continue
+                        if _name_matches(entry["_name_lower"], ref_tokens) and _spec_matches(entry["_spec_parsed"], stm_parsed):
+                            seen.add(no)
+                            _append(entry)
+                else:
+                    # 기준 컬럼 없을 시 원래 방식 (product token + spec)
+                    for entry in _ENTRIES:
+                        no = entry["column_no"]
+                        if no in seen:
+                            continue
+                        ti = entry["_test_item_lower"]
+                        if not ti:
+                            continue
+                        token_hit = any(
+                            (t in ti or ti in t) and len(t) >= 2
+                            for t in fb_tokens
+                        )
+                        if token_hit and _spec_matches(entry["_spec_parsed"], stm_parsed):
+                            seen.add(no)
+                            _append(entry)
 
     return results
 

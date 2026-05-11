@@ -12,28 +12,48 @@ _RE_DILUENT = re.compile(r'^diluent|^희석액', re.IGNORECASE)
 _RE_KOREAN = re.compile(r'[가-힣]')
 _RE_SAMPLE_SOL  = re.compile(r'sample', re.IGNORECASE)
 _RE_UNIFORMITY  = re.compile(r'uniformity', re.IGNORECASE)
-_RE_ASSAY       = re.compile(r'^assay$', re.IGNORECASE)
-# 표준액·표준원액: 배치 수·함량 수 무관 1회만 조제
-_RE_STD_PREP    = re.compile(r'standard\s+(?:stock\s+)?solution', re.IGNORECASE)
+_RE_ASSAY       = re.compile(r'^assay\b', re.IGNORECASE)
+# 표준액·표준원액·시스템 적합성: 배치 수·함량 수 무관 1회만 조제 (영문·한글 모두 포함)
+_RE_STD_PREP    = re.compile(
+    r'standard\s+(?:stock\s+)?solution|표준원액|표준액|시스템\s*적합성|system\s+suitability',
+    re.IGNORECASE,
+)
 # 함량 지정 조제 패턴: "Standard solution (for 50 mg)"
 _RE_FOR_STRENGTH = re.compile(r'\(\s*for\s+(.+?)\s*\)', re.IGNORECASE)
 # 피펫 집계 대상: 검액 및 표준액만 포함 (용액 조제 시약류 제외 규칙 반영)
-_RE_PIPETTE_SOURCE  = re.compile(r'sample|standard|표준원액|표준액', re.IGNORECASE)
+_RE_PIPETTE_SOURCE  = re.compile(r'sample|standard|표준원액|표준액|검액', re.IGNORECASE)
 
-# Rule 3: 용액 조제 목록에서 제외할 시험 용액 (표준액, 표준원액, 검액)
+# Rule 3: 용액 조제 목록에서 제외할 시험 용액 (표준액, 표준원액, 검액, 시스템적합성 용액)
 _RE_TEST_SOLUTION = re.compile(
-    r'\bstandard\b.*\bsolution\b|\bsample\b|표준원액|표준액|검액',
+    r'\bstandard\b.*\bsolution\b|\bsample\b|표준원액|표준액|검액'
+    r'|system\s+suitability|시스템\s*적합성',
     re.IGNORECASE,
 )
-# Rule 1: 초자 목록에 포함할 소스 준비 (standard/sample 준비에서 나온 초자만 유지)
-_RE_GW_KEEP_SOURCE = re.compile(r'standard|sample|표준|검액', re.IGNORECASE)
+# Rule 1: 초자 목록에 포함할 소스 준비 (standard/sample/placebo/system suitability 준비에서 나온 초자만 유지)
+_RE_GW_KEEP_SOURCE = re.compile(r'standard|sample|placebo|플라시보|표준|검액|system\s*suitability|시스템\s*적합성', re.IGNORECASE)
 
 _RE_SAMPLE_OR_STD   = re.compile(r'sample|standard', re.IGNORECASE)
 _RE_RATIO = re.compile(
-    r'Mix\s+(.+?)\s+and\s+(.+?)\s+in\s+the\s+ratio\s+of\s+'
+    r'Mix\s+(.+?)\s+and\s+(.+?)\s+(?:in|at)\s+the\s+ratio\s+of\s+'
     r'(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)',
     re.IGNORECASE,
 )
+# 쉼표형 2성분 비율: "Mix A, B in/at the ratio of X:Y" (다단계 이동상 조제)
+_RE_RATIO_COMMA = re.compile(
+    r'Mix\s+(.+?)\s*,\s*(.+?)\s+(?:in|at)\s+the\s+ratio\s+of\s+'
+    r'(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)'
+    r'(?!\s*:\s*\d)',
+    re.IGNORECASE,
+)
+# 영문 3성분 비율: "Mix A, B and C at/in the ratio of X:Y:Z"
+_RE_RATIO_EN3 = re.compile(
+    r'Mix\s+(.+?)\s*,\s*(.+?)\s+and\s+(.+?)\s+(?:in|at)\s+the\s+ratio\s+of\s+'
+    r'(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)',
+    re.IGNORECASE,
+)
+# Related substances Method A/B 패턴
+_RE_RELATED_A = re.compile(r'Related\s+substances.*\(Method\s+A\)', re.IGNORECASE)
+_RE_RELATED_B = re.compile(r'Related\s+substances.*\(Method\s+B\)', re.IGNORECASE)
 # 한글 2성분 비율: "A와/과 B를/을 각각 X:Y"
 _RE_RATIO_KO = re.compile(
     r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-()]*?)\s*(?:와|과)\s*'
@@ -166,7 +186,7 @@ def _hplc_mp_volume(hplc: dict, batch_count: int) -> float | None:
         inj["count"] * batch_count if inj.get("scales_with_batch") else inj["count"]
         for inj in injs
     ) if injs else 1
-    raw = flow * (rtime * total_inj + 30) * 1.5
+    raw = flow * (rtime * total_inj + 30)
     return math.ceil(raw / 50) * 50
 
 
@@ -208,17 +228,33 @@ def _process_preparations(
         effective_batches = 1 if (is_std_prep or prep.get("fixed_quantity")) else batch_count
 
         vol = prep.get("volume_per_batch_ml")
-        theoretical = round(vol * effective_batches, 1) if vol else None
+        # is_ratio_only: 비율 합산만으로 볼륨이 추정된 조제 → 이론량은 '-' 표시
+        is_ratio_only = prep.get("is_ratio_only", False)
+        theoretical = round(vol * effective_batches, 1) if (vol and not is_ratio_only) else None
+        # ratio_ref_vol: CP025 NaOH 등 이론량 '-'이지만 성분 스케일링에 참조 볼륨 필요
+        ratio_ref = prep.get("ratio_ref_vol")
+        effective_vol = ratio_ref if (vol is None and ratio_ref) else vol
+
+        # pH 조절용 용액: 이론량 '-', note 자동 추가 (용액명에 NaOH/HCl 포함 시)
+        note_val = prep.get("note", "")
+        _RE_PH_ADJ = re.compile(
+            r'수산화나트륨|sodium\s+hydroxide|NaOH|염산|hydrochloric\s+acid|HCl|인산|phosphoric\s+acid',
+            re.IGNORECASE,
+        )
+        if _RE_PH_ADJ.search(sol_name):
+            if not note_val:
+                note_val = "완충액 pH 조절용"
+            theoretical = None  # pH 조절용은 이론량 표시 불필요
 
         solutions.append({
             "test_item": item_name,
             "solution_name": sol_name,
             "section_name": prep.get("section_name", ""),
-            "volume_per_batch_ml": vol,
+            "volume_per_batch_ml": effective_vol,
             "theoretical_volume_ml": theoretical,
             "preparation_text": prep.get("preparation_text", ""),
             "ingredients": list(prep.get("ingredients", [])),
-            "note": prep.get("note", ""),
+            "note": note_val,
         })
 
         per_sample = sample_count if is_sample_prep else 1
@@ -242,7 +278,8 @@ def _process_preparations(
                     "strength": gw_strength,
                     "test_item": gw_test_item,
                     "count_per_batch": per_batch,
-                    "total_count": 1 if is_shared else per_batch * effective_batches,
+                    # 피펫은 배치 내 재사용·세척 → 총 1개 (Rule 18)
+                    "total_count": 1 if (is_shared or is_pipette) else per_batch * effective_batches,
                 }
             else:
                 if not is_shared:
@@ -295,6 +332,17 @@ def calculate_resources(
                 assay_item_for_uniformity = it
                 break
 
+    # Related substances (Method B)가 선택되고 Method A는 선택되지 않은 경우,
+    # Method A의 공유 조제(완충액·이동상·희석액·표준액)를 상속
+    related_a_for_b: dict | None = None
+    has_related_b = any(_RE_RELATED_B.search(n) for n in test_item_names)
+    has_related_a = any(_RE_RELATED_A.search(n) for n in test_item_names)
+    if has_related_b and not has_related_a:
+        for it in product.get("test_items", []):
+            if _RE_RELATED_A.search(it["name"]):
+                related_a_for_b = it
+                break
+
     for item in product.get("test_items", []):
         if item["name"] not in test_item_names:
             continue
@@ -304,6 +352,23 @@ def calculate_resources(
             _process_preparations(
                 item_name=item["name"],
                 preparations=assay_item_for_uniformity.get("preparations", []),
+                batch_count=batch_count,
+                solutions=solutions,
+                glassware_agg=glassware_agg,
+                filter_agg=filter_agg,
+                skip_sample=True,
+                strength=strength,
+            )
+
+        if _RE_RELATED_B.search(item["name"]) and related_a_for_b:
+            # Method B: Method A의 비-sample, 비-placebo 공유 조제 먼저 포함
+            shared_preps = [
+                p for p in related_a_for_b.get("preparations", [])
+                if not re.match(r'^placebo\b', p.get("solution_name", ""), re.IGNORECASE)
+            ]
+            _process_preparations(
+                item_name=item["name"],
+                preparations=shared_preps,
                 batch_count=batch_count,
                 solutions=solutions,
                 glassware_agg=glassware_agg,
@@ -332,6 +397,10 @@ def calculate_resources(
         if _RE_UNIFORMITY.search(item["name"]) and assay_item_for_uniformity:
             hplc = assay_item_for_uniformity.get("hplc_conditions")
             item_name_for_hplc = item["name"]
+        # Method B → Method A hplc_conditions 사용 (Method A 미선택 시)
+        elif _RE_RELATED_B.search(item["name"]) and related_a_for_b:
+            hplc = related_a_for_b.get("hplc_conditions")
+            item_name_for_hplc = item["name"]
         else:
             if item["name"] not in test_item_names:
                 continue
@@ -356,7 +425,7 @@ def calculate_resources(
             sol["volume_per_batch_ml"]   = mp_vol
             sol["theoretical_volume_ml"] = mp_vol
             prep_text = sol.get("preparation_text", "")
-            m3 = _RE_RATIO_KO3.search(prep_text)
+            m3 = _RE_RATIO_EN3.search(prep_text) or _RE_RATIO_KO3.search(prep_text)
             if m3:
                 sub_a, sub_b, sub_c = m3.group(1).strip(), m3.group(2).strip(), m3.group(3).strip()
                 r_a, r_b, r_c = float(m3.group(4)), float(m3.group(5)), float(m3.group(6))
@@ -383,15 +452,19 @@ def calculate_resources(
                 m = _RE_RATIO.search(prep_text) or _RE_RATIO_KO.search(prep_text)
                 if not m:
                     m = _RE_RATIO_KO2_MIT.search(prep_text) or _RE_RATIO_KO2_WA.search(prep_text)
+                if not m:
+                    m = _RE_RATIO_COMMA.search(prep_text)
                 if m:
                     sub_a, sub_b = m.group(1).strip(), m.group(2).strip()
                     r_a, r_b = float(m.group(3)), float(m.group(4))
                     t = r_a + r_b
+                    _above = re.compile(r'^(above|the\s+above|above\s+solution|above\s+mixture)$', re.IGNORECASE)
                     if t > 0:
-                        new_ings = [
-                            {"name": sub_a, "amount": round(r_a / t * mp_vol, 1), "unit": "mL"},
-                            {"name": sub_b, "amount": round(r_b / t * mp_vol, 1), "unit": "mL"},
-                        ]
+                        new_ings = []
+                        if not _above.match(sub_a):
+                            new_ings.append({"name": sub_a, "amount": round(r_a / t * mp_vol, 1), "unit": "mL"})
+                        if not _above.match(sub_b):
+                            new_ings.append({"name": sub_b, "amount": round(r_b / t * mp_vol, 1), "unit": "mL"})
                         # 기존 고체 성분(g, mg) 보존 및 스케일링
                         scale = mp_vol / old_vol
                         for old_ing in sol.get("ingredients", []):
@@ -400,17 +473,34 @@ def calculate_resources(
                                 scaled_ing["amount"] = round(float(old_ing["amount"]) * scale, 2)
                                 new_ings.append(scaled_ing)
                         sol["ingredients"] = new_ings
-                        
+
                         if "buffer" in sub_a.lower() or "완충액" in sub_a:
                             total_buffer_needed += mp_vol * (r_a / t)
                         elif "buffer" in sub_b.lower() or "완충액" in sub_b:
                             total_buffer_needed += mp_vol * (r_b / t)
+                else:
+                    # 비율 패턴 미매칭 시 mL/g/mg 성분을 mp_vol 기준으로 비례 스케일링
+                    scale = mp_vol / old_vol
+                    new_ings = []
+                    for old_ing in sol.get("ingredients", []):
+                        scaled_ing = dict(old_ing)
+                        unit = scaled_ing.get("unit", "").lower()
+                        if unit == "ml":
+                            scaled_ing["amount"] = round(float(old_ing["amount"]) * scale, 1)
+                        elif unit in ("g", "mg"):
+                            scaled_ing["amount"] = round(float(old_ing["amount"]) * scale, 2)
+                        new_ings.append(scaled_ing)
+                    if new_ings:
+                        sol["ingredients"] = new_ings
 
         if total_buffer_needed > 0 and buf_sols:
             for sol in buf_sols:
                 sol["theoretical_volume_ml"] = round(total_buffer_needed, 1)
 
     # 희석액/diluent: 다른 조제에서 사용된 총량 합산 → 이론량 + 비율 재료 업데이트
+    _RE_FILL_DIL_IMPL  = re.compile(r'희석액으로\s*표선|diluent로\s*표선', re.IGNORECASE)
+    _RE_FLASK_ML_IMPL  = re.compile(r'(\d+(?:\.\d+)?)\s*mL\s*(?:용량\s*플라스크|volumetric\s+flask)', re.IGNORECASE)
+    _RE_ONCE_DIL_SOL   = re.compile(r'시스템\s*적합성|system\s*suitability', re.IGNORECASE)
     for sol in solutions:
         if not _RE_DILUENT.match(sol.get("solution_name", "")):
             continue
@@ -423,17 +513,38 @@ def calculate_resources(
                 continue
             other_vol   = other.get("volume_per_batch_ml") or 0
             other_theor = other.get("theoretical_volume_ml") or 0
-            scale = (other_theor / other_vol) if other_vol else 1.0
+            if other_vol:
+                scale = other_theor / other_vol
+            else:
+                # vol 미정(None) 조제: 표준액은 1회, 그 외 검액 등은 batch_count배
+                is_other_std = bool(_RE_STD_PREP.search(other.get("solution_name", "")))
+                scale = 1.0 if is_other_std else float(batch_count)
             for ing in other.get("ingredients", []):
                 if (ing.get("name") or "").lower() == sol_name_exact.lower() and \
                    ing.get("unit", "").lower() == "ml":
                     total_used += float(ing.get("amount", 0)) * scale
+            # 희석액으로 표선까지 채우는 조제(표준액·시스템 적합성): explicit 성분 없으면 플라스크 볼륨으로 암묵적 사용량 추가
+            other_text = other.get("preparation_text", "")
+            if _RE_FILL_DIL_IMPL.search(other_text):
+                has_explicit_dil = any(
+                    (ing.get("name") or "").lower() == sol_name_exact.lower()
+                    and ing.get("unit", "").lower() == "ml"
+                    for ing in other.get("ingredients", [])
+                )
+                if not has_explicit_dil:
+                    is_once = bool(
+                        _RE_STD_PREP.search(other.get("solution_name", "")) or
+                        _RE_ONCE_DIL_SOL.search(other.get("solution_name", ""))
+                    )
+                    impl_scale = 1.0 if is_once else float(batch_count)
+                    for fm in _RE_FLASK_ML_IMPL.finditer(other_text):
+                        total_used += float(fm.group(1)) * impl_scale
         if total_used > 0:
             prep_text = sol.get("preparation_text", "")
             sol["theoretical_volume_ml"] = round(total_used, 1)
             sol["volume_per_batch_ml"]   = total_used
-            m3 = _RE_RATIO_KO3.search(prep_text)
-            m = None if m3 else (_RE_RATIO.search(prep_text) or _RE_RATIO_KO.search(prep_text) or _RE_RATIO_KO2_MIT.search(prep_text) or _RE_RATIO_KO2_WA.search(prep_text))
+            m3 = _RE_RATIO_EN3.search(prep_text) or _RE_RATIO_KO3.search(prep_text)
+            m = None if m3 else (_RE_RATIO.search(prep_text) or _RE_RATIO_KO.search(prep_text) or _RE_RATIO_KO2_MIT.search(prep_text) or _RE_RATIO_KO2_WA.search(prep_text) or _RE_RATIO_COMMA.search(prep_text))
             if m3:
                 sub_a, sub_b, sub_c = m3.group(1).strip(), m3.group(2).strip(), m3.group(3).strip()
                 r_a, r_b, r_c = float(m3.group(4)), float(m3.group(5)), float(m3.group(6))
@@ -453,6 +564,20 @@ def calculate_resources(
                     sol["ingredients"] = [
                         {"name": sub_a, "amount": round(r_a / t * total_used, 1), "unit": "mL"},
                         {"name": sub_b, "amount": round(r_b / t * total_used, 1), "unit": "mL"},
+                    ]
+            else:
+                # 비율 패턴 미매칭: 기존 파싱된 성분 비율로 비례 스케일
+                total_ing_ml = sum(
+                    float(ing.get("amount", 0))
+                    for ing in (sol.get("ingredients") or [])
+                    if (ing.get("unit") or "").lower() == "ml"
+                )
+                if total_ing_ml > 0:
+                    factor = total_used / total_ing_ml
+                    sol["ingredients"] = [
+                        {**ing, "amount": round(float(ing["amount"]) * factor, 1)}
+                        if (ing.get("unit") or "").lower() == "ml" else ing
+                        for ing in (sol.get("ingredients") or [])
                     ]
 
     # 표준품 이름 수집 (STD Name 표 기반)
@@ -475,6 +600,56 @@ def calculate_resources(
         product, strength, test_item_names, batch_count
     )
 
+    # 완충액이 시험액(dissolution medium)인 경우 → 이론량을 총 dissolution medium으로 업데이트
+    if dissolution_medium and dissolution_medium.get("medium_name"):
+        medium_name_lower = dissolution_medium["medium_name"].lower().strip()
+        for sol in solutions:
+            sol_name_lower = sol.get("solution_name", "").lower()
+            if medium_name_lower and (
+                sol_name_lower.startswith(medium_name_lower) or
+                medium_name_lower in sol_name_lower
+            ):
+                sol["theoretical_volume_ml"] = dissolution_medium["total_medium_ml"]
+                sol["is_dissolution_medium"] = True
+
+    # dissolution 표준액 prep 텍스트에서 완충액·희석액 추가 사용량 계산
+    if dissolution_medium:
+        _RE_FILL_DM_KO      = re.compile(r'시험액으로\s*표선|dissolution\s+medium으로\s*표선', re.IGNORECASE)
+        _RE_FILL_DILUENT_KO = re.compile(r'희석액으로\s*표선|diluent로\s*표선', re.IGNORECASE)
+        _RE_FLASK_ML        = re.compile(r'(\d+(?:\.\d+)?)\s*mL\s*(?:용량\s*플라스크|volumetric\s+flask)', re.IGNORECASE)
+        for item in product.get("test_items", []):
+            if item["name"] not in test_item_names:
+                continue
+            if not re.match(r"^dissolution\b", item["name"], re.IGNORECASE):
+                continue
+            for prep in item.get("preparations", []):
+                pname = prep.get("solution_name", "")
+                if not re.search(r'표준|standard', pname, re.IGNORECASE):
+                    continue
+                prep_text = prep.get("preparation_text", "")
+                flask_sizes = [float(m.group(1)) for m in _RE_FLASK_ML.finditer(prep_text)]
+                if not flask_sizes:
+                    continue
+                # 시험액(dissolution medium)으로 표선 → 표준액 dissolution medium 사용량 추가
+                if _RE_FILL_DM_KO.search(prep_text) and dissolution_medium.get("standard_medium_ml_once", 0) == 0:
+                    std_vol = max(flask_sizes)
+                    dissolution_medium["standard_medium_ml_once"] = std_vol
+                    dissolution_medium["total_medium_ml"] = round(
+                        dissolution_medium["sample_medium_ml"] + std_vol, 1
+                    )
+                    for sol in solutions:
+                        if sol.get("is_dissolution_medium"):
+                            sol["theoretical_volume_ml"] = dissolution_medium["total_medium_ml"]
+                # 희석액으로 표선 → 희석액 이론량 설정 (표준액 조제는 1회이므로 batch_count 미적용)
+                if _RE_FILL_DILUENT_KO.search(prep_text):
+                    dil_flask_vol = min(flask_sizes)
+                    for sol in solutions:
+                        sn = sol.get("solution_name", "").lower()
+                        if ("희석액" in sn or "diluent" in sn) and sol.get("volume_per_batch_ml"):
+                            if sol.get("theoretical_volume_ml") is None:
+                                sol["theoretical_volume_ml"] = round(dil_flask_vol, 1)
+                            break
+
     # pipette: mL 재료 규격 추출 → 초자 목록(glassware_agg)에 통합
     _RE_BTV = re.compile(
         r'(?:dilute to volume|bring to volume|make up to volume|make to volume)\s+with\s+([^.,\n]+)',
@@ -488,7 +663,7 @@ def calculate_resources(
         # 비율 혼합 용액(Mix A:B)은 pipette 자동 생성 제외
         if (_RE_RATIO.search(prep_text) or _RE_RATIO_KO.search(prep_text) or
                 _RE_RATIO_KO3.search(prep_text) or _RE_RATIO_KO2_MIT.search(prep_text) or
-                _RE_RATIO_KO2_WA.search(prep_text)):
+                _RE_RATIO_KO2_WA.search(prep_text) or _RE_RATIO_COMMA.search(prep_text)):
             continue
         btv_m = _RE_BTV.search(prep_text)
         btv_solvent = btv_m.group(1).strip().lower() if btv_m else ""
@@ -523,6 +698,32 @@ def calculate_resources(
                     "source_prep": sol_name,
                     "strength": pip_strength,
                     "test_item": pip_test_item,
+                    "count_per_batch": 1,
+                    "total_count": 1,
+                }
+
+    # "X mL를 취해/취하여" 패턴 → 피펫 (위 액 취하기: 표준액·검액 제조 시)
+    _RE_TAKE_KO = re.compile(r'(\d+(?:\.\d+)?)\s*mL\s*를?\s*(?:취해|취하여)', re.IGNORECASE)
+    for sol in solutions:
+        if not _RE_PIPETTE_SOURCE.search(sol.get("solution_name", "")):
+            continue
+        prep_text = sol.get("preparation_text", "")
+        for m in _RE_TAKE_KO.finditer(prep_text):
+            f_vol = float(m.group(1))
+            if f_vol <= 0 or f_vol > 25:
+                continue
+            size = f"{int(f_vol)} mL" if f_vol == int(f_vol) else f"{f_vol} mL"
+            sol_name = sol.get("solution_name", "")
+            sol_item = sol.get("test_item", "")
+            is_ss = bool(_RE_SAMPLE_OR_STD.search(sol_name))
+            key = ("pipette", size, sol_name, (strength or "") if is_ss else "", sol_item if is_ss else "")
+            if key not in glassware_agg:
+                glassware_agg[key] = {
+                    "type": "pipette",
+                    "size": size,
+                    "source_prep": sol_name,
+                    "strength": (strength or "") if is_ss else "",
+                    "test_item": sol_item if is_ss else "",
                     "count_per_batch": 1,
                     "total_count": 1,
                 }
@@ -580,11 +781,17 @@ def calculate_resources(
         if not (g.get("type") == "pipette" and "900" in str(g.get("size", "")))
     ]
 
-    # Rule 14: 용액 조제 목록에서 이동상이 완충액보다 먼저 오도록 재정렬
+    # Rule 14: 이동상 → 완충액 순; 희석액은 의존 조제(용액 A 등) 이후 맨 뒤
     _mp  = [s for s in solutions if _RE_MP.match(s.get("solution_name", ""))]
     _buf = [s for s in solutions if _RE_BUF.match(s.get("solution_name", ""))]
-    _other = [s for s in solutions if not _RE_MP.match(s.get("solution_name", "")) and not _RE_BUF.match(s.get("solution_name", ""))]
-    solutions = _other + _mp + _buf
+    _dil = [s for s in solutions if _RE_DILUENT.match(s.get("solution_name", ""))
+            and not _RE_MP.match(s.get("solution_name", ""))
+            and not _RE_BUF.match(s.get("solution_name", ""))]
+    _other = [s for s in solutions
+              if not _RE_MP.match(s.get("solution_name", ""))
+              and not _RE_BUF.match(s.get("solution_name", ""))
+              and not _RE_DILUENT.match(s.get("solution_name", ""))]
+    solutions = _other + _mp + _buf + _dil
 
     return {
         "product_name": product.get("product_name", ""),
@@ -694,8 +901,10 @@ def merge_all_results(
             src = gw.get("source_prep", "")
             is_std    = bool(_RE_STD_PREP.search(src))
             is_pipette = gw.get("type", "") in ("pipette", "graduated cylinder")
-            str_key = "" if is_std else gw.get("strength", "")
-            key = (gw["type"], gw["size"], src, str_key, gw.get("test_item", ""))
+            str_key      = "" if is_std else gw.get("strength", "")
+            # 표준액 초자는 어느 시험항목에서 나왔든 1회만 집계 (Rule 17)
+            test_item_key = "" if is_std else gw.get("test_item", "")
+            key = (gw["type"], gw["size"], src, str_key, test_item_key)
             if key not in gw_map:
                 entry = dict(gw)
                 entry["strength"] = str_key

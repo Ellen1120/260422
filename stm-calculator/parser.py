@@ -159,7 +159,7 @@ _INGREDIENT_PATTERNS: list[tuple[str, re.Pattern]] = [
      re.compile(
          r"Add\s+(?:about\s+)?(\d+(?:\.\d+)?)\s*(mL|mg|g|L)\s+of\s+"
          r"([A-Za-z0-9][^\n]{2,60}?)"
-         r"(?:\s+(?:and\b|to\b|,|\.))",
+         r"(?:\s+(?:and\b|to\b|,)|\s*\.)",
          re.IGNORECASE,
      )),
     # Dilute X mL of [substance] with water to Y mL  (희석)
@@ -183,6 +183,13 @@ _INGREDIENT_PATTERNS: list[tuple[str, re.Pattern]] = [
 _RE_RATIO = re.compile(
     r"Mix\s+(.+?)\s+and\s+(.+?)\s+in\s+the\s+ratio\s+of\s+"
     r"(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)",
+    re.IGNORECASE,
+)
+# 쉼표형 2성분: "Mix A, B in/at the ratio of X:Y" (300287 이동상 등 다단계 조제)
+_RE_RATIO_COMMA = re.compile(
+    r"Mix\s+(.+?)\s*,\s*(.+?)\s+(?:in|at)\s+the\s+ratio\s+of\s+"
+    r"(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)"
+    r"(?!\s*:\s*\d)",   # 3성분 비율 제외
     re.IGNORECASE,
 )
 
@@ -240,6 +247,13 @@ _RE_RATIO_COLON3 = re.compile(
     r'([A-Za-z가-힣][A-Za-z가-힣0-9\s\-()]*?)\s*'
     r'(?:=\s*)?(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)',
 )
+# 콜론 구분 2성분 비율 (한글/영문): "A : B (X : Y)" 또는 "A : B = X : Y"
+# 예) "아세토니트릴 : 물 (50 : 50)" 또는 "Acetonitrile : Water = 1 : 1"
+_RE_RATIO_COLON2 = re.compile(
+    r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-]*?)\s*:\s*'
+    r'([가-힣A-Za-z][가-힣A-Za-z0-9\s\-]*?)\s+'
+    r'(?:=|\()\s*(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)\s*(?:\))?\s*$',
+)
 
 # 초자 패턴 (영문)
 _RE_GLASSWARE = re.compile(
@@ -276,12 +290,12 @@ _RE_KO_PIPETTE = re.compile(
     r"(\d+(?:\.\d+)?)\s*mL\s*를\s*(?:정확하게|정밀하게)?\s*취하여",
 )
 
-# 원심분리 팔콘 검출 (falcon tube 포함)
-_RE_CENTRIFUGE = re.compile(r"\bcentrifuge\b|\bfalcon\b", re.IGNORECASE)
+# 원심분리 팔콘 검출 (falcon tube 포함, 한글 "원심분리" 포함)
+_RE_CENTRIFUGE = re.compile(r"\bcentrifuge\b|\bfalcon\b|원심분리", re.IGNORECASE)
 
-# 시린지 필터: 재질 명시형 (0.45 µm PVDF (Millipore))
+# 시린지 필터: 재질 명시형 — 크기와 재질 사이에 한글 텍스트(공경의 등) 허용
 _RE_FILTER_MENTION = re.compile(
-    r"(\d+(?:\.\d+)?)\s*[uμµ]\s*m\s+(PVDF|Nylon|PTFE|PES|MCE|Cellulose)\s*(?:\(([^)]+)\))?",
+    r"(\d+(?:\.\d+)?)\s*[uμµ]\s*m\s+(?:[^\n]*?\s+)?(PVDF|Nylon|PTFE|PES|MCE|Cellulose)\s*(?:\(([^)]+)\))?",
     re.IGNORECASE,
 )
 # 시린지 필터: 재질 미명시형 (0.45µm syringe filter)
@@ -289,11 +303,18 @@ _RE_GENERIC_SYRINGE_FILTER = re.compile(
     r"(\d+(?:\.\d+)?)\s*[uμµ]\s*m\s+syringe\s+filter",
     re.IGNORECASE,
 )
-# 시린지 필터: 한글 표현 (0.45 µm PTFE 시린지 필터)
+# 시린지 필터: 한글 표현 (0.45 µm PTFE 시린지 필터 또는 0.45 um 공경의 PVDF 필터)
 _RE_FILTER_KO = re.compile(
-    r"(\d+(?:\.\d+)?)\s*[uμµ]\s*m\s+(PVDF|Nylon|PTFE|PES|MCE)?\s*시린지\s*필터",
+    r"(\d+(?:\.\d+)?)\s*[uμµ]\s*m\s+(?:[^\n]*?\s+)?(PVDF|Nylon|PTFE|PES|MCE)?\s*시린지\s*필터",
     re.IGNORECASE,
 )
+# 시린지 필터: 한글 fallback — 재질 미명시 (0.45 μm 공경의 적당한 필터 등)
+_RE_FILTER_KO_PORE = re.compile(
+    r"(\d+(?:\.\d+)?)\s*[uμµ]\s*m",
+    re.IGNORECASE,
+)
+# 한글 필터 여과 동사 패턴 (필터로 여과, 여과한다)
+_RE_FILTER_KO_VERB = re.compile(r"필터로\s*여과|여과한다|여과지로", re.IGNORECASE)
 
 # 용출 표준액 조제에서 volumetric flask 크기 추출 (영문/한글)
 _RE_VOLUMETRIC_FLASK_SIZE = re.compile(
@@ -401,6 +422,14 @@ def _extract_volume(heading: str, lines: list[str]) -> float | None:
     )
     if m_l:
         return float(m_l.group(1)) * 1000
+    # 한글: "X L 가 되도록" / "X L이 되도록" → X * 1000 mL
+    m_l_become = re.search(r"(\d+(?:\.\d+)?)\s*L\s*(?:가|이)?\s*되도록", combined)
+    if m_l_become:
+        return float(m_l_become.group(1)) * 1000
+    # 한글: "X mL가 되도록" / "X mL 이 되도록" → X mL
+    m_ml_become = re.search(r"(\d+(?:\.\d+)?)\s*mL\s*(?:가|이)?\s*되도록", combined)
+    if m_ml_become:
+        return float(m_ml_become.group(1))
     # 비율 혼합이고 총량 미지정인 경우 비율 합산을 기본 볼륨으로 사용
     m = _RE_RATIO.search(combined)
     if m:
@@ -411,6 +440,10 @@ def _extract_volume(heading: str, lines: list[str]) -> float | None:
     m2 = _RE_RATIO_KO2.search(combined) or _RE_RATIO_KO2_MIT.search(combined)
     if m2:
         return float(m2.group(3)) + float(m2.group(4))
+    # 콜론 구분 2성분 비율 "A : B (X : Y)" — 비율 합산을 참조 볼륨으로 사용
+    m_c2 = _RE_RATIO_COLON2.search(combined)
+    if m_c2:
+        return float(m_c2.group(3)) + float(m_c2.group(4))
     return None
 
 
@@ -434,11 +467,14 @@ def _extract_ingredients(text: str, final_volume_ml: float | None) -> list[dict]
         name = re.sub(r"^the\s+", "", name, flags=re.IGNORECASE).strip()
         if len(name) < 2 or len(name) > 70:
             return
-        # 모호한 참조 건너뜀 (영문: "the above" 등, 한글: "이 액", "이 용액")
-        if re.match(r"^(the\s+above|above|it|them|each|following|이\s+액|이\s+용액)$", name, re.IGNORECASE):
+        # 모호한 참조 건너뜀 (영문: "the above solution" 등, 한글: "이 액", "이 용액", "위 액")
+        if re.match(r"^(the\s+above|above|above\s+solution|above\s+mixture|it|them|each|following|이\s+액|이\s+용액|위\s+액|위\s+용액|위\s+표준액)$", name, re.IGNORECASE):
             return
         # 이름 내 단위 표기(mL, mg) 포함 → 절차 텍스트 오인식, 제외 (case-sensitive)
         if re.search(r'mL|mg', name):
+            return
+        # 단위 접두어 오인식 제거 (예: "g을 물", "mL의 용액") — 1~3 소문자 + 한글 조사 + 공백
+        if re.match(r'^[a-zA-Z]{1,3}[을를이가은는도와과의]\s+', name):
             return
         key = (name.lower(), unit.lower())
         if key not in seen:
@@ -469,6 +505,18 @@ def _extract_ingredients(text: str, final_volume_ml: float | None) -> list[dict]
         if total > 0:
             _add(sub_a, round(ratio_a / total * eff_vol, 1), "mL")
             _add(sub_b, round(ratio_b / total * eff_vol, 1), "mL")
+
+    # 쉼표형 2성분 비율 (Mix A, B in ratio X:Y) — "above solution" 등 전 단계 참조는 _add에서 자동 제외
+    if not _RE_RATIO.search(text):   # 이미 "and" 패턴으로 처리된 경우 중복 방지
+        for m in _RE_RATIO_COMMA.finditer(text):
+            sub_a = m.group(1).strip()
+            sub_b = m.group(2).strip()
+            ratio_a = float(m.group(3))
+            ratio_b = float(m.group(4))
+            total = ratio_a + ratio_b
+            if total > 0:
+                _add(sub_a, round(ratio_a / total * eff_vol, 1), "mL")
+                _add(sub_b, round(ratio_b / total * eff_vol, 1), "mL")
 
     # 비율 혼합 한글 2성분 (A와 B를 각각 X:Y)
     for m in _RE_RATIO_KO2.finditer(text):
@@ -520,13 +568,25 @@ def _extract_ingredients(text: str, final_volume_ml: float | None) -> list[dict]
 
     # 콜론 구분 3성분: "A:B:C = X:Y:Z (v/v/v)"
     for m in _RE_RATIO_COLON3.finditer(text):
-        sub_a, sub_b, sub_c = m.group(1).strip(), m.group(2).strip(), m.group(3).strip()
+        sub_a = m.group(1).strip().rstrip("( ").strip()
+        sub_b = m.group(2).strip().rstrip("( ").strip()
+        sub_c = m.group(3).strip().rstrip("( ").strip()
         ratio_a, ratio_b, ratio_c = float(m.group(4)), float(m.group(5)), float(m.group(6))
         total = ratio_a + ratio_b + ratio_c
         if total > 0:
             _add(sub_a, round(ratio_a / total * eff_vol, 1), "mL")
             _add(sub_b, round(ratio_b / total * eff_vol, 1), "mL")
             _add(sub_c, round(ratio_c / total * eff_vol, 1), "mL")
+
+    # 콜론 구분 2성분: "A : B (X : Y)" — 3성분, 다른 비율로 처리되지 않은 경우만
+    if not results:
+        for m in _RE_RATIO_COLON2.finditer(text):
+            sub_a, sub_b = m.group(1).strip(), m.group(2).strip()
+            ratio_a, ratio_b = float(m.group(3)), float(m.group(4))
+            total = ratio_a + ratio_b
+            if total > 0:
+                _add(sub_a, round(ratio_a / total * eff_vol, 1), "mL")
+                _add(sub_b, round(ratio_b / total * eff_vol, 1), "mL")
 
     return results
 
@@ -642,6 +702,7 @@ def _extract_filters_from_text(text: str) -> list[dict]:
     filter_lines = [
         line for line in text.splitlines()
         if re.search(r"filter\s+through|syringe\s+filter|시린지\s*필터", line, re.IGNORECASE)
+        or _RE_FILTER_KO_VERB.search(line)
     ]
     if not filter_lines:
         return []
@@ -681,6 +742,15 @@ def _extract_filters_from_text(text: str) -> list[dict]:
                     seen.add(key)
                     results.append({
                         "size_um": size, "material": material, "manufacturer": "",
+                        "filter_type": "syringe", "count_per_batch": 1,
+                    })
+            for m in _RE_FILTER_KO_PORE.finditer(line):
+                size = float(m.group(1))
+                key = (size, "", "")
+                if key not in seen:
+                    seen.add(key)
+                    results.append({
+                        "size_um": size, "material": "", "manufacturer": "",
                         "filter_type": "syringe", "count_per_batch": 1,
                     })
     return results
@@ -826,7 +896,17 @@ def _parse_sections(english_lines: list[str]) -> list[dict]:
             else:
                 if current:
                     sections.append(current)
-                current = {"name": canonical, "lines": []}
+                # 국문 STM: 원래 한글 이름을 display_name으로 보존 (Rule 20)
+                stripped = line.strip()
+                if _RE_KOREAN.search(stripped):
+                    dn = re.sub(r"\s*시험", "", stripped)
+                    display_name = re.sub(r"\s+", " ", dn).strip() or stripped
+                else:
+                    display_name = canonical
+                # 제제균일성(함량균일성) 표준 명칭으로 통일
+                if canonical == "Uniformity of dosage units (Content Uniformity)":
+                    display_name = "함량균일성"
+                current = {"name": canonical, "display_name": display_name, "lines": []}
         elif current is not None:
             current["lines"].append(line)
 
@@ -929,10 +1009,24 @@ def _parse_preparations(section_lines: list[str]) -> list[dict]:
                     "size_um": None, "material": None, "manufacturer": None,
                     "filter_type": "centrifuge", "count_per_batch": 1,
                 })
+
+            # 콜론 비율 전용 볼륨(50:50 → 100 등): is_ratio_only 플래그 → theoretical = '-'
+            is_ratio_only = False
+            if vol is not None and _RE_RATIO_COLON2.search(current_heading + " " + prep_text):
+                combined_chk = current_heading + " " + prep_text
+                has_explicit = any(p.search(combined_chk) for p in _RE_VOLUME_PATTERNS)
+                has_l = bool(re.search(
+                    r'\d+(?:\.\d+)?\s*L\s*(?:가|이)?\s*되도록|\d+(?:\.\d+)?\s*L\s*(?:차광\s*)?(?:용량\s*플라스크|메스플라스크)',
+                    combined_chk,
+                ))
+                if not has_explicit and not has_l:
+                    is_ratio_only = True
+
             blocks.append({
                 "section_name": current_heading,
                 "solution_name": sol_name,
                 "volume_per_batch_ml": vol,
+                "is_ratio_only": is_ratio_only,
                 "preparation_text": prep_text,
                 "ingredients": ingredients,
                 "glassware": glassware,
@@ -1633,7 +1727,10 @@ def parse_document(doc_path: str) -> dict:
     test_items: list[dict] = []
     for sec in sections:
         preps = _parse_preparations(sec["lines"])
-        test_items.append({"name": sec["name"], "preparations": preps})
+        item: dict = {"name": sec["name"], "preparations": preps}
+        if sec.get("display_name") and sec["display_name"] != sec["name"]:
+            item["display_name"] = sec["display_name"]
+        test_items.append(item)
 
     # 용출 시험 조건 추출 (방법별)
     diss_conds_by_section = _extract_dissolution_conditions_per_method(doc)
@@ -1670,6 +1767,27 @@ def parse_document(doc_path: str) -> dict:
     for item in test_items:
         if item["name"] in standards_per_section:
             item["standards"] = standards_per_section[item["name"]]
+
+    # 표준품 정보가 없는 경우: 섹션 텍스트에서 "XXX 표준품" 패턴으로 추출
+    _RE_STD_TEXT = re.compile(
+        r'([A-Z][A-Za-z0-9\s\-()]+?)\s+(?:\d\s*차\s*또는\s*\d\s*차\s*)?표준품',
+    )
+    for item in test_items:
+        if item.get("standards"):
+            continue
+        sec = next((s for s in sections if s["name"] == item["name"]), None)
+        if not sec:
+            continue
+        found: list[dict] = []
+        seen_std: set[str] = set()
+        for line in sec["lines"]:
+            for m_std in _RE_STD_TEXT.finditer(line):
+                std_name = m_std.group(1).strip().rstrip(",").strip()
+                if len(std_name) >= 4 and std_name.lower() not in seen_std:
+                    seen_std.add(std_name.lower())
+                    found.append({"std_name": std_name, "grade": ""})
+        if found:
+            item["standards"] = found
 
     # HPLC 크로마토그래피 조건 추출 (Mobile phase 볼륨 계산용)
     hplc_per_section = _extract_hplc_conditions_per_section(doc)
@@ -1788,10 +1906,11 @@ def parse_document(doc_path: str) -> dict:
                 for p in item.get("preparations", []):
                     sol = p.get("solution_name", "")
                     if re.match(r"1N-?sodium\s+hydroxide", sol, re.IGNORECASE):
-                        p["volume_per_batch_ml"] = 100.0
+                        p["volume_per_batch_ml"] = None   # 이론량 '-' 표시
                         p["fixed_quantity"] = True  # 배치 수 무관 1회 조제
-                        p["note"] = "(Dissolution medium pH 조절용)"
-                        # Milli-Q water 성분이 없으면 추가
+                        p["note"] = "완충액 pH 조절용"
+                        # 성분 기준 볼륨은 100 mL (사용자 입력 시 스케일링용)
+                        p["ratio_ref_vol"] = 100.0
                         has_water = any(
                             "water" in (i.get("name") or "").lower() or
                             "milli" in (i.get("name") or "").lower()
@@ -1801,6 +1920,101 @@ def parse_document(doc_path: str) -> dict:
                             p.setdefault("ingredients", []).append(
                                 {"name": "Milli-Q water", "amount": 100.0, "unit": "mL"}
                             )
+                    # 표준액: 아세토니트릴 피펫 + 팔콘튜브용 Diluent C 피펫 추가
+                    elif re.match(r"Standard solution \(For 80", sol, re.IGNORECASE):
+                        gw = p.setdefault("glassware", [])
+                        pip_sizes = [g.get("size") for g in gw if g.get("type") == "pipette"]
+                        if "1 mL" not in pip_sizes:
+                            gw.append({"type": "pipette", "size": "1 mL", "count_per_batch": 1, "amber": False})
+                        if pip_sizes.count("3 mL") < 2:
+                            gw.append({"type": "pipette", "size": "3 mL", "count_per_batch": 1, "amber": False})
+                    elif re.match(r"Standard solution \(For 40", sol, re.IGNORECASE):
+                        gw = p.setdefault("glassware", [])
+                        pip_sizes = [g.get("size") for g in gw if g.get("type") == "pipette"]
+                        if "6 mL" not in pip_sizes:
+                            gw.append({"type": "pipette", "size": "6 mL", "count_per_batch": 1, "amber": False})
+                        if pip_sizes.count("3 mL") < 2:
+                            gw.append({"type": "pipette", "size": "3 mL", "count_per_batch": 1, "amber": False})
+
+            # Related substances (Method A): 플라시보 용액 조제 초자 추가
+            if item["name"] == "Related substances (Method A)":
+                existing_sols = {p.get("solution_name", "") for p in item.get("preparations", [])}
+                if not any("Placebo solution-1" in s for s in existing_sols):
+                    item["preparations"].extend([
+                        {
+                            "section_name": "Placebo solution-1 preparation (Azilsartan medoxomil potassium + placebo)",
+                            "solution_name": "Placebo solution-1 (Azilsartan medoxomil potassium + placebo)",
+                            "volume_per_batch_ml": 200.0,
+                            "preparation_text": "Weigh and transfer the powder (Azilsartan medoxomil potassium + Placebo) equivalent to 400 mg of Azilsartan medoxomil into a 200 mL volumetric flask.",
+                            "ingredients": [],
+                            "glassware": [{"type": "volumetric flask", "size": "200 mL", "count_per_batch": 1, "amber": False}],
+                            "filters": [],
+                        },
+                        {
+                            "section_name": "Placebo solution-2 preparation (Amlodipine besylate + placebo)",
+                            "solution_name": "Placebo solution-2 (Amlodipine besylate + placebo)",
+                            "volume_per_batch_ml": 200.0,
+                            "preparation_text": "Weigh and transfer the powder (Amlodipine besylate + Placebo) equivalent to 50 mg of Amlodipine into a 200 mL volumetric flask.",
+                            "ingredients": [],
+                            "glassware": [{"type": "volumetric flask", "size": "200 mL", "count_per_batch": 1, "amber": False}],
+                            "filters": [],
+                        },
+                    ])
+
+            # Related substances (Method B): 플라시보 용액 조제 초자 추가
+            if item["name"] == "Related substances (Method B)":
+                existing_sols = {p.get("solution_name", "") for p in item.get("preparations", [])}
+                if not any("Placebo solution-1" in s for s in existing_sols):
+                    item["preparations"].extend([
+                        {
+                            "section_name": "Placebo solution-1 preparation (Azilsartan medoxomil + placebo)",
+                            "solution_name": "Placebo solution-1 (Azilsartan medoxomil + placebo)",
+                            "volume_per_batch_ml": 20.0,
+                            "preparation_text": "Pipette 2 mL of Placebo solution-1 (Method-A) into a 20 mL volumetric flask and dilute to volume with diluent and mix well.",
+                            "ingredients": [{"name": "Placebo solution-1 (Method-A)", "amount": 2.0, "unit": "mL"}],
+                            "glassware": [
+                                {"type": "volumetric flask", "size": "20 mL", "count_per_batch": 1, "amber": False},
+                                {"type": "pipette", "size": "2 mL", "count_per_batch": 1, "amber": False},
+                            ],
+                            "filters": [],
+                        },
+                        {
+                            "section_name": "Placebo solution-2 preparation (Amlodipine besylate + placebo)",
+                            "solution_name": "Placebo solution-2 (Amlodipine besylate + placebo)",
+                            "volume_per_batch_ml": 20.0,
+                            "preparation_text": "Pipette 2 mL of Placebo solution-2 (Method-A) into a 20 mL volumetric flask and dilute to volume with diluent and mix well.",
+                            "ingredients": [{"name": "Placebo solution-2 (Method-A)", "amount": 2.0, "unit": "mL"}],
+                            "glassware": [
+                                {"type": "volumetric flask", "size": "20 mL", "count_per_batch": 1, "amber": False},
+                                {"type": "pipette", "size": "2 mL", "count_per_batch": 1, "amber": False},
+                            ],
+                            "filters": [],
+                        },
+                    ])
+
+    # Assay 내 여러 검액 조제 → 각 검액별 별도 시험항목 분리
+    # 예) 검액 (혼합) + 검액 (타정, 완제품) → 함량(혼합) / 함량(타정, 완제품)
+    _RE_KO_SAMPLE_PREP = re.compile(r'^(?:검액|sample\s+solution)\b', re.IGNORECASE)
+    expanded_items: list[dict] = []
+    for item in test_items:
+        if not re.match(r'^assay$', item['name'], re.IGNORECASE):
+            expanded_items.append(item)
+            continue
+        sample_preps = [p for p in item['preparations'] if _RE_KO_SAMPLE_PREP.match(p.get('solution_name', ''))]
+        non_sample_preps = [p for p in item['preparations'] if not _RE_KO_SAMPLE_PREP.match(p.get('solution_name', ''))]
+        if len(sample_preps) <= 1:
+            expanded_items.append(item)
+            continue
+        for sp in sample_preps:
+            sol_name = sp.get('solution_name', '')
+            m_paren = re.search(r'\(([^)]+)\)', sol_name)
+            suffix = m_paren.group(1).strip() if m_paren else sol_name
+            new_item = dict(item)
+            new_item['preparations'] = non_sample_preps + [sp]
+            new_item['name'] = f"Assay ({suffix})"
+            new_item['display_name'] = f"함량({suffix})"
+            expanded_items.append(new_item)
+    test_items = expanded_items
 
     return {
         "id": Path(doc_path).stem,

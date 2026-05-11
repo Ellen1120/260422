@@ -146,7 +146,8 @@ def get_products():
             "code_no": _extract_code_no(p.get("stm_file", "")),
             "strengths": p.get("strengths", ["N/A"]),
             "test_items": [
-                t["name"] for t in p.get("test_items", [])
+                {"name": t["name"], "display_name": t.get("display_name", t["name"])}
+                for t in p.get("test_items", [])
                 if not _is_excluded_test_item(t)
             ],
         }
@@ -203,11 +204,13 @@ def calculate(req: CalculateRequest):
     assay_col_spec = next(
         (item.get("hplc_conditions", {}).get("column_spec")
          for item in product.get("test_items", [])
-         if re.match(r"^assay$", item.get("name", ""), re.IGNORECASE)
+         if re.match(r"^assay\b", item.get("name", ""), re.IGNORECASE)
          and item.get("hplc_conditions", {}).get("column_spec")),
         None,
     )
     col_specs_set: set[str] = set()
+    col_std_names: list[str] = []
+    _col_std_seen: set[str] = set()
     for item in product.get("test_items", []):
         if item.get("name") not in selected_test_names:
             continue
@@ -216,7 +219,16 @@ def calculate(req: CalculateRequest):
             col_specs_set.add(spec)
         elif re.match(r"uniformity", item.get("name", ""), re.IGNORECASE) and assay_col_spec:
             col_specs_set.add(assay_col_spec)
-    merged["columns"] = lookup_columns(list(col_specs_set))
+        for std in item.get("standards", []):
+            nm = (std.get("std_name") or "").strip()
+            if nm and nm.lower() not in _col_std_seen:
+                _col_std_seen.add(nm.lower())
+                col_std_names.append(nm)
+    merged["columns"] = lookup_columns(
+        list(col_specs_set),
+        product_name=product.get("product_name", ""),
+        standard_names=col_std_names,
+    )
     return merged
 
 

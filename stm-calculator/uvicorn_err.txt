@@ -1,0 +1,1 @@
+d:\Work Anti\.venv\Scripts\python.exe: No module named uvicorn

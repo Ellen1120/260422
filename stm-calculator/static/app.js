@@ -90,11 +90,13 @@ function onProductChange() {
         </div>
       `;
       const itemsDiv = div.querySelector('.str-test-items');
-      product.test_items.forEach(name => {
+      product.test_items.forEach(t => {
+        const name  = t.name || t;
+        const label = t.display_name || name;
         const lbl = document.createElement('label');
         lbl.innerHTML = `
           <input type="checkbox" value="${esc(name)}" onchange="onStrTestChange(this)">
-          <span>${esc(name)}</span>
+          <span>${esc(label)}</span>
           <span class="batch-inline hidden">
             <input type="number" class="batch-count-input" value="1" min="1" max="100"
                    oninput="onStrBatchInput(this)" onclick="event.stopPropagation()">
@@ -157,11 +159,13 @@ function _syncStrCfg(cfgEl) {
 function _renderSingleTestItems(product) {
   const container = document.getElementById('test-checkboxes');
   container.innerHTML = '';
-  product.test_items.forEach(name => {
+  product.test_items.forEach(t => {
+    const name  = t.name || t;
+    const label = t.display_name || name;
     const lbl = document.createElement('label');
     lbl.innerHTML = `
       <input type="checkbox" value="${esc(name)}" onchange="onSingleTestChange(this)">
-      <span>${esc(name)}</span>
+      <span>${esc(label)}</span>
       <span class="batch-inline hidden">
         <input type="number" class="batch-count-input" value="1" min="1" max="100"
                oninput="_syncSingleCfg()" onclick="event.stopPropagation()">
@@ -240,16 +244,20 @@ async function calculate() {
 // ── 결과 렌더링 ──────────────────────────────────────────
 function renderResult(data) {
   const cfgs = data.strength_configs || [];
+  const _dnMap = {};
+  const _curProd = _products.find(p => p.id === _selected.productId);
+  (_curProd?.test_items || []).forEach(t => { _dnMap[t.name || t] = t.display_name || t.name || t; });
+  const _dn = name => _dnMap[name] || name;
   let subtitleStr;
   if (cfgs.length === 0) {
     subtitleStr = data.strength || '';
   } else if (cfgs.length === 1) {
     const sc = cfgs[0];
-    const testsPart = (sc.test_items || []).map(ti => `${ti.name} ${ti.batch_count}배치`).join(', ');
+    const testsPart = (sc.test_items || []).map(ti => `${_dn(ti.name)} ${ti.batch_count}배치`).join(', ');
     subtitleStr = `${sc.strength}  |  ${testsPart}`;
   } else {
     subtitleStr = cfgs.map(sc => {
-      const testsPart = (sc.test_items || []).map(ti => `${ti.name} ${ti.batch_count}배치`).join(', ');
+      const testsPart = (sc.test_items || []).map(ti => `${_dn(ti.name)} ${ti.batch_count}배치`).join(', ');
       return `${sc.strength}: ${testsPart}`;
     }).join('  /  ');
   }
@@ -315,7 +323,7 @@ function renderSolutionTable(solutions, dm) {
   _sortedSolutions.forEach((s, idx) => {
     const tr = document.createElement('tr');
 
-    const isDissolutionMedium = /dissolution/i.test(s.solution_name) || s.solution_name === '시험액';
+    const isDissolutionMedium = /dissolution/i.test(s.solution_name) || s.solution_name === '시험액' || s.is_dissolution_medium;
     let effectiveVolumeMl, breakdownHtml = '';
 
     if (isDissolutionMedium && dm && dm.total_medium_ml) {
@@ -436,18 +444,31 @@ function _updateBufferFromMPs() {
 
 function _renderReagents(outEl, sol, volumeMl) {
   if (!outEl) return;
-  if (!volumeMl || volumeMl <= 0 || !sol.volume_per_batch_ml) {
-    outEl.innerHTML = sol.ingredients && sol.ingredients.length
-      ? '<span class="reagent-placeholder">조제량 정보 없음</span>'
-      : '<span class="reagent-placeholder">-</span>';
-    return;
-  }
   if (!sol.ingredients || !sol.ingredients.length) {
     outEl.innerHTML = '<span class="reagent-placeholder">-</span>';
     return;
   }
 
-  const scale = volumeMl / sol.volume_per_batch_ml;
+  const batchVol = sol.volume_per_batch_ml;
+
+  // batch volume 없음 → 스케일 불가, 원래 값 그대로 표시 (pH 조절용 등)
+  if (!batchVol) {
+    const items = sol.ingredients.map(ing => {
+      const trackingHtml = ing.tracking_no
+        ? `<span class="reagent-tracking">${esc(ing.tracking_no)}</span>`
+        : '';
+      return `<div class="reagent-item">
+        <span class="reagent-name">${esc(ing.name)}${trackingHtml}</span>
+        <span class="reagent-amount">${ing.amount} ${esc(ing.unit)}</span>
+      </div>`;
+    });
+    outEl.innerHTML = items.join('');
+    return;
+  }
+
+  // volumeMl 없으면 batchVol 기준으로 표시 (이론량 '-'인 비율 희석액 등)
+  const refVol = (volumeMl > 0) ? volumeMl : batchVol;
+  const scale = refVol / batchVol;
   const items = sol.ingredients.map(ing => {
     const scaledAmt = roundSig(ing.amount * scale, 4);
     const trackingHtml = ing.tracking_no
@@ -672,8 +693,10 @@ function renderColumnTable(columns) {
 // ── 필터 테이블 ──────────────────────────────────────────
 function renderFilterTable(filters, strengthConfigs) {
   const block = document.getElementById('block-filters');
+  const fiSummary = document.getElementById('fi-summary');
   const tbody = document.querySelector('#tbl-filters tbody');
   tbody.innerHTML = '';
+  fiSummary.innerHTML = '';
 
   if (!filters.length) {
     block.style.display = 'none';
@@ -683,6 +706,70 @@ function renderFilterTable(filters, strengthConfigs) {
   block.style.display = '';
   const multiStrength = (strengthConfigs || []).length > 1;
 
+  const _filterKind = f => {
+    if (f.filter_type === 'centrifuge') return '원심분리 팔콘';
+    if (f.filter_type === 'membrane')  return 'Membrane filter';
+    return 'Syringe filter';
+  };
+  const _filterSize = f =>
+    f.filter_type === 'centrifuge' ? '50 mL' : (f.size_um ? `${f.size_um} µm` : '-');
+
+  // ── 요약 집계: (filter_type, size_um, material) 기준 합산 ──
+  const sumMap = new Map();
+  for (const f of filters) {
+    const key = `${f.filter_type}||${f.size_um ?? ''}||${f.material ?? ''}`;
+    if (!sumMap.has(key)) {
+      sumMap.set(key, { kind: _filterKind(f), size: _filterSize(f), material: f.material || '-', total: 0 });
+    }
+    sumMap.get(key).total += f.total_count;
+  }
+  const sumSorted = [...sumMap.values()].sort((a, b) => {
+    const k = a.kind.localeCompare(b.kind);
+    return k !== 0 ? k : a.material.localeCompare(b.material);
+  });
+
+  // 요약 테이블 렌더링
+  const sumTbl = document.createElement('table');
+  sumTbl.id = 'tbl-filters-summary';
+  sumTbl.innerHTML = `
+    <thead><tr><th>종류</th><th>규격</th><th>재질</th><th>합계 수량</th></tr></thead>
+    <tbody>
+      ${sumSorted.map(s => `
+        <tr>
+          <td>${esc(s.kind)}</td>
+          <td>${esc(s.size)}</td>
+          <td>${esc(s.material)}</td>
+          <td class="num bold">${s.total}개</td>
+        </tr>
+      `).join('')}
+    </tbody>
+  `;
+  fiSummary.appendChild(sumTbl);
+
+  // 상세 내역 토글 버튼
+  const tblFi = document.getElementById('tbl-filters');
+  const toggleBtn = document.createElement('button');
+  toggleBtn.className = 'btn btn-outline gw-detail-toggle';
+  toggleBtn.style.cssText = 'margin-top:12px; font-size:0.85rem;';
+  toggleBtn.textContent = '▶ 상세 내역 보기';
+  fiSummary.appendChild(toggleBtn);
+
+  // 상세 테이블 소제목
+  const detailLabel = document.createElement('p');
+  detailLabel.className = 'block-desc';
+  detailLabel.style.cssText = 'margin-top:16px; margin-bottom:6px; font-weight:600; color:var(--gray-6); display:none;';
+  detailLabel.textContent = '상세 내역 (용액 조제별)';
+  fiSummary.appendChild(detailLabel);
+
+  tblFi.style.display = 'none';
+  toggleBtn.onclick = () => {
+    const isHidden = tblFi.style.display === 'none';
+    tblFi.style.display = isHidden ? '' : 'none';
+    detailLabel.style.display = isHidden ? '' : 'none';
+    toggleBtn.textContent = isHidden ? '▼ 상세 내역 숨기기' : '▶ 상세 내역 보기';
+  };
+
+  // ── 상세 테이블 ──
   const sorted = [...filters].sort((a, b) => {
     const sp = (a.source_prep || '').localeCompare(b.source_prep || '');
     if (sp !== 0) return sp;
@@ -690,15 +777,12 @@ function renderFilterTable(filters, strengthConfigs) {
     if (st !== 0) return st;
     const ss = (a.strength || '').localeCompare(b.strength || '');
     if (ss !== 0) return ss;
-    return (a.material + a.manufacturer).localeCompare(b.material + b.manufacturer);
+    return ((a.material || '') + (a.manufacturer || '')).localeCompare((b.material || '') + (b.manufacturer || ''));
   });
 
   sorted.forEach(f => {
-    const isFalcon = f.filter_type === 'centrifuge';
-    const kind = isFalcon ? '원심분리 팔콘'
-               : f.filter_type === 'membrane' ? 'Membrane filter'
-               : 'Syringe filter';
-    const size = isFalcon ? '50 mL' : (f.size_um ? `${f.size_um} µm` : '-');
+    const kind = _filterKind(f);
+    const size = _filterSize(f);
     const mat  = f.material || '-';
     const mfr  = f.manufacturer || '-';
     const hints = [];
