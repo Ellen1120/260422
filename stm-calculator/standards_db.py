@@ -3,28 +3,54 @@
 매칭 전략: 1) exact lowercase → 2) Excel 이름이 쿼리로 시작 → 3) stub
 
 엑셀 파일 탐색 순서:
-  1. 네트워크 경로 (\\\\file\\04. 품질본부\\3. 품질관리담당\\1. 담당 공용\\AI)
-  2. 접근 불가 시 → standards_db.py 옆 폴더의 .xlsx (fallback)
+  1. 네트워크 경로 (\\\\file\\04. 품질본부\\...\\02.Working standard)
+  2. 바로가기(.lnk) 해석 → 대상 경로 사용
+  3. 접근 불가 시 → standards_db.py 옆 폴더의 .xlsx (fallback)
 """
 from __future__ import annotations
 import re
+import subprocess
 from pathlib import Path
 
-_NETWORK_AI = Path(r"\\file\04. 품질본부\3. 품질관리담당\1. 담당 공용\AI")
-_NETWORK_XLSX = _NETWORK_AI / "LIMS 도입 후 표준품 리스트_WS_최종본_250310.xlsx"
-_FALLBACK_XLSX = Path(__file__).parent.parent / "LIMS 도입 후 표준품 리스트_WS_최종본_250310.xlsx"
+_XLSX_NAME = "LIMS 도입 후 표준품 리스트_WS_최종본_250310.xlsx"
+_NETWORK_XLSX = Path(r"\\file\04. 품질본부\3. 품질관리담당\1. 담당 공용\04. Standard & Column & Reagent\02.Working standard") / _XLSX_NAME
+_LNK_PATH = Path(__file__).parent.parent / (_XLSX_NAME.replace(".xlsx", ".lnk"))
+_FALLBACK_XLSX = Path(__file__).parent.parent / _XLSX_NAME
 
 _DB: dict[str, list[dict]] = {}
 _ALL_ENTRIES: list[dict] = []
 
 
+def _resolve_lnk(lnk: Path) -> Path | None:
+    """Windows 바로가기(.lnk)의 실제 대상 경로를 반환."""
+    try:
+        result = subprocess.run(
+            ["powershell", "-NoProfile", "-Command",
+             f"(New-Object -ComObject WScript.Shell).CreateShortcut('{lnk}').TargetPath"],
+            capture_output=True, text=True, timeout=5,
+        )
+        target = result.stdout.strip()
+        if target:
+            return Path(target)
+    except Exception:
+        pass
+    return None
+
+
 def _find_excel_path() -> Path | None:
-    """사용할 엑셀 파일 경로를 반환. 우선순위: 네트워크 → 로컬 fallback"""
+    """사용할 엑셀 파일 경로를 반환. 우선순위: 네트워크 → .lnk 해석 → 로컬 fallback"""
     if _NETWORK_XLSX.exists():
         print(f"[standards_db] 네트워크 경로 사용: {_NETWORK_XLSX}")
         return _NETWORK_XLSX
 
-    print(f"[standards_db] 네트워크 접근 불가, fallback 시도: {_FALLBACK_XLSX}")
+    if _LNK_PATH.exists():
+        resolved = _resolve_lnk(_LNK_PATH)
+        if resolved and resolved.exists():
+            print(f"[standards_db] 바로가기 경로 사용: {resolved}")
+            return resolved
+        print(f"[standards_db] 바로가기 대상 접근 불가: {resolved}")
+
+    print(f"[standards_db] fallback 시도: {_FALLBACK_XLSX}")
     if _FALLBACK_XLSX.exists():
         return _FALLBACK_XLSX
 

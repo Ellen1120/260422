@@ -151,7 +151,9 @@
           ]
         },
         {
-          "name": "Uniformity of dosage units (Content Uniformity)",
+          "name": "혼합균일성",
+          "display_name": "혼합균일성",
+          "assay_reference": "Assay (혼합)",
           "preparations": [
             {
               "section_name": "검액 조제",
@@ -161,7 +163,7 @@
               "preparation_text": "혼합물 전량을 달아 100 mL 용량 플라스크에 넣는다. (검체량 범위: 1X - 3X)\n희석액 50 mL를 가하고 15 분간 또는 모두 녹을 때까지 기계를 사용해 섞은 후 희석액으로 표선까지 채운다.\n원심분리하거나 0.45 μm 공경의 적당한 필터로 여과한다.\n위 액 5 mL를 취해 10 mL 용량 플라스크에 넣는다. 희석액으로 표선까지 채워 잘 섞는다.\n크로마토그래픽 시스템\n계산\nASTD\t:  표준액에서 Atorvastatin 피크 면적의 평균\nASAM\t:  검액에서 Atorvastatin 피크 면적\nWSTD\t:  취한 Atorvastatin calcium 표준품의 무게 (mg)\nWSAM\t:  취한 검체의 무게 (mg)\nLC\t:  1 정 중 Atorvastatin 표시량\nP\t:  Atorvastatin calcium 표준품의 함량 (as is(%))\n2\t:  Atorvastatin calcium 몰 수 대비 Atorvastatin 몰 수\n558.65\t:  Atorvastatin의 분자량\n1155.36\t:  Atorvastatin calcium의 분자량\nTW\t:  이 약 1 정의 이론 무게 (mg)\n제제균일성 시험(함량균일성)\nNote: 시험 정보, 완충액, 이동상, 용액 A, 희석액, 시스템 적합성 용액, 표준액 조제, 절차, 시스템 적합성은 함량 시험을 따른다.",
               "ingredients": [
                 {
-                  "name": "X - 3X)\n희석액",
+                  "name": "희석액",
                   "amount": 50.0,
                   "unit": "ml"
                 }
@@ -196,7 +198,24 @@
                   "count_per_batch": 1
                 }
               ]
-            },
+            }
+          ],
+          "standards": [
+            {
+              "std_name": "Atorvastatin calcium",
+              "grade": ""
+            }
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 1.5,
+            "run_time_min": 30.0,
+            "column_spec": "4.6 mm x 25 cm, 5 μm packing L1",
+            "injections": []
+          }
+        },
+        {
+          "name": "Uniformity of dosage units (Content Uniformity)",
+          "preparations": [
             {
               "section_name": "검액 조제",
               "solution_name": "검액",
@@ -248,7 +267,8 @@
             "run_time_min": 30.0,
             "column_spec": "4.6 mm x 25 cm, 5 μm packing L1",
             "injections": []
-          }
+          },
+          "assay_reference": "Assay (타정, 완제품)"
         },
         {
           "name": "Assay (혼합)",
@@ -744,13 +764,14 @@
                 }
               ],
               "glassware": [],
-              "filters": []
+              "filters": [],
+              "is_mobile_phase": true
             },
             {
               "section_name": "용액 B 조제",
               "solution_name": "용액 B",
               "volume_per_batch_ml": 100.0,
-              "is_ratio_only": true,
+              "is_ratio_only": false,
               "preparation_text": "용액 A: 완충액 (42: 58)",
               "ingredients": [
                 {
@@ -765,7 +786,9 @@
                 }
               ],
               "glassware": [],
-              "filters": []
+              "filters": [],
+              "is_mobile_phase": true,
+              "mobile_phase_fraction": 0.8
             },
             {
               "section_name": "용액 C 조제",
@@ -791,7 +814,9 @@
                 }
               ],
               "glassware": [],
-              "filters": []
+              "filters": [],
+              "is_mobile_phase": true,
+              "mobile_phase_fraction": 0.2
             },
             {
               "section_name": "희석액 조제",
@@ -824,7 +849,8 @@
                   "amber": false
                 }
               ],
-              "filters": []
+              "filters": [],
+              "exclude_from_solutions": true
             },
             {
               "section_name": "Atorvastatin related compound B 용액 조제",
@@ -847,7 +873,8 @@
                   "amber": false
                 }
               ],
-              "filters": []
+              "filters": [],
+              "exclude_from_solutions": true
             },
             {
               "section_name": "Atorvastatin related compound H 용액 조제",
@@ -870,7 +897,8 @@
                   "amber": false
                 }
               ],
-              "filters": []
+              "filters": [],
+              "exclude_from_solutions": true
             },
             {
               "section_name": "Atorvastatin related compound D 용액 조제",
@@ -899,7 +927,8 @@
                   "amber": false
                 }
               ],
-              "filters": []
+              "filters": [],
+              "exclude_from_solutions": true
             },
             {
               "section_name": "시스템 적합성 용액 조제",
@@ -997,7 +1026,53 @@
               "std_name": "Atorvastatin related compound D",
               "grade": ""
             }
-          ]
+          ],
+          "hplc_conditions": {
+            "flow_rate_ml_min": 1.8,
+            "run_time_min": 65,
+            "column_spec": "Kromasil 100-5-C18(w), 4.6 mm x 25 cm, 5 μm",
+            "injections": [
+              {
+                "solution": "Blank solution",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "System suitability solution",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Blank solution (100 μL)",
+                "count": 1,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Standard solution",
+                "count": 6,
+                "scales_with_batch": false
+              },
+              {
+                "solution": "Sample solution",
+                "count": 1,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Blank solution (100 μL) post-sample",
+                "count": 2,
+                "scales_with_batch": true
+              },
+              {
+                "solution": "Bracketing (Standard solution)",
+                "count": 1,
+                "scales_with_batch": false
+              }
+            ],
+            "gradient_fractions": {
+              "용액 B": 0.8,
+              "용액 C": 0.2
+            }
+          }
         }
       ]
     },
