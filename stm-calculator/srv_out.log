@@ -1,0 +1,15 @@
+Loaded 59 products from knowledge base.
+INFO:     127.0.0.1:63025 - "GET /api/products HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63029 - "GET /api/products HTTP/1.1" 200 OK
+[standards_db] 바로가기 대상 접근 불가: \\file\04. 품질본부\3. 품질관리담당\1. 담당 공용\04. Standard & Column & Reagent\02.Working standard\LIMS 도입 후 표준품 리스트_WS_최종본_250310.xlsx
+[standards_db] fallback 시도: D:\Work Anti\LIMS 도입 후 표준품 리스트_WS_최종본_250310.xlsx
+[column_db] 바로가기 대상 접근 불가: \\file\04. 품질본부\3. 품질관리담당\1. 담당 공용\04. Standard & Column & Reagent\03. Column\LC01004-A1(4.0) Column List.xlsx
+[column_db] fallback 시도: D:\Work Anti\LC01004-A1(4.0) Column List.xlsx
+INFO:     127.0.0.1:51820 - "POST /api/calculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56341 - "POST /api/calculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64504 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64504 - "GET /style.css?v=6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54807 - "GET /app.js?v=26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64504 - "GET /api/products HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64504 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64232 - "POST /api/calculate HTTP/1.1" 200 OK

@@ -103,6 +103,8 @@ def _load() -> tuple[dict[str, list[dict]], list[dict]]:
 _ALIASES: dict[str, str] = {
     "scb4-impurity 1": "scb-4-imp-1",
     "sacubitril valsartan sodium hydrate": "sacubitril valsartan sodium",
+    "atorvastatin related compound b": "atorvastatine releated compound b",
+    "p-methoxyacetophenone": "4-methoxyacetophenone",
 }
 
 
@@ -144,11 +146,16 @@ def lookup(names: list[str]) -> list[dict]:
     out: list[dict] = []
     seen: set[tuple] = set()
     for nm in names:
+        aliased = nm.strip().lower() in _ALIASES
         for m in _find_matches(nm):
-            dk = (m["name"], m["consumable_type"], m["location"])
+            dk = (m["consumable_type"], m["location"])
             if dk not in seen:
                 seen.add(dk)
-                out.append(m)
+                entry = dict(m)
+                # alias로 조회된 경우 표시명은 STM 원본 이름 사용
+                if aliased:
+                    entry["name"] = nm.strip()
+                out.append(entry)
     return out
 
 

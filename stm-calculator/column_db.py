@@ -84,8 +84,10 @@ def _parse_stm_col(stm_spec: str) -> tuple[dict, set[str]]:
 
     name_part = stm_spec.split(',')[0]
     tokens = re.sub(r'[^a-z0-9]', ' ', name_part.lower()).split()
-    stopwords = {'mm', 'um', 'ml', 'x', 'uv', 'nm', 'min', 'and', 'the', 'of', 'in', 'm', 'c18', 'c8', 'c4', 'c1'}
-    keywords = {t for t in tokens if len(t) >= 2 and re.search(r'[a-z]', t) and t not in stopwords}
+    stopwords = {'mm', 'um', 'ml', 'x', 'uv', 'nm', 'min', 'and', 'the', 'of', 'in', 'm'}
+    # c18/c8/c4/c1은 컬럼 타입 구분자이므로 키워드로 유지; 숫자 모델번호(100 등, 3자리↑)도 포함
+    keywords = {t for t in tokens if len(t) >= 2 and t not in stopwords
+                and (re.search(r'[a-z]', t) or (t.isdigit() and len(t) >= 3))}
 
     return {"length": length, "id": id_, "particle": particle}, keywords
 

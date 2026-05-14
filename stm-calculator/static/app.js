@@ -10,6 +10,7 @@ let _pollTimer = null;
 let _mpBufferFractions = []; // [{mpIdx, fraction}] — 이동상별 완충액 비율
 let _bufferSolIdx = -1;      // 완충액 행 인덱스
 let _bufferOriginalMl = null;
+let _diluentChildLinks = []; // [{dilIdx, childIdx, fraction}] — 희석액→추출용매 등 연동
 
 // ── 초기화 ────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
@@ -302,23 +303,28 @@ function renderSolutionTable(solutions, dm) {
   solutions = visible;
 
   const _IS_MP  = /이동상|mobile\s*phase/i;
-  const _IS_BUF = /완충액|\bbuffer\b/i;
+  const _IS_BUF = /완충액|\bbuffer\b|ammonium.*phosphate\s+solution|인산이수소암모늄/i;
+  const _IS_DIL = /희석액|diluent/i;
+  const _IS_EXT = /extracting\s+solvent/i;
 
-  const solutionPriority = name => {
-    if (_IS_MP.test(name))             return 0;
-    if (_IS_BUF.test(name))            return 1;
-    if (/dissolution/i.test(name))     return 2;
-    return 3;
+  const solutionPriority = s => {
+    if (s.is_mobile_phase || _IS_MP.test(s.solution_name)) return 0;
+    if (_IS_BUF.test(s.solution_name))                     return 1;
+    if (_IS_DIL.test(s.solution_name))                     return 2;
+    if (_IS_EXT.test(s.solution_name))                     return 3;
+    if (/dissolution/i.test(s.solution_name))              return 4;
+    return 5;
   };
 
   _sortedSolutions = [...solutions].sort((a, b) =>
-    solutionPriority(a.solution_name) - solutionPriority(b.solution_name)
+    solutionPriority(a) - solutionPriority(b)
   );
 
-  // 이동상-완충액 연동 상태 초기화
+  // 이동상-완충액 / 희석액-추출용매 연동 상태 초기화
   _mpBufferFractions = [];
   _bufferSolIdx = -1;
   _bufferOriginalMl = null;
+  _diluentChildLinks = [];
 
   _sortedSolutions.forEach((s, idx) => {
     const tr = document.createElement('tr');
@@ -343,6 +349,8 @@ function renderSolutionTable(solutions, dm) {
     const reagentId = `reagent-out-${idx}`;
     const theorId   = `theor-cell-${idx}`;
 
+    const isDil = _IS_DIL.test(s.solution_name);
+
     tr.innerHTML = `
       <td>${esc(s.solution_name)}${s.note ? `<div class="sol-note">${esc(s.note)}</div>` : ''}</td>
       <td class="num bold" id="${theorId}">
@@ -355,7 +363,8 @@ function renderSolutionTable(solutions, dm) {
                  placeholder="${placeholderVal}"
                  data-idx="${idx}"
                  data-theoretical="${placeholderVal}"
-                 data-is-mp="${_IS_MP.test(s.solution_name) ? '1' : ''}"
+                 data-is-mp="${(s.is_mobile_phase || _IS_MP.test(s.solution_name)) ? '1' : ''}"
+                 data-is-dil="${isDil ? '1' : ''}"
                  oninput="onPrepAmountInput(this)"
                  style="width:110px" />
           <span class="unit">mL</span>
@@ -368,13 +377,15 @@ function renderSolutionTable(solutions, dm) {
     const outEl = tr.querySelector('.reagent-list');
     if (outEl) _renderReagents(outEl, s, effectiveVolumeMl);
 
-    // 이동상: 완충액 비율 추출
-    if (_IS_MP.test(s.solution_name) && s.volume_per_batch_ml) {
-      const bufIng = (s.ingredients || []).find(
-        ing => _IS_BUF.test(ing.name || '') && (ing.unit || '').toLowerCase() === 'ml'
+    // 이동상: 완충액 비율 추출 — 레시피 총량(mL 성분 합) 기준으로 비율 계산
+    if ((s.is_mobile_phase || _IS_MP.test(s.solution_name)) && s.volume_per_batch_ml) {
+      const allMlIng = (s.ingredients || []).filter(
+        ing => (ing.unit || '').toLowerCase() === 'ml'
       );
+      const recipeTotalMl = allMlIng.reduce((sum, ing) => sum + (ing.amount || 0), 0) || s.volume_per_batch_ml;
+      const bufIng = allMlIng.find(ing => _IS_BUF.test(ing.name || ''));
       if (bufIng) {
-        _mpBufferFractions.push({ mpIdx: idx, fraction: bufIng.amount / s.volume_per_batch_ml });
+        _mpBufferFractions.push({ mpIdx: idx, fraction: bufIng.amount / recipeTotalMl });
       }
     }
     // 완충액 행 기억
@@ -382,7 +393,30 @@ function renderSolutionTable(solutions, dm) {
       _bufferSolIdx = idx;
       _bufferOriginalMl = effectiveVolumeMl;
     }
+
+    // 희석액: mL 성분 중 다른 용액과 이름이 일치하는 항목을 자식 링크로 등록
+    if (isDil) {
+      const allMlIng = (s.ingredients || []).filter(
+        ing => (ing.unit || '').toLowerCase() === 'ml' && (ing.amount || 0) > 0
+      );
+      const recipeTotalMl = allMlIng.reduce((sum, ing) => sum + ing.amount, 0);
+      if (recipeTotalMl > 0) {
+        for (const ing of allMlIng) {
+          const childIdx = _sortedSolutions.findIndex((cs, ci) =>
+            ci !== idx &&
+            (cs.solution_name || '').trim().toLowerCase() === (ing.name || '').trim().toLowerCase()
+          );
+          if (childIdx >= 0) {
+            _diluentChildLinks.push({ dilIdx: idx, childIdx, fraction: ing.amount / recipeTotalMl });
+          }
+        }
+      }
+    }
   });
+
+  // 초기 렌더링: 이동상 기준 완충액 이론량 계산, 희석액 기준 추출용매 이론량 계산
+  _updateBufferFromMPs();
+  _updateDiluentChildren();
 }
 
 function onPrepAmountInput(input) {
@@ -403,6 +437,8 @@ function onPrepAmountInput(input) {
 
   // 이동상 조제량 변경 → 완충액 이론량 실시간 업데이트
   if (input.dataset.isMp === '1') _updateBufferFromMPs();
+  // 희석액 조제량 변경 → 추출용매 등 이론량 실시간 업데이트
+  if (input.dataset.isDil === '1') _updateDiluentChildren();
 }
 
 function _updateBufferFromMPs() {
@@ -438,6 +474,34 @@ function _updateBufferFromMPs() {
     const outEl = document.getElementById(`reagent-out-${_bufferSolIdx}`);
     if (outEl && bufInp && bufInp.value.trim() === '') {
       _renderReagents(outEl, _sortedSolutions[_bufferSolIdx], newMl);
+    }
+  }
+}
+
+function _updateDiluentChildren() {
+  for (const { dilIdx, childIdx, fraction } of _diluentChildLinks) {
+    const dilInp   = document.getElementById(`prep-input-${dilIdx}`);
+    const dilSol   = _sortedSolutions[dilIdx];
+    const dilTheor = parseFloat(dilInp?.dataset.theoretical) || dilSol?.theoretical_volume_ml || 0;
+    const dilActual = (dilInp && dilInp.value.trim() !== '') ? parseFloat(dilInp.value) : dilTheor;
+    if (dilActual <= 0) continue;
+
+    const newMl   = Math.round(dilActual * fraction * 10) / 10;
+    const cell    = document.getElementById(`theor-cell-${childIdx}`);
+    const childInp = document.getElementById(`prep-input-${childIdx}`);
+
+    if (cell) cell.innerHTML = `${fmt(newMl)} mL`;
+    if (childInp && childInp.value.trim() === '') {
+      childInp.placeholder = String(newMl);
+      childInp.dataset.theoretical = String(newMl);
+    }
+    if (_sortedSolutions[childIdx]) {
+      _sortedSolutions[childIdx].theoretical_volume_ml = newMl;
+      _sortedSolutions[childIdx].volume_per_batch_ml   = newMl;
+      const outEl = document.getElementById(`reagent-out-${childIdx}`);
+      if (outEl && childInp && childInp.value.trim() === '') {
+        _renderReagents(outEl, _sortedSolutions[childIdx], newMl);
+      }
     }
   }
 }
@@ -572,7 +636,6 @@ function renderGlasswareTable(glassware, strengthConfigs) {
   });
   sorted.forEach(g => {
     const hints = [];
-    if (g.test_item) hints.push(esc(g.test_item));
     if (multiStrength && g.strength) hints.push(`(${esc(g.strength)})`);
     const hintHtml = hints.length ? ` <span class="th-hint">· ${hints.join(' ')}</span>` : '';
     const tr = document.createElement('tr');
@@ -786,7 +849,6 @@ function renderFilterTable(filters, strengthConfigs) {
     const mat  = f.material || '-';
     const mfr  = f.manufacturer || '-';
     const hints = [];
-    if (f.test_item) hints.push(esc(f.test_item));
     if (multiStrength && f.strength) hints.push(`(${esc(f.strength)})`);
     const hintHtml = hints.length ? ` <span class="th-hint">· ${hints.join(' ')}</span>` : '';
     const tr = document.createElement('tr');

@@ -938,6 +938,21 @@
               "preparation_text": "Atorvastatin calcium 용액 6 mL, Atorvastatin related compound B 용액 5 mL, Atorvastatin related compound H 용액 1 mL, Atorvastatin related compound D 용액 1 mL를 취해 20 mL 용량 플라스크에 넣는다.\n희석액으로 표선까지 채워 희석한다.",
               "ingredients": [
                 {
+                  "name": "Atorvastatin calcium 용액",
+                  "amount": 6.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "Atorvastatin related compound B 용액",
+                  "amount": 5.0,
+                  "unit": "ml"
+                },
+                {
+                  "name": "Atorvastatin related compound H 용액",
+                  "amount": 1.0,
+                  "unit": "ml"
+                },
+                {
                   "name": "Atorvastatin related compound D 용액",
                   "amount": 1.0,
                   "unit": "ml"
@@ -32062,7 +32077,7 @@
       ],
       "test_items": [
         {
-          "name": "Identification",
+          "name": "Identification (UV)",
           "preparations": [
             {
               "section_name": "Diluent (0.1mol/L Hydrochloric acid) preparation",
@@ -32156,15 +32171,15 @@
           "preparations": [
             {
               "section_name": "Dissolution medium (0.01 mol/L Hydrochloric acid solution) preparation",
-              "solution_name": "시험액 (Dissolution medium)",
+              "solution_name": "Dissolution medium (0.01 mol/L Hydrochloric acid solution)",
               "volume_per_batch_ml": 1000.0,
               "is_ratio_only": false,
-              "preparation_text": "Ammonium phosphate monobasic 2.3 g을 물 1000 mL에 녹이고 인산으로 pH 6.0으로 맞춘다.",
+              "preparation_text": "Dilute 8.5 mL of concentrated Hydrochloric acid to 10000 mL with purified water.",
               "ingredients": [
                 {
-                  "name": "Ammonium phosphate monobasic",
-                  "amount": 2.3,
-                  "unit": "g"
+                  "name": "Concentrated Hydrochloric acid",
+                  "amount": 0.85,
+                  "unit": "mL"
                 }
               ],
               "glassware": [],
@@ -32280,6 +32295,12 @@
                   "size": "10 mL",
                   "count_per_batch": 1,
                   "amber": false
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 1,
+                  "amber": false
                 }
               ],
               "filters": []
@@ -32354,6 +32375,390 @@
               "12.5/500 mg": 300.0
             }
           }
+        },
+        {
+          "name": "Blend Uniformity",
+          "display_name": "Blend Uniformity",
+          "hplc_conditions": {
+            "flow_rate_ml_min": 7.0,
+            "run_time_min": 10.0,
+            "column_spec": "YMC-Pack Pro C8 (5 µm, 6.0 mm x 15 cm), YMC Co., Ltd or Equivalent.",
+            "injections": []
+          },
+          "standards": [
+            {
+              "std_name": "Alogliptin benzoate",
+              "grade": "working standard or reference standard"
+            },
+            {
+              "std_name": "Metformin hydrochloride",
+              "grade": "working standard or reference standard"
+            },
+            {
+              "std_name": "p-Methoxyacetophenone",
+              "grade": "working standard or reference standard"
+            }
+          ],
+          "preparations": [
+            {
+              "section_name": "Mobile phase preparation",
+              "solution_name": "Mobile phase",
+              "volume_per_batch_ml": 1000.0,
+              "is_ratio_only": false,
+              "is_mobile_phase": true,
+              "preparation_text": "Mix 500 mL of 50 mmol/L Ammonium dihydrogen phosphate solution and 500 mL of acetonitrile and then add about 7.2 g of Sodium dodecyl sulfate and mix well.",
+              "ingredients": [
+                {
+                  "name": "50 mmol/L Ammonium dihydrogen phosphate solution",
+                  "amount": 500.0,
+                  "unit": "mL"
+                },
+                {
+                  "name": "Acetonitrile",
+                  "amount": 500.0,
+                  "unit": "mL"
+                },
+                {
+                  "name": "Sodium dodecyl sulfate",
+                  "amount": 7.2,
+                  "unit": "g"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "50 mmol/L Ammonium dihydrogen phosphate solution preparation",
+              "solution_name": "50 mmol/L Ammonium dihydrogen phosphate solution",
+              "volume_per_batch_ml": 1000.0,
+              "is_ratio_only": false,
+              "preparation_text": "Weigh and transfer about 5.75 g of Ammonium dihydrogen phosphate in water to make 1000 mL.",
+              "ingredients": [
+                {
+                  "name": "Ammonium dihydrogen phosphate",
+                  "amount": 5.75,
+                  "unit": "g"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Diluent solution preparation",
+              "solution_name": "Diluent",
+              "volume_per_batch_ml": null,
+              "is_ratio_only": true,
+              "preparation_text": "Mix Extracting solvent (0.1mol/L Hydrochloric acid) and Methanol (1:1 v/v).",
+              "ingredients": [
+                {
+                  "name": "Extracting solvent (0.1mol/L Hydrochloric acid)",
+                  "amount": 500.0,
+                  "unit": "mL"
+                },
+                {
+                  "name": "Methanol",
+                  "amount": 500.0,
+                  "unit": "mL"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Extracting solvent (0.1mol/L Hydrochloric acid) preparation",
+              "solution_name": "Extracting solvent (0.1mol/L Hydrochloric acid)",
+              "volume_per_batch_ml": 1000.0,
+              "is_ratio_only": false,
+              "preparation_text": "Transfer 8.5 mL of Hydrochloric acid in water to make 1000 mL.",
+              "ingredients": [
+                {
+                  "name": "Hydrochloric acid",
+                  "amount": 8.5,
+                  "unit": "mL"
+                }
+              ],
+              "glassware": [],
+              "filters": []
+            },
+            {
+              "section_name": "Metformin hydrochloride internal standard solution preparation",
+              "solution_name": "Metformin hydrochloride internal standard solution",
+              "volume_per_batch_ml": 100.0,
+              "is_ratio_only": false,
+              "preparation_text": "Weigh and transfer about 30 mg of p-methoxyacetophenone into a 100 mL volumetric flask, dilute to volume with diluent. (Concentration: 0.3 mg/mL)",
+              "ingredients": [
+                {
+                  "name": "p-Methoxyacetophenone",
+                  "amount": 30.0,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1,
+                  "amber": false
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Alogliptin internal standard solution preparation",
+              "solution_name": "Alogliptin internal standard solution",
+              "volume_per_batch_ml": 100.0,
+              "is_ratio_only": false,
+              "preparation_text": "Transfer 10 mL of Metformin hydrochloride Internal standard solution into a 100 mL volumetric flask, dilute to volume with diluent. (Concentration: 0.03 mg/mL)",
+              "ingredients": [
+                {
+                  "name": "Metformin hydrochloride internal standard solution",
+                  "amount": 10.0,
+                  "unit": "mL"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1,
+                  "amber": false
+                },
+                {
+                  "type": "pipette",
+                  "size": "10 mL",
+                  "count_per_batch": 1,
+                  "amber": false
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Alogliptin standard stock solution preparation",
+              "solution_name": "Alogliptin standard stock solution",
+              "volume_per_batch_ml": 50.0,
+              "is_ratio_only": false,
+              "preparation_text": "Weigh and transfer about 42.5 mg of Alogliptin benzoate standard into a 50 mL volumetric flask, dilute to volume with extracting solvent. Transfer 10 mL of the above solution into a 50 mL volumetric flask, dilute to volume with extracting solvent.",
+              "ingredients": [
+                {
+                  "name": "Alogliptin benzoate",
+                  "amount": 42.5,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 2,
+                  "amber": false
+                },
+                {
+                  "type": "pipette",
+                  "size": "10 mL",
+                  "count_per_batch": 1,
+                  "amber": false
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Alogliptin standard solution preparation",
+              "solution_name": "Alogliptin standard solution",
+              "volume_per_batch_ml": 20.0,
+              "is_ratio_only": false,
+              "preparation_text": "Transfer 5 mL of Alogliptin standard stock solution and 5 mL of Alogliptin internal standard solution into a 20 mL volumetric flask, dilute to volume with extracting solvent.",
+              "ingredients": [
+                {
+                  "name": "Alogliptin standard stock solution",
+                  "amount": 5.0,
+                  "unit": "mL"
+                },
+                {
+                  "name": "Alogliptin internal standard solution",
+                  "amount": 5.0,
+                  "unit": "mL"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "20 mL",
+                  "count_per_batch": 1,
+                  "amber": false
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 2,
+                  "amber": false
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Metformin hydrochloride stock solution preparation",
+              "solution_name": "Metformin hydrochloride stock solution",
+              "volume_per_batch_ml": 100.0,
+              "is_ratio_only": false,
+              "preparation_text": "Weigh and transfer about 50 mg of Metformin hydrochloride standard into a 100 mL volumetric flask, dilute to volume with extracting solvent.",
+              "ingredients": [
+                {
+                  "name": "Metformin hydrochloride",
+                  "amount": 50.0,
+                  "unit": "mg"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1,
+                  "amber": false
+                }
+              ],
+              "filters": [],
+              "exclude_from_solutions": true
+            },
+            {
+              "section_name": "Metformin hydrochloride standard solution preparation",
+              "solution_name": "Metformin hydrochloride standard solution",
+              "volume_per_batch_ml": 50.0,
+              "is_ratio_only": false,
+              "preparation_text": "Transfer 5 mL of Metformin hydrochloride standard stock solution and 5 mL of Metformin hydrochloride internal standard solution into a 50 mL volumetric flask, dilute to volume with extracting solvent.",
+              "ingredients": [
+                {
+                  "name": "Metformin hydrochloride stock solution",
+                  "amount": 5.0,
+                  "unit": "mL"
+                },
+                {
+                  "name": "Metformin hydrochloride internal standard solution",
+                  "amount": 5.0,
+                  "unit": "mL"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1,
+                  "amber": false
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 2,
+                  "amber": false
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Sample stock solution preparation",
+              "solution_name": "Sample stock solution",
+              "volume_per_batch_ml": 100.0,
+              "is_ratio_only": false,
+              "preparation_text": "Weigh and transfer whole blend sample (1X~3X) into a 100 mL volumetric flask. Add approximately 70 mL of extracting solvent and shake for 30 minutes. Make up to the mark with extracting solvent. Centrifuge 3000 rpm for 5 minutes.",
+              "ingredients": [],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1,
+                  "amber": false
+                }
+              ],
+              "filters": []
+            },
+            {
+              "section_name": "Alogliptin sample solution preparation",
+              "solution_name": "Alogliptin sample solution",
+              "volume_per_batch_ml": 20.0,
+              "is_ratio_only": false,
+              "preparation_text": "Pipette 4 mL of supernatant into a 20 mL volumetric flask. Add 5 mL of Alogliptin internal standard solution, make up to the mark with extracting solvent. Filter through 0.45 µm membrane filter.",
+              "ingredients": [
+                {
+                  "name": "Alogliptin internal standard solution",
+                  "amount": 5.0,
+                  "unit": "mL"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "20 mL",
+                  "count_per_batch": 1,
+                  "amber": false
+                },
+                {
+                  "type": "pipette",
+                  "size": "4 mL",
+                  "count_per_batch": 1,
+                  "amber": false
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 1,
+                  "amber": false
+                }
+              ],
+              "filters": [
+                {
+                  "pore_size": "0.45 µm",
+                  "material": "membrane",
+                  "count_per_batch": 1
+                }
+              ]
+            },
+            {
+              "section_name": "Metformin hydrochloride sample solution preparation",
+              "solution_name": "Metformin hydrochloride sample solution",
+              "volume_per_batch_ml": 50.0,
+              "is_ratio_only": false,
+              "preparation_text": "Pipette 5 mL of supernatant into a 100 mL volumetric flask, make up to the mark with extracting solvent. Pipette 4 mL of above solution and 5 mL of Metformin hydrochloride internal standard solution into a 50 mL volumetric flask, make up to the mark with extracting solvent. Filter through 0.45 µm Nylon membrane filter.",
+              "ingredients": [
+                {
+                  "name": "Metformin hydrochloride internal standard solution",
+                  "amount": 5.0,
+                  "unit": "mL"
+                }
+              ],
+              "glassware": [
+                {
+                  "type": "volumetric flask",
+                  "size": "100 mL",
+                  "count_per_batch": 1,
+                  "amber": false
+                },
+                {
+                  "type": "volumetric flask",
+                  "size": "50 mL",
+                  "count_per_batch": 1,
+                  "amber": false
+                },
+                {
+                  "type": "pipette",
+                  "size": "5 mL",
+                  "count_per_batch": 2,
+                  "amber": false
+                },
+                {
+                  "type": "pipette",
+                  "size": "4 mL",
+                  "count_per_batch": 1,
+                  "amber": false
+                }
+              ],
+              "filters": [
+                {
+                  "pore_size": "0.45 µm",
+                  "material": "Nylon membrane",
+                  "count_per_batch": 1
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "Uniformity of dosage units (Content Uniformity)",
@@ -32446,7 +32851,7 @@
               ]
             }
           ],
-          "display_name": "함량균일성",
+          "display_name": "Uniformity of dosage units (Content Uniformity)",
           "standards": [
             {
               "std_name": "Alogliptin benzoate",
@@ -32468,7 +32873,7 @@
             {
               "section_name": "50mmol/L Ammonium dihydrogen phosphate solution preparation",
               "solution_name": "50mmol/L Ammonium dihydrogen phosphate solution",
-              "volume_per_batch_ml": null,
+              "volume_per_batch_ml": 1000.0,
               "is_ratio_only": false,
               "preparation_text": "Weigh and transfer about 5.75 g of Ammonium dihydrogen phosphate in water to make 1000 mL.",
               "ingredients": [
@@ -32489,25 +32894,36 @@
               "preparation_text": "Mix 500 mL of 50 mmol/L Ammonium dihydrogen phosphate solution and 500 mL of acetonitrile and then add about 7.2 g of Sodium dodecyl sulfate and mix well.",
               "ingredients": [
                 {
+                  "name": "50mmol/L Ammonium dihydrogen phosphate solution",
+                  "amount": 500.0,
+                  "unit": "mL"
+                },
+                {
+                  "name": "Acetonitrile",
+                  "amount": 500.0,
+                  "unit": "mL"
+                },
+                {
                   "name": "Sodium dodecyl sulfate",
                   "amount": 7.2,
                   "unit": "g"
                 }
               ],
               "glassware": [],
-              "filters": []
+              "filters": [],
+              "is_mobile_phase": true
             },
             {
               "section_name": "Extracting solvent (0.1mol/L Hydrochloric acid) preparation",
               "solution_name": "Extracting solvent (0.1mol/L Hydrochloric acid)",
-              "volume_per_batch_ml": null,
+              "volume_per_batch_ml": 1000.0,
               "is_ratio_only": false,
               "preparation_text": "Transfer 8.5 mL of Hydrochloric acid in water to make 1000 mL.",
               "ingredients": [
                 {
                   "name": "Hydrochloric acid",
-                  "amount": 0,
-                  "unit": "ml"
+                  "amount": 8.5,
+                  "unit": "mL"
                 }
               ],
               "glassware": [
@@ -32524,9 +32940,20 @@
               "section_name": "Diluent solution preparation",
               "solution_name": "Diluent solution",
               "volume_per_batch_ml": null,
-              "is_ratio_only": false,
+              "is_ratio_only": true,
               "preparation_text": "Mix Methanol and 0.1 mol/L Hydrochloric acid (1:1 v/v).",
-              "ingredients": [],
+              "ingredients": [
+                {
+                  "name": "Extracting solvent (0.1mol/L Hydrochloric acid)",
+                  "amount": 500.0,
+                  "unit": "mL"
+                },
+                {
+                  "name": "Methanol",
+                  "amount": 500.0,
+                  "unit": "mL"
+                }
+              ],
               "glassware": [],
               "filters": []
             },
@@ -32649,7 +33076,8 @@
                   "amber": false
                 }
               ],
-              "filters": []
+              "filters": [],
+              "exclude_from_solutions": true
             },
             {
               "section_name": "Metformin hydrochloride standard solution preparation",

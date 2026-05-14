@@ -56,7 +56,7 @@ def _get_api_key() -> str | None:
 
 _EXCLUDED_TEST_ITEMS = re.compile(
     r"^description$"
-    r"|^identification"
+    r"|^identification(?!\s*\(?\s*uv\s*\)?)"
     r"|^microbial\s+enumeration"
     r"|^specified\s+microorganisms"
     r"|^polymorphism\s+by\s+pxrd"

@@ -11,7 +11,7 @@ _RE_BUF   = re.compile(r'^buffer\b|^완충액', re.IGNORECASE)
 _RE_DILUENT = re.compile(r'^diluent|^희석액', re.IGNORECASE)
 _RE_KOREAN = re.compile(r'[가-힣]')
 _RE_SAMPLE_SOL  = re.compile(r'sample|검액', re.IGNORECASE)
-_RE_UNIFORMITY  = re.compile(r'uniformity|균일성', re.IGNORECASE)
+_RE_UNIFORMITY  = re.compile(r'uniformity\s+of\s+dosage|content\s+uniformity|함량\s*균일성|제제\s*균일성', re.IGNORECASE)
 _RE_ASSAY       = re.compile(r'^assay\b', re.IGNORECASE)
 # 표준액·표준원액·시스템 적합성: 배치 수·함량 수 무관 1회만 조제 (영문·한글 모두 포함)
 _RE_STD_PREP    = re.compile(
@@ -21,7 +21,7 @@ _RE_STD_PREP    = re.compile(
 # 함량 지정 조제 패턴: "Standard solution (for 50 mg)"
 _RE_FOR_STRENGTH = re.compile(r'\(\s*for\s+(.+?)\s*\)', re.IGNORECASE)
 # 피펫 집계 대상: 검액 및 표준액만 포함 (용액 조제 시약류 제외 규칙 반영)
-_RE_PIPETTE_SOURCE  = re.compile(r'sample|standard|표준원액|표준액|검액', re.IGNORECASE)
+_RE_PIPETTE_SOURCE  = re.compile(r'sample|standard|표준원액|표준액|검액|시스템\s*적합성|system\s*suitability', re.IGNORECASE)
 
 # Rule 3: 용액 조제 목록에서 제외할 시험 용액 (표준액, 표준원액, 검액, 시스템적합성 용액)
 _RE_TEST_SOLUTION = re.compile(
@@ -265,7 +265,9 @@ def _process_preparations(
             r'수산화나트륨|sodium\s+hydroxide|NaOH|염산|hydrochloric\s+acid|HCl|인산|phosphoric\s+acid',
             re.IGNORECASE,
         )
-        if _RE_PH_ADJ.search(sol_name):
+        _is_diluent_sol = _RE_DILUENT.match(sol_name)
+        _is_extracting_sol = bool(re.search(r'extracting\s+solvent|추출용매', sol_name, re.IGNORECASE))
+        if _RE_PH_ADJ.search(sol_name) and not _is_diluent_sol and not _is_extracting_sol:
             if not note_val:
                 note_val = "완충액 pH 조절용"
             theoretical = None  # pH 조절용은 이론량 표시 불필요
@@ -290,6 +292,8 @@ def _process_preparations(
             sol_dict["_mp_fraction"] = mp_fraction
         if exclude_from_solutions:
             sol_dict["_excluded_from_output"] = True
+        if effective_vol:
+            sol_dict["_ref_vol"] = effective_vol  # 성분 스케일링 기준량 (배치 무관 단위량)
         solutions.append(sol_dict)
 
         per_sample = sample_count if is_sample_prep else 1
@@ -603,13 +607,20 @@ def calculate_resources(
                     other_sol["volume_per_batch_ml"] = derived
 
     # 희석액/diluent: 다른 조제에서 사용된 총량 합산 → 이론량 + 비율 재료 업데이트
-    _RE_FILL_DIL_IMPL  = re.compile(r'희석액으로\s*표선|diluent로\s*표선', re.IGNORECASE)
+    _RE_FILL_DIL_IMPL  = re.compile(
+        r'희석액으로\s*표선|diluent로\s*표선'
+        r'|dilute\s+(?:to\s+volume|with\s+.{0,30}?to\s+volume)\s+with\s+(?:the\s+)?diluent'
+        r'|dilute\s+with\s+(?:the\s+)?diluent\s+to\s+volume',
+        re.IGNORECASE,
+    )
     _RE_FLASK_ML_IMPL  = re.compile(r'(\d+(?:\.\d+)?)\s*mL\s*(?:용량\s*플라스크|volumetric\s+flask)', re.IGNORECASE)
     _RE_ONCE_DIL_SOL   = re.compile(r'시스템\s*적합성|system\s*suitability', re.IGNORECASE)
     for sol in solutions:
         if not _RE_DILUENT.match(sol.get("solution_name", "")):
             continue
-        if sol.get("theoretical_volume_ml"):
+        # _ref_vol이 있는 조제(KB에 단위량 기재)는 영문 fill 패턴이 감지될 때만 재계산 허용
+        # _ref_vol이 없으면 기존처럼 theoretical_volume_ml 미설정 시에만 계산
+        if sol.get("theoretical_volume_ml") and not sol.get("_ref_vol"):
             continue
         sol_name_exact = sol["solution_name"]
         total_used = 0.0
@@ -678,7 +689,12 @@ def calculate_resources(
                     if (ing.get("unit") or "").lower() == "ml"
                 )
                 if total_ing_ml > 0:
-                    factor = total_used / total_ing_ml
+                    ref_vol = sol.get("_ref_vol") or 0
+                    # 성분 합계가 기준량의 50% 미만이면 소량 시약 조제 → _ref_vol 기준으로 스케일
+                    if ref_vol > 0 and total_ing_ml / ref_vol < 0.5:
+                        factor = total_used / ref_vol
+                    else:
+                        factor = total_used / total_ing_ml
                     sol["ingredients"] = [
                         {**ing, "amount": round(float(ing["amount"]) * factor, 1)}
                         if (ing.get("unit") or "").lower() == "ml" else ing
@@ -710,6 +726,9 @@ def calculate_resources(
                 if other_sol is dil_sol:
                     continue
                 if other_sol["solution_name"].strip().lower() == ing_name.lower():
+                    # KB에 명시된 이론량(_ref_vol)이 있는 용액은 희석액 역산으로 덮어쓰지 않음
+                    if other_sol.get("_ref_vol"):
+                        break
                     other_sol["theoretical_volume_ml"] = round(ratio * dil_theor, 1)
                     break
 
